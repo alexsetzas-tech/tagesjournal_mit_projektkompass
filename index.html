@@ -87,14 +87,14 @@
                 <p id="quickOverlayDateLabel" class="text-xs text-slate-300 font-semibold">Heutiger Kalendertag bereit</p>
             </div>
         </div>
-        <button onclick="closeQuickDictateOverlay()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold">
+        <button type="button" onclick="closeQuickDictateOverlay()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold">
             Schließen ✕
         </button>
     </div>
 
     <!-- RIESIGER BLIND-TIPP-BUTTON FÜR DAS MIKROFON -->
     <div class="w-full max-w-md my-auto flex flex-col gap-4 py-6">
-        <button id="quickOverlayStartMicBtn" onclick="startDictationFromOverlay()" class="w-full py-12 px-6 rounded-3xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 transition transform shadow-2xl border-4 border-emerald-400/40 flex flex-col items-center justify-center gap-3 text-center">
+        <button type="button" id="quickOverlayStartMicBtn" onclick="startDictationFromOverlay()" class="w-full py-12 px-6 rounded-3xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 transition transform shadow-2xl border-4 border-emerald-400/40 flex flex-col items-center justify-center gap-3 text-center">
             <span class="text-6xl animate-bounce">🎤</span>
             <span class="text-xl font-extrabold tracking-tight">HIER TIPPEN & LOSSPRECHEN</span>
             <span class="text-xs text-emerald-100 font-medium max-w-xs">
@@ -124,7 +124,7 @@
         </div>
 
         <!-- Alternative: Tastatur-Mikrofon nutzen -->
-        <button onclick="focusTodayTextareaFromOverlay()" class="w-full py-3.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center justify-center gap-2">
+        <button type="button" onclick="focusTodayTextareaFromOverlay()" class="w-full py-3.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center justify-center gap-2">
             <span>⌨️</span> Direkt ins Textfeld springen (für Handytastatur-Mikrofon)
         </button>
     </div>
@@ -141,14 +141,17 @@
         <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
             <!-- SYSTEM-UMSCHALTER (Kompass vs. Kalender-Journal + Heute-Schnellstart) -->
             <div class="flex flex-wrap items-center gap-1.5 bg-slate-800 p-1 rounded-xl border border-slate-700 w-full sm:w-auto">
-                <button id="modeBtnCompass" onclick="switchAppMode('compass')" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-indigo-600 text-white shadow">
+                <button type="button" id="modeBtnCompass" onclick="switchAppMode('compass')" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-indigo-600 text-white shadow">
                     <span>🗺️</span> Projekt-Kompass
                 </button>
-                <button id="modeBtnJournal" onclick="switchAppMode('journal')" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white">
+                <button type="button" id="modeBtnJournal" onclick="switchAppMode('journal')" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white">
                     <span>📅</span> Kalender-Journal
                 </button>
-                <button onclick="triggerTodayQuickStart(true)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition flex items-center justify-center gap-1 shadow" title="Legt automatisch den heutigen Tag an und startet den Diktier-Modus">
+                <button type="button" onclick="triggerTodayQuickStart(true)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition flex items-center justify-center gap-1 shadow" title="Legt automatisch den heutigen Tag an und öffnet das Mikrofon-Schnellstartfenster">
                     <span>⚡</span> Heute-Start
+                </button>
+                <button type="button" id="autoQuickStartToggleBtn" onclick="toggleMobileAutoQuickStart()" class="px-2.5 py-1.5 rounded-lg text-[11px] font-bold bg-slate-700 text-slate-300 hover:text-white transition flex items-center justify-center gap-1" title="Wenn aktiviert, öffnet sich beim Starten der App auf diesem Gerät immer sofort das Heute-Schnellstartfenster">
+                    📱 Autostart: AUS
                 </button>
             </div>
 
@@ -156,25 +159,25 @@
             <div class="flex flex-wrap items-center justify-center gap-2">
                 <div id="syncBadge" class="bg-indigo-600 text-indigo-100 text-[10px] font-bold uppercase px-2.5 py-1 rounded-md flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
-                    Lokaler Modus (Aktiv)
+                    Lokaler Speicher (Aktiv)
                 </div>
                 <select id="versionSelect" onchange="changeVersion(this.value)" class="bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                     <option value="current">Aktuelle Arbeitskopie</option>
                 </select>
-                <button onclick="window.createBackup()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">
+                <button type="button" onclick="createBackup()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">
                     Sicherungskopie
                 </button>
-                <button onclick="exportBackupJSON()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition flex items-center gap-1" title="Daten als Datei sichern">
+                <button type="button" onclick="exportBackupJSON()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition flex items-center gap-1" title="Daten als Datei sichern">
                     💾 Export
                 </button>
                 <label class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition cursor-pointer flex items-center gap-1" title="Sicherung einlesen">
                     📂 Import
                     <input type="file" id="importFileInput" accept=".json" class="hidden" onchange="importBackupJSON(event)">
                 </label>
-                <button id="resetBtn" onclick="triggerResetWithConfirmation()" class="bg-rose-950/40 hover:bg-rose-950/60 text-rose-300 border border-rose-900/40 font-bold text-xs px-3 py-1.5 rounded-lg transition">
+                <button type="button" id="resetBtn" onclick="triggerResetWithConfirmation()" class="bg-rose-950/40 hover:bg-rose-950/60 text-rose-300 border border-rose-900/40 font-bold text-xs px-3 py-1.5 rounded-lg transition">
                     Werksreset
                 </button>
-                <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg shadow transition">
+                <button type="button" onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg shadow transition">
                     🖨️ PDF / Drucken
                 </button>
             </div>
@@ -186,7 +189,7 @@
                 <span id="topPhaseBadge" class="bg-indigo-600 text-indigo-100 text-[10px] font-bold uppercase px-2.5 py-1 rounded-md tracking-wider">Phase 1: Vorbereitung</span>
                 <div class="flex items-center gap-2">
                     <h1 id="projectTitleDisplay" class="text-base sm:text-lg font-bold tracking-tight">Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)</h1>
-                    <button onclick="openHeaderModal()" class="text-slate-400 hover:text-white transition p-1 rounded hover:bg-slate-800" title="Kopfzeile ändern & Vorschläge abrufen">
+                    <button type="button" onclick="openHeaderModal()" class="text-slate-400 hover:text-white transition p-1 rounded hover:bg-slate-800" title="Kopfzeile ändern & Vorschläge abrufen">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                         </svg>
@@ -194,10 +197,10 @@
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <button onclick="openHeaderModal()" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1">
+                <button type="button" onclick="openHeaderModal()" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1">
                     ✨ Kopfzeile & Vorschläge
                 </button>
-                <button onclick="openFooterModal()" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1">
+                <button type="button" onclick="openFooterModal()" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1">
                     ✨ Fußzeile & Vorschläge
                 </button>
             </div>
@@ -215,7 +218,7 @@
                 </h3>
                 <p class="text-[11px] text-slate-500 mt-0.5">Klicke auf einen der dynamischen Vorschläge, um ihn direkt zu übernehmen, oder tippe/diktiere deinen eigenen Text.</p>
             </div>
-            <button onclick="closeHeaderModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
+            <button type="button" onclick="closeHeaderModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
         </div>
 
         <div class="space-y-5">
@@ -261,8 +264,8 @@
         </div>
 
         <div class="flex justify-end gap-2 mt-6 pt-4 border-t border-slate-100">
-            <button onclick="closeHeaderModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-4 py-2 rounded-lg transition">Abbrechen</button>
-            <button onclick="saveHeaderChanges()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-2 rounded-lg shadow transition">Kopfzeile speichern</button>
+            <button type="button" onclick="closeHeaderModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-4 py-2 rounded-lg transition">Abbrechen</button>
+            <button type="button" onclick="saveHeaderChanges()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-2 rounded-lg shadow transition">Kopfzeile speichern</button>
         </div>
     </div>
 </div>
@@ -277,7 +280,7 @@
                 </h3>
                 <p class="text-[11px] text-slate-500 mt-0.5">Wähle einen passenden Vorschlag für die linke Dokument-Info und das rechte Leitmotto oder gib eigene Texte ein.</p>
             </div>
-            <button onclick="closeFooterModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
+            <button type="button" onclick="closeFooterModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
         </div>
 
         <div class="space-y-5">
@@ -309,8 +312,8 @@
         </div>
 
         <div class="flex justify-end gap-2 mt-6 pt-4 border-t border-slate-100">
-            <button onclick="closeFooterModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-4 py-2 rounded-lg transition">Abbrechen</button>
-            <button onclick="saveFooterChanges()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-2 rounded-lg shadow transition">Fußzeile speichern</button>
+            <button type="button" onclick="closeFooterModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-4 py-2 rounded-lg transition">Abbrechen</button>
+            <button type="button" onclick="saveFooterChanges()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-2 rounded-lg shadow transition">Fußzeile speichern</button>
         </div>
     </div>
 </div>
@@ -324,7 +327,7 @@
             <span>⚠️</span>
             <span><strong>Historischer Stand (Schreibgeschützt):</strong> Du betrachtest ein archiviertes Backup. Änderungen sind in diesem Modus deaktiviert.</span>
         </div>
-        <button onclick="restoreSelectedVersion()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-4 py-2 rounded-lg transition shrink-0">
+        <button type="button" onclick="restoreSelectedVersion()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-4 py-2 rounded-lg transition shrink-0">
             Diese Version als Arbeitskopie wiederherstellen
         </button>
     </div>
@@ -334,7 +337,7 @@
         <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
             <div class="flex items-center gap-2.5">
                 <h2 id="handoutProjectName" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)</h2>
-                <button onclick="openHeaderModal()" class="no-print text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-bold px-2.5 py-1 rounded-lg transition flex items-center gap-1 shrink-0" title="Kopfzeile bearbeiten & Vorschläge anzeigen">
+                <button type="button" onclick="openHeaderModal()" class="no-print text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-bold px-2.5 py-1 rounded-lg transition flex items-center gap-1 shrink-0" title="Kopfzeile bearbeiten & Vorschläge anzeigen">
                     ✏️ Kopf ändern
                 </button>
             </div>
@@ -377,7 +380,7 @@
             <div class="flex-1">
                 <div class="flex items-center justify-between mb-1">
                     <label class="block text-[10px] font-bold text-indigo-900 uppercase">😊 Nach Tages-Emoji filtern (inkl. Sprach-Smileys 😄 😐 ☹️)</label>
-                    <button id="clearFilterBtn" onclick="clearJournalFilters()" class="hidden text-[10px] font-bold text-rose-600 hover:text-rose-800 underline">
+                    <button type="button" id="clearFilterBtn" onclick="clearJournalFilters()" class="hidden text-[10px] font-bold text-rose-600 hover:text-rose-800 underline">
                         Filter zurücksetzen
                     </button>
                 </div>
@@ -412,7 +415,7 @@
             <span id="footerRightDisplay" onclick="openFooterModal()" class="font-semibold italic cursor-pointer hover:text-slate-700 transition">
                 „Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“
             </span>
-            <button onclick="openFooterModal()" class="no-print bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-700 border border-slate-200 hover:border-indigo-200 font-bold text-[10px] px-2.5 py-1 rounded-md transition flex items-center gap-1 shrink-0">
+            <button type="button" onclick="openFooterModal()" class="no-print bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-700 border border-slate-200 hover:border-indigo-200 font-bold text-[10px] px-2.5 py-1 rounded-md transition flex items-center gap-1 shrink-0">
                 ✏️ Fußzeile ändern
             </button>
         </div>
@@ -423,11 +426,10 @@
 
 </main>
 
-<!-- CORE LOGIC, SPEECH RECOGNITION, TODAY-AUTOMATION & FIREBASE IMPLEMENTATION -->
-<script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
-    import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
-    import { getFirestore, doc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+<!-- CORE APPLICATION LOGIC (Direkter Sofort-Start ohne externe Lade-Blockaden) -->
+<script>
+    // Sichere Cloud-Fallback-Funktion von Anfang an bereitstellen (verhindert jegliche Skript-Abbrüche)
+    window.saveStateToCloud = async function() {};
 
     // Color Matrix
     const colorMatrix = {
@@ -596,7 +598,7 @@
         else if (type === 'error') toast.className += 'bg-rose-600 text-white border-l-4 border-rose-950';
         else toast.className += 'bg-slate-800 text-white border-l-4 border-slate-500';
 
-        toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()" class="text-white hover:text-slate-200 font-bold ml-2">✕</button>`;
+        toast.innerHTML = `<span>${message}</span><button type="button" onclick="this.parentElement.remove()" class="text-white hover:text-slate-200 font-bold ml-2">✕</button>`;
         container.appendChild(toast);
         setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
         setTimeout(() => {
@@ -616,8 +618,6 @@
     ];
     const allMoodEmojis = ["😄", "😐", "☹️"];
 
-    // Prüft den gesprochenen Text auf „Guter Tag“, „Normaler Tag“, „Schlechter Tag“,
-    // setzt automatisch das passende Smiley-Emoji am Kalendertag und bereinigt den Text
     function applyVoiceEmojiCommandsAndFormat(rawText, dayObj) {
         if (!rawText) return { cleanedText: "", emojiChanged: false };
         let workingText = rawText;
@@ -627,19 +627,15 @@
             if (!Array.isArray(dayObj.emojis)) dayObj.emojis = [];
             moodVoiceCommands.forEach(cmd => {
                 if (cmd.regex.test(workingText)) {
-                    // Entferne vorherige Stimmungs-Smileys (😄, 😐, ☹️), damit immer die aktuell gesprochene Stimmung gilt
                     dayObj.emojis = dayObj.emojis.filter(e => !allMoodEmojis.includes(e));
-                    // Setze das neue Stimmungs-Smiley ganz nach vorne
                     dayObj.emojis.unshift(cmd.emoji);
                     emojiChanged = true;
                     showToast(`${cmd.emoji} Sprachbefehl „${cmd.label}“ erkannt – Smiley gesetzt!`, "success");
-                    // Entferne das gesprochene Kommando aus dem Notiztext
                     workingText = workingText.replace(cmd.regex, "");
                 }
             });
         }
 
-        // Satzzeichen-Befehle umwandeln
         let formatted = workingText
             .replace(/\s+punkt\b/gi, ".")
             .replace(/\s+komma\b/gi, ",")
@@ -775,7 +771,6 @@
         updateMicButtonsUI();
 
         const textarea = document.getElementById(`dayTextarea_${dayId}`);
-        const statusHint = document.getElementById(`dictationPreview_${dayId}`);
         if (textarea) textarea.focus();
 
         showToast("🎤 Mikrofon aktiv – sprich jetzt (Tipp: Sag „Guter Tag“, „Normaler Tag“ oder „Schlechter Tag“ fürs Smiley!)", "success");
@@ -800,7 +795,6 @@
                 saveToLocalStorage();
                 window.saveStateToCloud();
 
-                // Wenn sich durch einen Sprachbefehl das Emoji geändert hat, Tages-Emojis & Filterleiste frisch zeichnen
                 if (emojiChanged) {
                     renderJournalFilterBar();
                     renderJournalView(false);
@@ -872,13 +866,40 @@
     };
 
     // =========================================================================
-    // HEUTE-AUTOMATIK (?modus=heute) FÜR DEN HANDY-SPRACHBEFEHL
+    // HEUTE-AUTOMATIK (?modus=heute, #heute ODER AUTOSTART-SCHALTER)
     // =========================================================================
+    function updateAutoQuickStartButtonUI() {
+        const btn = document.getElementById('autoQuickStartToggleBtn');
+        if (!btn) return;
+        const isAutoOn = localStorage.getItem('stollberg_auto_quickstart') === 'true';
+        if (isAutoOn) {
+            btn.className = "px-2.5 py-1.5 rounded-lg text-[11px] font-bold bg-emerald-600 text-white shadow transition flex items-center justify-center gap-1";
+            btn.innerHTML = "📱 Autostart: AN";
+        } else {
+            btn.className = "px-2.5 py-1.5 rounded-lg text-[11px] font-bold bg-slate-700 text-slate-300 hover:text-white transition flex items-center justify-center gap-1";
+            btn.innerHTML = "📱 Autostart: AUS";
+        }
+    }
+
+    window.toggleMobileAutoQuickStart = function() {
+        const current = localStorage.getItem('stollberg_auto_quickstart') === 'true';
+        const nextState = !current;
+        localStorage.setItem('stollberg_auto_quickstart', nextState ? 'true' : 'false');
+        updateAutoQuickStartButtonUI();
+        if (nextState) {
+            showToast("📱 Handy-Autostart aktiviert! Beim Öffnen der Seite startet auf diesem Gerät ab sofort immer direkt das Heute-Schnellstartfenster.", "success");
+        } else {
+            showToast("📱 Handy-Autostart deaktiviert.", "info");
+        }
+    };
+
     window.triggerTodayQuickStart = function(showTouchOverlay = true) {
         if (loadedVersionId !== "current") {
             loadedVersionId = "current";
-            document.getElementById('versionSelect').value = "current";
-            document.getElementById('readonlyWarning').classList.add('hidden');
+            const verSel = document.getElementById('versionSelect');
+            if (verSel) verSel.value = "current";
+            const roWarn = document.getElementById('readonlyWarning');
+            if (roWarn) roWarn.classList.add('hidden');
             loadFromLocalStorage();
         }
 
@@ -940,7 +961,7 @@
             }
         }, 120);
 
-        // 6. Großes Handy-Schnellstart-Overlay zeigen (damit 1 blinder Fingertipp das Mikrofon startet)
+        // 6. Großes Handy-Schnellstart-Overlay zeigen
         if (showTouchOverlay) {
             const overlay = document.getElementById('quickDictateOverlay');
             const dateLabel = document.getElementById('quickOverlayDateLabel');
@@ -1003,7 +1024,11 @@
     }
 
     function saveToLocalStorage() {
-        localStorage.setItem('stollberg_handout_state', JSON.stringify(appState));
+        try {
+            localStorage.setItem('stollberg_handout_state', JSON.stringify(appState));
+        } catch (e) {
+            console.error("Fehler beim Speichern im LocalStorage:", e);
+        }
     }
 
     function loadFromLocalStorage() {
@@ -1028,7 +1053,9 @@
         openEmojiMenuDayId = null;
         if (loadedVersionId === "current") {
             saveToLocalStorage();
-            window.saveStateToCloud();
+            if (typeof window.saveStateToCloud === 'function') {
+                window.saveStateToCloud();
+            }
         }
         syncStateToUI();
         showToast(mode === 'compass' ? "Ansicht: Projekt-Kompass (Meilensteine)" : "Ansicht: Kalender-Journal (Tagesbasis)", "info");
@@ -1078,7 +1105,6 @@
         const summaryText = document.getElementById('activeFilterText');
         if (!filterContainer) return;
 
-        // Zähle alle verwendeten Emojis, wobei die 3 Sprach-Smileys (😄, 😐, ☹️) immer ganz vorne stehen
         const emojiCounts = { "😄": 0, "😐": 0, "☹️": 0 };
         appState.journalDays.forEach(d => {
             (d.emojis || []).forEach(em => {
@@ -1993,6 +2019,8 @@
             }
         }
 
+        updateAutoQuickStartButtonUI();
+
         // 2. Kopfzeile & Fußzeile synchronisieren
         const activeTitle = isCompass ? appState.projectName : appState.journalHeader.title;
         const activePhase = isCompass ? appState.headerPhase : appState.journalHeader.phase;
@@ -2058,7 +2086,7 @@
                     </div>
                 </div>
                 <div class="mt-4 flex justify-end">
-                    <button onclick="addNewMilestone()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow transition">
+                    <button type="button" onclick="addNewMilestone()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow transition">
                         Meilenstein anlegen
                     </button>
                 </div>
@@ -2096,7 +2124,7 @@
                     </div>
                 </div>
                 <div class="mt-4 flex justify-end">
-                    <button onclick="addNewJournalMonth()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow transition">
+                    <button type="button" onclick="addNewJournalMonth()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-lg shadow transition">
                         Monat anlegen
                     </button>
                 </div>
@@ -2164,9 +2192,9 @@
                                 </select>
                             </div>
                             <div class="flex gap-2">
-                                <button onclick="saveMilestoneChangesInline('${m.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition">Speichern</button>
-                                <button id="delMBtn_${m.id}" onclick="deleteMilestoneInline('${m.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-[10px] px-3 py-1.5 rounded transition">Löschen</button>
-                                <button onclick="toggleEditMilestoneMode('${m.id}')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-3 py-1.5 rounded-lg transition">Abbrechen</button>
+                                <button type="button" onclick="saveMilestoneChangesInline('${m.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition">Speichern</button>
+                                <button type="button" id="delMBtn_${m.id}" onclick="deleteMilestoneInline('${m.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-[10px] px-3 py-1.5 rounded transition">Löschen</button>
+                                <button type="button" onclick="toggleEditMilestoneMode('${m.id}')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-3 py-1.5 rounded-lg transition">Abbrechen</button>
                             </div>
                         </div>
                     </div>
@@ -2179,7 +2207,7 @@
                             <h3 class="text-xl font-bold text-slate-900 tracking-tight">${m.title}</h3>
                             <p class="text-slate-500 text-xs mt-1 leading-relaxed">${m.description}</p>
                         </div>
-                        <button onclick="toggleEditMilestoneMode('${m.id}')" class="no-print bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold text-xs px-3 py-1.5 rounded-lg transition shrink-0 ${isReadOnly ? 'hidden' : ''}">
+                        <button type="button" onclick="toggleEditMilestoneMode('${m.id}')" class="no-print bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold text-xs px-3 py-1.5 rounded-lg transition shrink-0 ${isReadOnly ? 'hidden' : ''}">
                             Bearbeiten / Löschen
                         </button>
                     </div>
@@ -2203,7 +2231,7 @@
                                    oninput="updateAnswerLine('${q.id}', ${lIdx}, this.value)" 
                                    class="w-full bg-transparent border-b border-dotted border-slate-300 focus:outline-none focus:border-indigo-500 py-1 text-slate-700 text-xs tracking-wide writing-line"
                                    ${isReadOnly ? 'disabled' : ''} />
-                            <button onclick="removeAnswerLine('${q.id}', ${lIdx})" 
+                            <button type="button" onclick="removeAnswerLine('${q.id}', ${lIdx})" 
                                     class="ml-2 text-rose-400 hover:text-rose-600 font-bold text-xs no-print opacity-0 group-hover/line:opacity-100 transition duration-150 focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" 
                                     title="Zeile entfernen">
                                 ✕
@@ -2217,14 +2245,14 @@
                     questionTextHTML = `
                         <div class="flex items-center gap-2 flex-1 no-print">
                             <input type="text" id="editQuestText_${q.id}" value="${q.text.replace(/"/g, '&quot;')}" class="flex-1 bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                            <button onclick="saveQuestionChangesInline('${q.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] px-2.5 py-1 rounded transition">Speichern</button>
-                            <button onclick="toggleEditQuestionMode(null)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-[10px] px-2.5 py-1 rounded transition">Abbrechen</button>
+                            <button type="button" onclick="saveQuestionChangesInline('${q.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] px-2.5 py-1 rounded transition">Speichern</button>
+                            <button type="button" onclick="toggleEditQuestionMode(null)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-[10px] px-2.5 py-1 rounded transition">Abbrechen</button>
                         </div>
                     `;
                 } else {
                     questionTextHTML = `
                         <span class="text-slate-800">${q.text}</span>
-                        <button onclick="toggleEditQuestionMode('${q.id}')" class="no-print opacity-0 group-hover/quest:opacity-100 text-indigo-500 hover:text-indigo-700 font-bold text-[10px] px-1 transition focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" title="Frage bearbeiten">
+                        <button type="button" onclick="toggleEditQuestionMode('${q.id}')" class="no-print opacity-0 group-hover/quest:opacity-100 text-indigo-500 hover:text-indigo-700 font-bold text-[10px] px-1 transition focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" title="Frage bearbeiten">
                             ✏️
                         </button>
                     `;
@@ -2237,7 +2265,7 @@
                                 <span class="${color.accentText} font-bold select-none shrink-0">${stepNum}.${qNum}</span>
                                 ${questionTextHTML}
                             </h4>
-                            <button onclick="deleteQuestionInline('${q.id}')" class="no-print text-rose-400 hover:text-rose-600 font-bold text-[10px] px-2 py-0.5 rounded border border-rose-200 hover:bg-rose-50 opacity-0 group-hover/quest:opacity-100 transition focus:opacity-100 shrink-0 ${isReadOnly ? 'hidden' : ''}">
+                            <button type="button" onclick="deleteQuestionInline('${q.id}')" class="no-print text-rose-400 hover:text-rose-600 font-bold text-[10px] px-2 py-0.5 rounded border border-rose-200 hover:bg-rose-50 opacity-0 group-hover/quest:opacity-100 transition focus:opacity-100 shrink-0 ${isReadOnly ? 'hidden' : ''}">
                                 Frage löschen
                             </button>
                         </div>
@@ -2245,7 +2273,7 @@
                             ${linesHTML}
                         </div>
                         <div class="pl-4 mt-2">
-                            <button onclick="addAnswerLine('${q.id}')" class="no-print text-[10px] ${color.accentText} hover:opacity-80 font-bold flex items-center gap-1 shrink-0 ${isReadOnly ? 'hidden' : ''}">
+                            <button type="button" onclick="addAnswerLine('${q.id}')" class="no-print text-[10px] ${color.accentText} hover:opacity-80 font-bold flex items-center gap-1 shrink-0 ${isReadOnly ? 'hidden' : ''}">
                                 <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                 </svg>
@@ -2260,7 +2288,7 @@
                 <div class="no-print mt-6 pt-4 border-t border-slate-100 flex gap-2 ${isReadOnly ? 'hidden' : ''}">
                     <input type="text" id="newQuestInput_${m.id}" placeholder="Eigene Leitfrage hinzufügen (oder per 🎤 diktieren)..." class="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-1 ${color.ring} focus:outline-none">
                     <button type="button" id="micBtn_newQuestInput_${m.id}" onclick="toggleInputDictation('newQuestInput_${m.id}')" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition shrink-0" title="Leitfrage per Sprache diktieren">🎤</button>
-                    <button onclick="addQuestionToMilestone('${m.id}')" class="${color.accent} ${color.hover} text-white font-bold text-xs px-4 py-1.5 rounded-lg shadow transition shrink-0">
+                    <button type="button" onclick="addQuestionToMilestone('${m.id}')" class="${color.accent} ${color.hover} text-white font-bold text-xs px-4 py-1.5 rounded-lg shadow transition shrink-0">
                         Hinzufügen
                     </button>
                 </div>
@@ -2345,9 +2373,9 @@
                                 </select>
                             </div>
                             <div class="flex gap-2">
-                                <button onclick="saveMonthChangesInline('${month.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition">Speichern</button>
-                                <button id="delMonthBtn_${month.id}" onclick="deleteMonthInline('${month.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-[10px] px-3 py-1.5 rounded transition">Löschen</button>
-                                <button onclick="toggleEditMonthMode('${month.id}')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-3 py-1.5 rounded-lg transition">Abbrechen</button>
+                                <button type="button" onclick="saveMonthChangesInline('${month.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition">Speichern</button>
+                                <button type="button" id="delMonthBtn_${month.id}" onclick="deleteMonthInline('${month.id}')" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-[10px] px-3 py-1.5 rounded transition">Löschen</button>
+                                <button type="button" onclick="toggleEditMonthMode('${month.id}')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-3 py-1.5 rounded-lg transition">Abbrechen</button>
                             </div>
                         </div>
                     </div>
@@ -2360,7 +2388,7 @@
                             <h3 class="text-xl font-bold text-slate-900 tracking-tight">${month.title}</h3>
                             <p class="text-slate-500 text-xs mt-1 leading-relaxed">${month.description}</p>
                         </div>
-                        <button onclick="toggleEditMonthMode('${month.id}')" class="no-print bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold text-xs px-3 py-1.5 rounded-lg transition shrink-0 ${isReadOnly ? 'hidden' : ''}">
+                        <button type="button" onclick="toggleEditMonthMode('${month.id}')" class="no-print bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold text-xs px-3 py-1.5 rounded-lg transition shrink-0 ${isReadOnly ? 'hidden' : ''}">
                             Monat bearbeiten / löschen
                         </button>
                     </div>
@@ -2381,7 +2409,7 @@
                         <div onclick="event.stopPropagation()" class="no-print absolute right-0 top-9 z-30 w-72 bg-white border border-slate-200 rounded-xl shadow-2xl p-3 text-left">
                             <div class="flex items-center justify-between border-b border-slate-100 pb-1.5 mb-2">
                                 <span class="text-[10px] font-bold text-slate-700 uppercase tracking-wider">Tages-Emojis auswählen</span>
-                                <button onclick="closeAllEmojiMenus()" class="text-slate-400 hover:text-slate-600 text-xs font-bold">✕</button>
+                                <button type="button" onclick="closeAllEmojiMenus()" class="text-slate-400 hover:text-slate-600 text-xs font-bold">✕</button>
                             </div>
                             <div class="space-y-2.5 max-h-60 overflow-y-auto pr-1">
                                 ${emojiCategories.map(cat => `
@@ -2411,8 +2439,8 @@
                         <div class="flex flex-wrap items-center gap-2 flex-1 no-print">
                             <input type="date" id="editDayDate_${day.id}" value="${day.date}" class="bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
                             <input type="text" id="editDayTitle_${day.id}" value="${(day.title || '').replace(/"/g, '&quot;')}" class="flex-1 min-w-[180px] bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                            <button onclick="saveDayChangesInline('${day.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] px-2.5 py-1 rounded transition">Speichern</button>
-                            <button onclick="toggleEditDayMode(null)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-[10px] px-2.5 py-1 rounded transition">Abbrechen</button>
+                            <button type="button" onclick="saveDayChangesInline('${day.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] px-2.5 py-1 rounded transition">Speichern</button>
+                            <button type="button" onclick="toggleEditDayMode(null)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-[10px] px-2.5 py-1 rounded transition">Abbrechen</button>
                         </div>
                     `;
                 } else {
@@ -2422,7 +2450,7 @@
                                 ${formatGermanDayDate(day.date)}
                             </span>
                             <span class="text-xs font-bold text-slate-800">${day.title}</span>
-                            <button onclick="toggleEditDayMode('${day.id}')" class="no-print opacity-0 group-hover/day:opacity-100 text-indigo-500 hover:text-indigo-700 font-bold text-[10px] px-1 transition focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" title="Datum oder Tagesthema ändern">
+                            <button type="button" onclick="toggleEditDayMode('${day.id}')" class="no-print opacity-0 group-hover/day:opacity-100 text-indigo-500 hover:text-indigo-700 font-bold text-[10px] px-1 transition focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" title="Datum oder Tagesthema ändern">
                                 ✏️
                             </button>
                         </div>
@@ -2489,7 +2517,7 @@
                         <input type="text" id="newDayTitle_${month.id}" placeholder="Tagesthema eingeben oder diktieren (z. B. Abstimmung Schnittstelle)..." class="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-1 ${color.ring} focus:outline-none">
                         <button type="button" id="micBtn_newDayTitle_${month.id}" onclick="toggleInputDictation('newDayTitle_${month.id}')" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition shrink-0" title="Tagesthema per Sprache diktieren">🎤</button>
                     </div>
-                    <button onclick="addDayToMonth('${month.id}')" class="${color.accent} ${color.hover} text-white font-bold text-xs px-4 py-1.5 rounded-lg shadow transition shrink-0">
+                    <button type="button" onclick="addDayToMonth('${month.id}')" class="${color.accent} ${color.hover} text-white font-bold text-xs px-4 py-1.5 rounded-lg shadow transition shrink-0">
                         + Kalendertag anlegen
                     </button>
                 </div>
@@ -2515,71 +2543,36 @@
         }, 0);
     }
 
-    // INIT APPLICATION, URL-PARAMETER CHECK (?modus=heute) & FIREBASE SNAPSHOTS
-    window.onload = function() {
+    // =========================================================================
+    // SOFORT-INITIALISIERUNG BEIM LADEN DER SEITE
+    // =========================================================================
+    function initApplication() {
         loadFromLocalStorage();
         syncStateToUI();
 
-        // Prüfen, ob die App über den Handy-Sprachbefehl (?modus=heute oder ?aktion=heute) geöffnet wurde
+        // Prüfen, ob ?modus=heute, #heute ODER der Handy-Autostart-Schalter aktiv ist
         const urlParams = new URLSearchParams(window.location.search);
         const modusParam = (urlParams.get('modus') || urlParams.get('mode') || urlParams.get('aktion') || '').toLowerCase();
-        if (modusParam === 'heute' || modusParam === 'today' || modusParam === 'journal') {
+        const hashParam = (window.location.hash || '').replace('#', '').toLowerCase();
+        const isAutoQuickStartEnabled = localStorage.getItem('stollberg_auto_quickstart') === 'true';
+
+        if (
+            modusParam === 'heute' ||
+            modusParam === 'today' ||
+            modusParam === 'journal' ||
+            hashParam === 'heute' ||
+            hashParam === 'today' ||
+            isAutoQuickStartEnabled
+        ) {
             window.triggerTodayQuickStart(true);
         }
+    }
 
-        try {
-            const firebaseConfig = JSON.parse(__firebase_config);
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
-            const db = getFirestore(app);
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-            const initAuth = async () => {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            };
-
-            initAuth();
-
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'handout_kompass', 'default_state');
-                    
-                    window.saveStateToCloud = async function() {
-                        if (loadedVersionId !== "current") return;
-                        try {
-                            await setDoc(docRef, appState, { merge: true });
-                        } catch (err) {
-                            console.warn("Fehler bei Cloud-Sicherung:", err);
-                        }
-                    };
-
-                    onSnapshot(docRef, (docSnap) => {
-                        if (docSnap.exists() && loadedVersionId === "current") {
-                            ensureStateIntegrity(docSnap.data());
-                            saveToLocalStorage();
-                            syncStateToUI();
-                        } else if (!docSnap.exists()) {
-                            window.saveStateToCloud();
-                        }
-                    }, (err) => {
-                        console.warn("Cloud read sync issue, running locally:", err);
-                    });
-                }
-            });
-
-        } catch (error) {
-            const syncBadge = document.getElementById('syncBadge');
-            if (syncBadge) {
-                syncBadge.innerText = "Lokaler Modus (Aktiv)";
-                syncBadge.className = "bg-indigo-600 text-white text-[10px] font-bold uppercase px-2 py-0.5 rounded-md flex items-center gap-1";
-            }
-            window.saveStateToCloud = async function() {};
-        }
-    };
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApplication);
+    } else {
+        initApplication();
+    }
 </script>
 </body>
 </html>
