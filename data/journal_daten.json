@@ -1,175 +1,16 @@
 {
   "activeMode": "journal",
-  "projectName": "Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)",
+  "projectName": "Projekt-Kompass: Projektstart bis Abschluss",
   "headerPhase": "Phase 1: Vorbereitung",
   "headerDocBadge": "Kick-off-Handout & Roadmap",
   "headerSubtitle": "Dieses Leitdokument dient als strukturierter Fahrplan zur Auftragsklärung und Prozessgestaltung. Es enthält die strategischen Projektmeilensteine sowie zentrale Leitfragen für die Inbetriebnahme.",
-  "footerLeft": "Projekt-Kompass Handout © 2026 Stollberg Arbeits Erleichterung",
+  "footerLeft": "Projekt-Kompass Handout © 2026",
   "footerRight": "„Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“",
-  "milestones": [
-    {
-      "id": "m1",
-      "title": "Konzeptionierung & Datenerfassung",
-      "description": "Phase 1 planen und starten",
-      "color": "indigo"
-    },
-    {
-      "id": "m2",
-      "title": "Schnittstellen-Abgleich & Datentransfer",
-      "description": "Technischer Handshake",
-      "color": "emerald"
-    },
-    {
-      "id": "m3",
-      "title": "Datenkonsolidierung & Verarbeitung",
-      "description": "Phase 2 auf dem Zentral-PC",
-      "color": "blue"
-    },
-    {
-      "id": "m4",
-      "title": "Freigabe-Gateway & Zahllauf",
-      "description": "Letzte Meile zur Auszahlung",
-      "color": "rose"
-    }
-  ],
-  "customQuestions": [
-    {
-      "id": "q1_m1",
-      "milestoneId": "m1",
-      "text": "Welche exakten Datenfelder (z. B. Personalnummer, Projekt-ID) müssen zwingend in der App erfasst werden?",
-      "type": "open"
-    },
-    {
-      "id": "q2_m1",
-      "milestoneId": "m1",
-      "text": "Wie stellen wir sicher, dass die App auch offline im Funkloch absolut zuverlässig speichert?",
-      "type": "open"
-    },
-    {
-      "id": "q3_m1",
-      "milestoneId": "m1",
-      "text": "Welches Smartphone-Betriebssystem (Android, iOS oder beide via Cross-Platform) wird vorrangig genutzt?",
-      "type": "open"
-    },
-    {
-      "id": "q1_m2",
-      "milestoneId": "m2",
-      "text": "Wie authentifiziert sich die App sicher an der REST-API, um Missbrauch zu verhindern?",
-      "type": "open"
-    },
-    {
-      "id": "q2_m2",
-      "milestoneId": "m2",
-      "text": "Wie visualisieren wir Übertragungsfehler für den Mitarbeiter direkt auf dem Display?",
-      "type": "open"
-    },
-    {
-      "id": "q3_m2",
-      "milestoneId": "m2",
-      "text": "Wird nach erfolgreicher Übertragung die lokale Datei auf dem Handy verschoben oder direkt gelöscht?",
-      "type": "open"
-    },
-    {
-      "id": "q1_m3",
-      "milestoneId": "m3",
-      "text": "Wie werden fehlerhafte oder manipulierte CSV-Dateien bei der Einlesung automatisch aussortiert?",
-      "type": "open"
-    },
-    {
-      "id": "q2_m3",
-      "milestoneId": "m3",
-      "text": "Wie ordnen wir die erfassten Stundenlöhne den Personalnummern datenschutzkonform zu?",
-      "type": "open"
-    },
-    {
-      "id": "q3_m3",
-      "milestoneId": "m3",
-      "text": "Welches Backup-Verfahren nutzen wir für die eingelesenen Originaldaten auf dem Büro-PC?",
-      "type": "open"
-    },
-    {
-      "id": "q1_m4",
-      "milestoneId": "m4",
-      "text": "Welche Person trägt die finale Verantwortung für die Freigabe des Zahllaufs?",
-      "type": "open"
-    },
-    {
-      "id": "q2_m4",
-      "milestoneId": "m4",
-      "text": "Wie dokumentieren wir das manuelle Go-Signal revisionssicher für Wirtschaftsprüfer?",
-      "type": "open"
-    },
-    {
-      "id": "q3_m4",
-      "milestoneId": "m4",
-      "text": "In welchem Dateiformat übergeben wir die freigegebenen Lohnsummen an das Bankprogramm?",
-      "type": "open"
-    }
-  ],
-  "answers": {
-    "q1_m1": [
-      "",
-      "",
-      ""
-    ],
-    "q2_m1": [
-      "",
-      "",
-      ""
-    ],
-    "q3_m1": [
-      "",
-      "",
-      ""
-    ],
-    "q1_m2": [
-      "",
-      "",
-      ""
-    ],
-    "q2_m2": [
-      "",
-      "",
-      ""
-    ],
-    "q3_m2": [
-      "",
-      "",
-      ""
-    ],
-    "q1_m3": [
-      "",
-      "",
-      ""
-    ],
-    "q2_m3": [
-      "",
-      "",
-      ""
-    ],
-    "q3_m3": [
-      "",
-      "",
-      ""
-    ],
-    "q1_m4": [
-      "",
-      "",
-      ""
-    ],
-    "q2_m4": [
-      "",
-      "",
-      ""
-    ],
-    "q3_m4": [
-      "",
-      "",
-      ""
-    ]
-  },
+  "milestones": [],
+  "customQuestions": [],
+  "answers": {},
   "journalHeader": {
-    "title": "Projekt- & Tagesjournal (Hr. Stollberg & BTZ)",
+    "title": "Projekt- & Tagesjournal (Eurodeco Wallsystem GmbH)",
     "phase": "Laufendes Journal",
     "docBadge": "Kalender-Journal & Tagesprotokoll",
     "subtitle": "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und täglichen Aufgaben auf Kalendertagbasis."
@@ -182,55 +23,71 @@
     {
       "id": "jm1",
       "title": "November 2026",
-      "description": "Kick-off, Anforderungsanalyse & Grundkonzept",
+      "description": "Praktikumsstart bei Eurodeco Wallsystem GmbH",
       "color": "indigo"
-    },
-    {
-      "id": "jm2",
-      "title": "Dezember 2026",
-      "description": "Schnittstellen-Design, Prototyp & Testlauf",
-      "color": "emerald"
     }
   ],
   "journalDays": [
     {
-      "id": "jd1",
-      "monthId": "jm1",
-      "date": "2026-11-06",
-      "title": "Kick-off & Abstimmung der Dokumentations-Struktur",
-      "emojis": [
-        "😄",
-        "🚀",
-        "✅"
-      ],
-      "text": "Kick-off-Unterlagen und Handout vorbereitet. Struktur für Meilensteine und das begleitende Tagesjournal festgelegt.\nNächster Schritt: Detailklärung der Pflichtfelder für die mobile Erfassung."
-    },
-    {
       "id": "jd2",
       "monthId": "jm1",
       "date": "2026-11-09",
-      "title": "Technische Prüfung Offline-Speicherung & CSV-Format",
-      "emojis": [
-        "😐",
-        "🛠️",
-        "💻"
-      ],
-      "text": "Lokale Datenhaltung im Funkloch evaluiert. Datensätze werden zunächst im Gerätespeicher gepuffert und erst nach erfolgreichem Handshake als übertragen markiert."
-    },
-    {
-      "id": "jd3",
-      "monthId": "jm2",
-      "date": "2026-12-01",
-      "title": "Erster Testlauf Datenkonsolidierung am Zentral-PC",
+      "title": "Erster Tag bei Eurodeco Wallsystem GmbH",
       "emojis": [
         "😄",
-        "📊",
-        "🔍"
+        "🛠️",
+        "🤝"
       ],
-      "text": "Test-CSV-Dateien eingelesen und Plausibilitätsprüfung für Stundensätze und Personalnummern durchgespielt."
+      "text": "Ankunft 7.55UHR\n- Telefondienst\n- Aufträge prüfen (Stückliste und Palletteninhalt)\n-  Auftragsbegleitscheine angelegt und gedruckt (Auftragsbeschreibung und Stückliste) noch 13 Uhr war nicht viel los aber ich habe eine neue App weiterentwickelt. Auto leider laut und kracht und ich und hoffe dass es funktioniert dass mir von BTZ ein Auto gestellt wird bis ich es repariert habe. tatsächlich habe ich noch meinen bewegungsplan eingehalten und es ist jetzt 25 Korrektur 17:25 Uhr"
     },
     {
-      "id": "jd_1794474811215",
+      "id": "jd_1794332316826",
+      "monthId": "jm1",
+      "date": "2026-11-10",
+      "title": "Tagesprotokoll & Notizen",
+      "emojis": [
+        "😄",
+        "📅"
+      ],
+      "text": "Heute definitiv viel und herausfordernde Tätigkeiten. den Tag über Telefondienst.\nProjektbesprechung für kunden Anfrage zur Kalkulation. Erstellung einer Stückliste aus architektenzeichnungen für eine Treppe.\n für ein treppenprojekt Stückliste in Excel bearbeitet. Einführung in das Kalkulationsschema und in das Management der Arbeitspläne. verbessern Kalkulation. Absatz Einfahrt Auto BTZ weil mein Auto kaputt war empfangen - "
+    },
+    {
+      "id": "jd_1794332705128",
+      "monthId": "jm1",
+      "date": "2026-11-10",
+      "title": "wie habe ich mich gefühlt",
+      "emojis": [
+        "📝",
+        "😄",
+        "🔥"
+      ],
+      "text": "Ein sehr herausfordernden Tag nahe an meiner stressgrenze weil es viele Aufgaben gegeben hat die ich noch nicht gewohnt war und keine Routine dabei hatte. Herr schleinkofer und die Kollegen sind nett und ein angenehmes Arbeitsverhältnis. Weil viel zu tun war hatte ich nicht den Eindruck dass es hektisch war. Das schöne an dem Tag war dass ich obwohl viel zu tun war die Arbeitslast bewältigen kann ohne dass ich das Gefühl gehabt hätte aufgeben zu müssen.  Das Thema mit meinem Auto hat mich den ganzen Tag über beschäftigt weil ich befürchte bzw weil ich nicht weiß was kaputt ist und was repariert werden muss "
+    },
+    {
+      "id": "jd_1794406987386",
+      "monthId": "jm1",
+      "date": "2026-11-11",
+      "title": "Tagesprotokoll & Notizen",
+      "emojis": [
+        "📅",
+        "😐",
+        "😄"
+      ],
+      "text": "- Telefondienst \n- Vorbereitung Auftragskalkulation fertig stellen \n"
+    },
+    {
+      "id": "jd_1794407252879",
+      "monthId": "jm1",
+      "date": "2026-11-11",
+      "title": "Wie habe ich mich gefühlt",
+      "emojis": [
+        "😄",
+        "😐"
+      ],
+      "text": "Gut. Viel weniger stressig als gestern. Auch konnte ich das Leihauto von BTZ laden.\nRoutine fehlt noch "
+    },
+    {
+      "id": "jd_1794461951442",
       "monthId": "jm1",
       "date": "2026-11-12",
       "title": "Tagesprotokoll & Notizen",
@@ -240,5 +97,141 @@
       "text": ""
     }
   ],
-  "versions": []
+  "versions": [
+    {
+      "activeMode": "journal",
+      "projectName": "Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)",
+      "headerPhase": "Phase 1: Vorbereitung",
+      "headerDocBadge": "Kick-off-Handout & Roadmap",
+      "headerSubtitle": "Dieses Leitdokument dient als strukturierter Fahrplan zur Auftragsklärung und Prozessgestaltung. Es enthält die strategischen Projektmeilensteine sowie zentrale Leitfragen für die Inbetriebnahme.",
+      "footerLeft": "Projekt-Kompass Handout © 2026",
+      "footerRight": "„Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“",
+      "milestones": [],
+      "customQuestions": [],
+      "answers": {},
+      "journalHeader": {
+        "title": "Projekt- & Tagesjournal (Eurodeco Wallsystem GmbH)",
+        "phase": "Laufendes Journal",
+        "docBadge": "Kalender-Journal & Tagesprotokoll",
+        "subtitle": "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und täglichen Aufgaben auf Kalendertagbasis."
+      },
+      "journalFooter": {
+        "left": "Kalender-Journal & Tagesdokumentation © 2026",
+        "right": "„Tag für Tag strukturiert dokumentiert – Fortschritt sichtbar machen.“"
+      },
+      "journalMonths": [
+        {
+          "id": "jm1",
+          "title": "November 2026",
+          "description": "Praktikumsstart bei Eurodeco Wallsystem GmbH",
+          "color": "indigo"
+        }
+      ],
+      "journalDays": [
+        {
+          "id": "jd2",
+          "monthId": "jm1",
+          "date": "2026-11-09",
+          "title": "Erster Tag bei Eurodeco Wallsystem GmbH",
+          "emojis": [
+            "😐"
+          ],
+          "text": "Ankunft 7.55UHR\n- Telefondienst\n- Aufträge prüfen (Stückliste und Palletteninhalt)\n-  Auftragsbegleitscheine angelegt und gedruckt (Auftragsbeschreibung und Stückliste)"
+        }
+      ],
+      "id": "v_1794225279195",
+      "dateLabel": "9.11.2026, 12:54:39",
+      "versionNum": 1
+    },
+    {
+      "activeMode": "journal",
+      "projectName": "Projekt-Kompass: Projektstart bis Abschluss",
+      "headerPhase": "Phase 1: Vorbereitung",
+      "headerDocBadge": "Kick-off-Handout & Roadmap",
+      "headerSubtitle": "Dieses Leitdokument dient als strukturierter Fahrplan zur Auftragsklärung und Prozessgestaltung. Es enthält die strategischen Projektmeilensteine sowie zentrale Leitfragen für die Inbetriebnahme.",
+      "footerLeft": "Projekt-Kompass Handout © 2026",
+      "footerRight": "„Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“",
+      "milestones": [],
+      "customQuestions": [],
+      "answers": {},
+      "journalHeader": {
+        "title": "Projekt- & Tagesjournal (Eurodeco Wallsystem GmbH)",
+        "phase": "Laufendes Journal",
+        "docBadge": "Kalender-Journal & Tagesprotokoll",
+        "subtitle": "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und täglichen Aufgaben auf Kalendertagbasis."
+      },
+      "journalFooter": {
+        "left": "Kalender-Journal & Tagesdokumentation © 2026",
+        "right": "„Tag für Tag strukturiert dokumentiert – Fortschritt sichtbar machen.“"
+      },
+      "journalMonths": [
+        {
+          "id": "jm1",
+          "title": "November 2026",
+          "description": "Praktikumsstart bei Eurodeco Wallsystem GmbH",
+          "color": "indigo"
+        }
+      ],
+      "journalDays": [
+        {
+          "id": "jd2",
+          "monthId": "jm1",
+          "date": "2026-11-09",
+          "title": "Erster Tag bei Eurodeco Wallsystem GmbH",
+          "emojis": [
+            "😐"
+          ],
+          "text": "Ankunft 7.55UHR\n- Telefondienst\n- Aufträge prüfen (Stückliste und Palletteninhalt)\n-  Auftragsbegleitscheine angelegt und gedruckt (Auftragsbeschreibung und Stückliste)"
+        }
+      ],
+      "id": "v_1794225674496",
+      "dateLabel": "9.11.2026, 13:01:14",
+      "versionNum": 2
+    },
+    {
+      "activeMode": "journal",
+      "projectName": "Projekt-Kompass: Projektstart bis Abschluss",
+      "headerPhase": "Phase 1: Vorbereitung",
+      "headerDocBadge": "Kick-off-Handout & Roadmap",
+      "headerSubtitle": "Dieses Leitdokument dient als strukturierter Fahrplan zur Auftragsklärung und Prozessgestaltung. Es enthält die strategischen Projektmeilensteine sowie zentrale Leitfragen für die Inbetriebnahme.",
+      "footerLeft": "Projekt-Kompass Handout © 2026",
+      "footerRight": "„Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“",
+      "milestones": [],
+      "customQuestions": [],
+      "answers": {},
+      "journalHeader": {
+        "title": "Projekt- & Tagesjournal (Eurodeco Wallsystem GmbH)",
+        "phase": "Laufendes Journal",
+        "docBadge": "Kalender-Journal & Tagesprotokoll",
+        "subtitle": "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und täglichen Aufgaben auf Kalendertagbasis."
+      },
+      "journalFooter": {
+        "left": "Kalender-Journal & Tagesdokumentation © 2026",
+        "right": "„Tag für Tag strukturiert dokumentiert – Fortschritt sichtbar machen.“"
+      },
+      "journalMonths": [
+        {
+          "id": "jm1",
+          "title": "November 2026",
+          "description": "Praktikumsstart bei Eurodeco Wallsystem GmbH",
+          "color": "indigo"
+        }
+      ],
+      "journalDays": [
+        {
+          "id": "jd2",
+          "monthId": "jm1",
+          "date": "2026-11-09",
+          "title": "Erster Tag bei Eurodeco Wallsystem GmbH",
+          "emojis": [
+            "😐"
+          ],
+          "text": "Ankunft 7.55UHR\n- Telefondienst\n- Aufträge prüfen (Stückliste und Palletteninhalt)\n-  Auftragsbegleitscheine angelegt und gedruckt (Auftragsbeschreibung und Stückliste)"
+        }
+      ],
+      "id": "v_1794228905583",
+      "dateLabel": "9.11.2026, 13:55:05",
+      "versionNum": 3
+    }
+  ]
 }
