@@ -92,9 +92,12 @@
       "date": "2026-11-12",
       "title": "Tagesprotokoll & Notizen",
       "emojis": [
-        "📅"
+        "📅",
+        "😄",
+        "😐",
+        "✅"
       ],
-      "text": ""
+      "text": "Test"
     }
   ],
   "versions": [
