@@ -1,0 +1,244 @@
+{
+  "activeMode": "journal",
+  "projectName": "Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)",
+  "headerPhase": "Phase 1: Vorbereitung",
+  "headerDocBadge": "Kick-off-Handout & Roadmap",
+  "headerSubtitle": "Dieses Leitdokument dient als strukturierter Fahrplan zur Auftragsklärung und Prozessgestaltung. Es enthält die strategischen Projektmeilensteine sowie zentrale Leitfragen für die Inbetriebnahme.",
+  "footerLeft": "Projekt-Kompass Handout © 2026 Stollberg Arbeits Erleichterung",
+  "footerRight": "„Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“",
+  "milestones": [
+    {
+      "id": "m1",
+      "title": "Konzeptionierung & Datenerfassung",
+      "description": "Phase 1 planen und starten",
+      "color": "indigo"
+    },
+    {
+      "id": "m2",
+      "title": "Schnittstellen-Abgleich & Datentransfer",
+      "description": "Technischer Handshake",
+      "color": "emerald"
+    },
+    {
+      "id": "m3",
+      "title": "Datenkonsolidierung & Verarbeitung",
+      "description": "Phase 2 auf dem Zentral-PC",
+      "color": "blue"
+    },
+    {
+      "id": "m4",
+      "title": "Freigabe-Gateway & Zahllauf",
+      "description": "Letzte Meile zur Auszahlung",
+      "color": "rose"
+    }
+  ],
+  "customQuestions": [
+    {
+      "id": "q1_m1",
+      "milestoneId": "m1",
+      "text": "Welche exakten Datenfelder (z. B. Personalnummer, Projekt-ID) müssen zwingend in der App erfasst werden?",
+      "type": "open"
+    },
+    {
+      "id": "q2_m1",
+      "milestoneId": "m1",
+      "text": "Wie stellen wir sicher, dass die App auch offline im Funkloch absolut zuverlässig speichert?",
+      "type": "open"
+    },
+    {
+      "id": "q3_m1",
+      "milestoneId": "m1",
+      "text": "Welches Smartphone-Betriebssystem (Android, iOS oder beide via Cross-Platform) wird vorrangig genutzt?",
+      "type": "open"
+    },
+    {
+      "id": "q1_m2",
+      "milestoneId": "m2",
+      "text": "Wie authentifiziert sich die App sicher an der REST-API, um Missbrauch zu verhindern?",
+      "type": "open"
+    },
+    {
+      "id": "q2_m2",
+      "milestoneId": "m2",
+      "text": "Wie visualisieren wir Übertragungsfehler für den Mitarbeiter direkt auf dem Display?",
+      "type": "open"
+    },
+    {
+      "id": "q3_m2",
+      "milestoneId": "m2",
+      "text": "Wird nach erfolgreicher Übertragung die lokale Datei auf dem Handy verschoben oder direkt gelöscht?",
+      "type": "open"
+    },
+    {
+      "id": "q1_m3",
+      "milestoneId": "m3",
+      "text": "Wie werden fehlerhafte oder manipulierte CSV-Dateien bei der Einlesung automatisch aussortiert?",
+      "type": "open"
+    },
+    {
+      "id": "q2_m3",
+      "milestoneId": "m3",
+      "text": "Wie ordnen wir die erfassten Stundenlöhne den Personalnummern datenschutzkonform zu?",
+      "type": "open"
+    },
+    {
+      "id": "q3_m3",
+      "milestoneId": "m3",
+      "text": "Welches Backup-Verfahren nutzen wir für die eingelesenen Originaldaten auf dem Büro-PC?",
+      "type": "open"
+    },
+    {
+      "id": "q1_m4",
+      "milestoneId": "m4",
+      "text": "Welche Person trägt die finale Verantwortung für die Freigabe des Zahllaufs?",
+      "type": "open"
+    },
+    {
+      "id": "q2_m4",
+      "milestoneId": "m4",
+      "text": "Wie dokumentieren wir das manuelle Go-Signal revisionssicher für Wirtschaftsprüfer?",
+      "type": "open"
+    },
+    {
+      "id": "q3_m4",
+      "milestoneId": "m4",
+      "text": "In welchem Dateiformat übergeben wir die freigegebenen Lohnsummen an das Bankprogramm?",
+      "type": "open"
+    }
+  ],
+  "answers": {
+    "q1_m1": [
+      "",
+      "",
+      ""
+    ],
+    "q2_m1": [
+      "",
+      "",
+      ""
+    ],
+    "q3_m1": [
+      "",
+      "",
+      ""
+    ],
+    "q1_m2": [
+      "",
+      "",
+      ""
+    ],
+    "q2_m2": [
+      "",
+      "",
+      ""
+    ],
+    "q3_m2": [
+      "",
+      "",
+      ""
+    ],
+    "q1_m3": [
+      "",
+      "",
+      ""
+    ],
+    "q2_m3": [
+      "",
+      "",
+      ""
+    ],
+    "q3_m3": [
+      "",
+      "",
+      ""
+    ],
+    "q1_m4": [
+      "",
+      "",
+      ""
+    ],
+    "q2_m4": [
+      "",
+      "",
+      ""
+    ],
+    "q3_m4": [
+      "",
+      "",
+      ""
+    ]
+  },
+  "journalHeader": {
+    "title": "Projekt- & Tagesjournal (Hr. Stollberg & BTZ)",
+    "phase": "Laufendes Journal",
+    "docBadge": "Kalender-Journal & Tagesprotokoll",
+    "subtitle": "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und täglichen Aufgaben auf Kalendertagbasis."
+  },
+  "journalFooter": {
+    "left": "Kalender-Journal & Tagesdokumentation © 2026",
+    "right": "„Tag für Tag strukturiert dokumentiert – Fortschritt sichtbar machen.“"
+  },
+  "journalMonths": [
+    {
+      "id": "jm1",
+      "title": "November 2026",
+      "description": "Kick-off, Anforderungsanalyse & Grundkonzept",
+      "color": "indigo"
+    },
+    {
+      "id": "jm2",
+      "title": "Dezember 2026",
+      "description": "Schnittstellen-Design, Prototyp & Testlauf",
+      "color": "emerald"
+    }
+  ],
+  "journalDays": [
+    {
+      "id": "jd1",
+      "monthId": "jm1",
+      "date": "2026-11-06",
+      "title": "Kick-off & Abstimmung der Dokumentations-Struktur",
+      "emojis": [
+        "😄",
+        "🚀",
+        "✅"
+      ],
+      "text": "Kick-off-Unterlagen und Handout vorbereitet. Struktur für Meilensteine und das begleitende Tagesjournal festgelegt.\nNächster Schritt: Detailklärung der Pflichtfelder für die mobile Erfassung."
+    },
+    {
+      "id": "jd2",
+      "monthId": "jm1",
+      "date": "2026-11-09",
+      "title": "Technische Prüfung Offline-Speicherung & CSV-Format",
+      "emojis": [
+        "😐",
+        "🛠️",
+        "💻"
+      ],
+      "text": "Lokale Datenhaltung im Funkloch evaluiert. Datensätze werden zunächst im Gerätespeicher gepuffert und erst nach erfolgreichem Handshake als übertragen markiert."
+    },
+    {
+      "id": "jd3",
+      "monthId": "jm2",
+      "date": "2026-12-01",
+      "title": "Erster Testlauf Datenkonsolidierung am Zentral-PC",
+      "emojis": [
+        "😄",
+        "📊",
+        "🔍"
+      ],
+      "text": "Test-CSV-Dateien eingelesen und Plausibilitätsprüfung für Stundensätze und Personalnummern durchgespielt."
+    },
+    {
+      "id": "jd_1794474811215",
+      "monthId": "jm1",
+      "date": "2026-11-12",
+      "title": "Tagesprotokoll & Notizen",
+      "emojis": [
+        "📅"
+      ],
+      "text": ""
+    }
+  ],
+  "versions": []
+}
