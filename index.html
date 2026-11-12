@@ -12,7 +12,6 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Custom print styling to guarantee clean A4 layouts and hide UI-controls when printing */
         @media print {
             .no-print {
                 display: none !important;
@@ -43,7 +42,6 @@
                 print-color-adjust: exact;
             }
         }
-        /* Style for interactive dotted lines in Compass mode */
         input.writing-line {
             border-bottom: 1.5px dotted #94a3b8;
             transition: all 150ms ease;
@@ -56,7 +54,6 @@
         input.writing-line::placeholder {
             color: #cbd5e1;
         }
-        /* Auto-expanding journal textarea with subtle notebook appearance */
         textarea.journal-area {
             resize: none;
             overflow: hidden;
@@ -69,7 +66,6 @@
         textarea.journal-area:focus {
             background-color: #f8fafc;
         }
-        /* Drag and Drop transitional animations */
         .scale-102 {
             transform: scale(1.02);
         }
@@ -92,7 +88,6 @@
         </button>
     </div>
 
-    <!-- RIESIGER BLIND-TIPP-BUTTON FÜR DAS MIKROFON -->
     <div class="w-full max-w-md my-auto flex flex-col gap-4 py-6">
         <button type="button" id="quickOverlayStartMicBtn" onclick="startDictationFromOverlay()" class="w-full py-12 px-6 rounded-3xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 transition transform shadow-2xl border-4 border-emerald-400/40 flex flex-col items-center justify-center gap-3 text-center">
             <span class="text-6xl animate-bounce">🎤</span>
@@ -102,7 +97,6 @@
             </span>
         </button>
 
-        <!-- Sprachbefehl-Spickzettel -->
         <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-4 text-center">
             <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-300 block mb-2">
                 💡 Sprachbefehle für dein Tages-Smiley (einfach mitsprechen):
@@ -123,7 +117,6 @@
             </div>
         </div>
 
-        <!-- Alternative: Tastatur-Mikrofon nutzen -->
         <button type="button" onclick="focusTodayTextareaFromOverlay()" class="w-full py-3.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center justify-center gap-2">
             <span>⌨️</span> Direkt ins Textfeld springen (für Handytastatur-Mikrofon)
         </button>
@@ -134,12 +127,65 @@
     </p>
 </div>
 
+<!-- MODAL: GITHUB VERSIONS-SYNCHRONISATION (Wird nicht gedruckt) -->
+<div id="githubModal" class="no-print hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 max-w-lg w-full" onclick="event.stopPropagation()">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+            <div class="flex items-center gap-2">
+                <span class="text-xl">☁️</span>
+                <div>
+                    <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide">GitHub Versions-Synchronisation</h3>
+                    <p class="text-[11px] text-slate-500">Repository: <span class="font-mono text-indigo-600 font-semibold">alexsetzas-tech/tagesjournal_mit_projektkompass</span></p>
+                </div>
+            </div>
+            <button type="button" onclick="closeGitHubModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Token-Eingabe -->
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">GitHub Personal Access Token (PAT)</label>
+                <div class="flex gap-2">
+                    <input type="password" id="ghTokenInput" placeholder="github_pat_... oder ghp_..." class="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    <button type="button" onclick="saveGitHubToken()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition shrink-0">
+                        Speichern
+                    </button>
+                </div>
+                <p class="text-[10px] text-slate-400 mt-1">
+                    🔒 Der Token wird ausschließlich lokal in diesem Browser gespeichert und niemals übertragen.
+                </p>
+            </div>
+
+            <!-- Sync Aktionen -->
+            <div class="pt-2 border-t border-slate-100 flex flex-col gap-2.5">
+                <button type="button" id="ghSaveCommitBtn" onclick="saveStateToGitHub()" class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow transition flex items-center justify-center gap-2">
+                    <span>☁️</span> Jetzt auf GitHub sichern (Neuer Git-Commit)
+                </button>
+                <button type="button" id="ghLoadBtn" onclick="loadStateFromGitHub()" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs border border-slate-200 transition flex items-center justify-center gap-2">
+                    <span>📥</span> Neuesten Stand von GitHub laden
+                </button>
+            </div>
+
+            <!-- Sync-Status Info -->
+            <div id="ghSyncStatusBox" class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-[11px] text-slate-600 flex items-center justify-between">
+                <span>Status: <strong id="ghSyncStatusLabel" class="text-slate-800">Noch kein Sync durchgeführt</strong></span>
+                <span id="ghSyncFileLink"></span>
+            </div>
+        </div>
+
+        <div class="flex justify-end mt-5 pt-3 border-t border-slate-100">
+            <button type="button" onclick="closeGitHubModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-4 py-2 rounded-lg transition">
+                Schließen
+            </button>
+        </div>
+    </div>
+</div>
+
 <!-- TOP HEADER & CONTROLS (Wird nicht gedruckt) -->
 <header class="no-print bg-slate-900 text-white py-4 px-6 shadow-md sticky top-0 z-40">
     <div class="max-w-6xl mx-auto flex flex-col gap-3">
-        <!-- Obere Zeile: Modus-Umschalter & Aktionen -->
         <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
-            <!-- SYSTEM-UMSCHALTER (Kompass vs. Kalender-Journal + Heute-Schnellstart) -->
+            <!-- Modus-Umschalter -->
             <div class="flex flex-wrap items-center gap-1.5 bg-slate-800 p-1 rounded-xl border border-slate-700 w-full sm:w-auto">
                 <button type="button" id="modeBtnCompass" onclick="switchAppMode('compass')" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-indigo-600 text-white shadow">
                     <span>🗺️</span> Projekt-Kompass
@@ -147,30 +193,30 @@
                 <button type="button" id="modeBtnJournal" onclick="switchAppMode('journal')" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300 hover:text-white">
                     <span>📅</span> Kalender-Journal
                 </button>
-                <button type="button" onclick="triggerTodayQuickStart(true)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition flex items-center justify-center gap-1 shadow" title="Legt automatisch den heutigen Tag an und öffnet das Mikrofon-Schnellstartfenster">
+                <button type="button" onclick="triggerTodayQuickStart(true)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition flex items-center justify-center gap-1 shadow" title="Legt den heutigen Tag an und öffnet das Mikrofon-Schnellstartfenster">
                     <span>⚡</span> Heute-Start
                 </button>
-                <button type="button" id="autoQuickStartToggleBtn" onclick="toggleMobileAutoQuickStart()" class="px-2.5 py-1.5 rounded-lg text-[11px] font-bold bg-slate-700 text-slate-300 hover:text-white transition flex items-center justify-center gap-1" title="Wenn aktiviert, öffnet sich beim Starten der App auf diesem Gerät immer sofort das Heute-Schnellstartfenster">
+                <button type="button" id="autoQuickStartToggleBtn" onclick="toggleMobileAutoQuickStart()" class="px-2.5 py-1.5 rounded-lg text-[11px] font-bold bg-slate-700 text-slate-300 hover:text-white transition flex items-center justify-center gap-1" title="Automatischer Start des Diktierfensters auf diesem Gerät">
                     📱 Autostart: AUS
                 </button>
             </div>
 
-            <!-- Werkzeuge & Sicherungen -->
+            <!-- Werkzeuge & Sicherungen inkl. GitHub-Sync -->
             <div class="flex flex-wrap items-center justify-center gap-2">
-                <div id="syncBadge" class="bg-indigo-600 text-indigo-100 text-[10px] font-bold uppercase px-2.5 py-1 rounded-md flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
-                    Lokaler Speicher (Aktiv)
-                </div>
+                <!-- GITHUB SYNC BUTTON -->
+                <button type="button" id="ghSyncHeaderBtn" onclick="openGitHubModal()" class="bg-indigo-600/90 hover:bg-indigo-500 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow transition flex items-center gap-1.5" title="Daten auf GitHub sichern oder von dort laden">
+                    <span>☁️</span> GitHub Sync
+                </button>
                 <select id="versionSelect" onchange="changeVersion(this.value)" class="bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                     <option value="current">Aktuelle Arbeitskopie</option>
                 </select>
-                <button type="button" onclick="createBackup()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">
+                <button type="button" onclick="createBackup()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition">
                     Sicherungskopie
                 </button>
-                <button type="button" onclick="exportBackupJSON()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition flex items-center gap-1" title="Daten als Datei sichern">
+                <button type="button" onclick="exportBackupJSON()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1" title="Daten als JSON herunterladen">
                     💾 Export
                 </button>
-                <label class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition cursor-pointer flex items-center gap-1" title="Sicherung einlesen">
+                <label class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-3 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1" title="JSON-Sicherung einlesen">
                     📂 Import
                     <input type="file" id="importFileInput" accept=".json" class="hidden" onchange="importBackupJSON(event)">
                 </label>
@@ -183,13 +229,13 @@
             </div>
         </div>
 
-        <!-- Untere Zeile: Aktueller Projekt-/Journal-Titel & Schnellzugriff auf Kopf-/Fußzeile -->
+        <!-- Untere Leiste -->
         <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 border-t border-slate-800/80">
             <div class="flex items-center gap-3">
                 <span id="topPhaseBadge" class="bg-indigo-600 text-indigo-100 text-[10px] font-bold uppercase px-2.5 py-1 rounded-md tracking-wider">Phase 1: Vorbereitung</span>
                 <div class="flex items-center gap-2">
                     <h1 id="projectTitleDisplay" class="text-base sm:text-lg font-bold tracking-tight">Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)</h1>
-                    <button type="button" onclick="openHeaderModal()" class="text-slate-400 hover:text-white transition p-1 rounded hover:bg-slate-800" title="Kopfzeile ändern & Vorschläge abrufen">
+                    <button type="button" onclick="openHeaderModal()" class="text-slate-400 hover:text-white transition p-1 rounded hover:bg-slate-800" title="Kopfzeile ändern">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                         </svg>
@@ -208,7 +254,7 @@
     </div>
 </header>
 
-<!-- MODAL 1: KOPFZEILE ÄNDERN & AUTOMATISCHE VORSCHLÄGE (Wird nicht gedruckt) -->
+<!-- MODAL 1: KOPFZEILE ÄNDERN -->
 <div id="headerModal" class="no-print hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
@@ -216,48 +262,45 @@
                 <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide flex items-center gap-2">
                     <span>✨</span> Kopfzeile anpassen (inkl. Themen-Vorschläge)
                 </h3>
-                <p class="text-[11px] text-slate-500 mt-0.5">Klicke auf einen der dynamischen Vorschläge, um ihn direkt zu übernehmen, oder tippe/diktiere deinen eigenen Text.</p>
+                <p class="text-[11px] text-slate-500 mt-0.5">Klicke auf einen der dynamischen Vorschläge oder tippe/diktiere deinen eigenen Text.</p>
             </div>
             <button type="button" onclick="closeHeaderModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
         </div>
 
         <div class="space-y-5">
-            <!-- 1. Haupttitel -->
             <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Haupttitel (Projekt- oder Journalname)</label>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Haupttitel</label>
                 <div class="flex gap-2">
                     <input type="text" id="editHeaderTitle" class="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     <button type="button" id="micBtn_editHeaderTitle" onclick="toggleInputDictation('editHeaderTitle')" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition shrink-0" title="Titel per Mikrofon diktieren">🎤</button>
                 </div>
                 <div class="mt-2">
-                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider block mb-1">💡 Automatische Vorschläge (aus deinen Themen):</span>
+                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider block mb-1">💡 Automatische Vorschläge:</span>
                     <div id="headerTitleSuggestions" class="flex flex-wrap gap-1.5"></div>
                 </div>
             </div>
 
-            <!-- 2. Phasen-Badge & Dokumenttyp-Badge -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Phasen-Badge (Oben links)</label>
+                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Phasen-Badge</label>
                     <input type="text" id="editHeaderPhase" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     <div id="headerPhaseSuggestions" class="flex flex-wrap gap-1 mt-1.5"></div>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Dokumenttyp-Badge (Rechts im Kopf)</label>
+                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Dokumenttyp-Badge</label>
                     <input type="text" id="editHeaderDocBadge" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     <div id="headerDocBadgeSuggestions" class="flex flex-wrap gap-1 mt-1.5"></div>
                 </div>
             </div>
 
-            <!-- 3. Leittext / Beschreibung unter der Überschrift -->
             <div>
                 <div class="flex items-center justify-between mb-1">
-                    <label class="block text-[11px] font-bold text-slate-700 uppercase">Leittext / Zusammenfassung unter dem Titel</label>
+                    <label class="block text-[11px] font-bold text-slate-700 uppercase">Leittext unter dem Titel</label>
                     <button type="button" id="micBtn_editHeaderSubtitle" onclick="toggleInputDictation('editHeaderSubtitle')" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-300 px-2.5 py-0.5 rounded text-[11px] font-bold transition">🎤 Diktieren</button>
                 </div>
                 <textarea id="editHeaderSubtitle" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
                 <div class="mt-2">
-                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider block mb-1">💡 Vorgeschlagene Leittexte (basierend auf deinen Meilensteinen/Monaten):</span>
+                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider block mb-1">💡 Vorgeschlagene Leittexte:</span>
                     <div id="headerSubtitleSuggestions" class="space-y-1.5"></div>
                 </div>
             </div>
@@ -270,42 +313,40 @@
     </div>
 </div>
 
-<!-- MODAL 2: FUSSZEILE ÄNDERN & AUTOMATISCHE VORSCHLÄGE (Wird nicht gedruckt) -->
+<!-- MODAL 2: FUSSZEILE ÄNDERN -->
 <div id="footerModal" class="no-print hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
             <div>
                 <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wide flex items-center gap-2">
-                    <span>✨</span> Fußzeile anpassen (inkl. Vorschlags-Generator)
+                    <span>✨</span> Fußzeile anpassen
                 </h3>
-                <p class="text-[11px] text-slate-500 mt-0.5">Wähle einen passenden Vorschlag für die linke Dokument-Info und das rechte Leitmotto oder gib eigene Texte ein.</p>
+                <p class="text-[11px] text-slate-500 mt-0.5">Wähle einen passenden Vorschlag oder gib eigene Texte ein.</p>
             </div>
             <button type="button" onclick="closeFooterModal()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
         </div>
 
         <div class="space-y-5">
-            <!-- Fußzeile Links -->
             <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Fußzeile Links (Dokument-Info / Copyright / Stand)</label>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Fußzeile Links</label>
                 <div class="flex gap-2">
                     <input type="text" id="editFooterLeft" class="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     <button type="button" id="micBtn_editFooterLeft" onclick="toggleInputDictation('editFooterLeft')" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition shrink-0">🎤</button>
                 </div>
                 <div class="mt-2">
-                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider block mb-1">💡 Vorschläge für Fußzeile Links:</span>
+                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider block mb-1">💡 Vorschläge:</span>
                     <div id="footerLeftSuggestions" class="space-y-1.5"></div>
                 </div>
             </div>
 
-            <!-- Fußzeile Rechts -->
             <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Fußzeile Rechts (Leitsatz / Motto / Ziel-Fokus)</label>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Fußzeile Rechts (Leitsatz / Motto)</label>
                 <div class="flex gap-2">
                     <input type="text" id="editFooterRight" class="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs italic focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     <button type="button" id="micBtn_editFooterRight" onclick="toggleInputDictation('editFooterRight')" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition shrink-0">🎤</button>
                 </div>
                 <div class="mt-2">
-                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider block mb-1">💡 Vorschläge für Leitsatz / Motto (passend zu deinen Themen):</span>
+                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider block mb-1">💡 Vorschläge:</span>
                     <div id="footerRightSuggestions" class="space-y-1.5"></div>
                 </div>
             </div>
@@ -318,26 +359,26 @@
     </div>
 </div>
 
-<!-- MAIN HANDOUT WRAPPER (Optimiert für A4 Print) -->
+<!-- MAIN HANDOUT WRAPPER -->
 <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 print-page">
 
-    <!-- HISTORICAL READ-ONLY WARNING (No-print) -->
+    <!-- HISTORICAL READ-ONLY WARNING -->
     <div id="readonlyWarning" class="no-print hidden bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-6 flex items-center justify-between gap-4">
         <div class="flex items-center gap-2 text-amber-800 text-xs">
             <span>⚠️</span>
-            <span><strong>Historischer Stand (Schreibgeschützt):</strong> Du betrachtest ein archiviertes Backup. Änderungen sind in diesem Modus deaktiviert.</span>
+            <span><strong>Historischer Stand:</strong> Du betrachtest ein archiviertes Backup. Änderungen sind in diesem Modus deaktiviert.</span>
         </div>
         <button type="button" onclick="restoreSelectedVersion()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-4 py-2 rounded-lg transition shrink-0">
-            Diese Version als Arbeitskopie wiederherstellen
+            Diese Version wiederherstellen
         </button>
     </div>
 
-    <!-- MAIN HEADER IN REPORT (EDITIERBAR MIT VORSCHLÄGEN) -->
+    <!-- MAIN HEADER IN REPORT -->
     <div class="border-b-4 border-slate-900 pb-5 mb-8 text-center sm:text-left group relative">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
             <div class="flex items-center gap-2.5">
                 <h2 id="handoutProjectName" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)</h2>
-                <button type="button" onclick="openHeaderModal()" class="no-print text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-bold px-2.5 py-1 rounded-lg transition flex items-center gap-1 shrink-0" title="Kopfzeile bearbeiten & Vorschläge anzeigen">
+                <button type="button" onclick="openHeaderModal()" class="no-print text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-bold px-2.5 py-1 rounded-lg transition flex items-center gap-1 shrink-0" title="Kopfzeile bearbeiten">
                     ✏️ Kopf ändern
                 </button>
             </div>
@@ -350,33 +391,29 @@
         </p>
     </div>
 
-    <!-- DIE INTERAKTIVE LANDKARTE (MEILENSTEINE ODER MONATE) -->
+    <!-- DIE INTERAKTIVE LANDKARTE -->
     <section class="mb-10">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
             <h3 id="roadmapSectionTitle" class="font-bold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-2">
                 <span>🗺️</span> Die Projektlandkarte (Visuelle Meilensteine)
             </h3>
             <span class="no-print text-[10px] text-slate-400 font-medium italic">
-                (Tipp: Greife eine Karte und ziehe sie per Drag-and-Drop an die gewünschte Stelle, um die Reihenfolge anzupassen)
+                (Tipp: Greife eine Karte und ziehe sie per Drag-and-Drop an die gewünschte Stelle)
             </span>
         </div>
-        <div id="roadmapMapContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- Dynamisch generiert -->
-        </div>
+        <div id="roadmapMapContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
     </section>
 
-    <!-- FILTER- & SUCHLEISTE FÜR DAS KALENDER-JOURNAL (Nur im Journal-Modus sichtbar, wird nicht gedruckt) -->
+    <!-- FILTER- & SUCHLEISTE -->
     <section id="journalFilterSection" class="no-print hidden bg-indigo-950/5 border border-indigo-200/80 rounded-xl p-4 mb-8">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <!-- Volltextsuche -->
             <div class="flex-1">
-                <label class="block text-[10px] font-bold text-indigo-900 uppercase mb-1">🔍 Kalender-Journal durchsuchen (Stichwort oder Datum)</label>
+                <label class="block text-[10px] font-bold text-indigo-900 uppercase mb-1">🔍 Kalender-Journal durchsuchen</label>
                 <div class="relative flex items-center">
                     <input type="text" id="journalSearchInput" oninput="setJournalSearchQuery(this.value)" placeholder="z. B. CSV, Schnittstelle, Kick-off..." class="w-full bg-white border border-slate-300 rounded-lg pl-3 pr-8 py-1.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    <button type="button" id="micBtn_journalSearchInput" onclick="toggleInputDictation('journalSearchInput', true)" class="absolute right-2 text-slate-400 hover:text-indigo-600 text-xs" title="Suchbegriff per Sprache eingeben">🎤</button>
+                    <button type="button" id="micBtn_journalSearchInput" onclick="toggleInputDictation('journalSearchInput', true)" class="absolute right-2 text-slate-400 hover:text-indigo-600 text-xs" title="Suchbegriff diktieren">🎤</button>
                 </div>
             </div>
-            <!-- Emoji-Schnellfilter -->
             <div class="flex-1">
                 <div class="flex items-center justify-between mb-1">
                     <label class="block text-[10px] font-bold text-indigo-900 uppercase">😊 Nach Tages-Emoji filtern (inkl. Sprach-Smileys 😄 😐 ☹️)</label>
@@ -384,9 +421,7 @@
                         Filter zurücksetzen
                     </button>
                 </div>
-                <div id="journalEmojiFilterContainer" class="flex flex-wrap gap-1.5">
-                    <!-- Dynamisch generierte Emoji-Filter-Pills -->
-                </div>
+                <div id="journalEmojiFilterContainer" class="flex flex-wrap gap-1.5"></div>
             </div>
         </div>
         <div id="activeFilterSummary" class="hidden mt-3 pt-2 border-t border-indigo-200/60 text-[11px] font-semibold text-indigo-800 flex items-center justify-between">
@@ -394,19 +429,15 @@
         </div>
     </section>
 
-    <!-- NEUEN MEILENSTEIN BZW. MONAT ERSTELLEN (Wird nicht gedruckt) -->
-    <section id="creatorBoxSection" class="no-print bg-white rounded-xl shadow-md border border-slate-200 p-6 mb-12">
-        <!-- Inhalt wird je nach aktivem Modus dynamisch befüllt -->
-    </section>
+    <!-- NEUEN MEILENSTEIN BZW. MONAT ERSTELLEN -->
+    <section id="creatorBoxSection" class="no-print bg-white rounded-xl shadow-md border border-slate-200 p-6 mb-12"></section>
 
-    <!-- DETAILS-CONTAINER (MEILENSTEINE MIT LEITFRAGEN ODER MONATE MIT KALENDERTAGEN) -->
+    <!-- DETAILS-CONTAINER -->
     <section class="space-y-12">
-        <div id="milestonesDetailsContainer" class="space-y-12">
-            <!-- Dynamisch generierte Detailkarten -->
-        </div>
+        <div id="milestonesDetailsContainer" class="space-y-12"></div>
     </section>
 
-    <!-- FOOTER INFO IN HARDCOPY (EDITIERBAR MIT VORSCHLÄGEN) -->
+    <!-- FOOTER -->
     <footer class="mt-16 pt-6 border-t border-slate-200 text-center text-[10px] text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-4 group relative">
         <span id="footerLeftDisplay" onclick="openFooterModal()" class="cursor-pointer hover:text-slate-700 transition">
             Projekt-Kompass Handout &copy; 2026 Stollberg Arbeits Erleichterung
@@ -421,74 +452,57 @@
         </div>
     </footer>
 
-    <!-- Toast container for background events -->
+    <!-- Toast container -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
 </main>
 
-<!-- CORE APPLICATION LOGIC (Direkter Sofort-Start ohne externe Lade-Blockaden) -->
+<!-- CORE APPLICATION LOGIC & GITHUB REST API SYNC -->
 <script>
-    // Sichere Cloud-Fallback-Funktion von Anfang an bereitstellen (verhindert jegliche Skript-Abbrüche)
-    window.saveStateToCloud = async function() {};
+    // GitHub Konfiguration
+    const GITHUB_REPO_OWNER = "alexsetzas-tech";
+    const GITHUB_REPO_NAME = "tagesjournal_mit_projektkompass";
+    const GITHUB_DATA_PATH = "data/journal_daten.json";
+    const GITHUB_BRANCH = "main";
+
+    // Sichere UTF-8 Unicode Base64 Kodierung für Emojis & Umlaute
+    function toBase64Unicode(str) {
+        const bytes = new TextEncoder().encode(str);
+        let binString = "";
+        for (let i = 0; i < bytes.length; i++) {
+            binString += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binString);
+    }
+
+    function fromBase64Unicode(base64) {
+        const binString = atob(base64.replace(/\s/g, ''));
+        const bytes = Uint8Array.from(binString, (m) => m.charCodeAt(0));
+        return new TextDecoder().decode(bytes);
+    }
 
     // Color Matrix
     const colorMatrix = {
-        indigo: {
-            border: 'border-indigo-200', bg: 'bg-indigo-50/70', text: 'text-indigo-800',
-            accent: 'bg-indigo-600', hover: 'hover:bg-indigo-700', accentText: 'text-indigo-600',
-            ring: 'focus:ring-indigo-500', badge: 'bg-indigo-100 text-indigo-800 border-indigo-200'
-        },
-        emerald: {
-            border: 'border-emerald-200', bg: 'bg-emerald-50/70', text: 'text-emerald-800',
-            accent: 'bg-emerald-600', hover: 'hover:bg-emerald-700', accentText: 'text-emerald-600',
-            ring: 'focus:ring-emerald-500', badge: 'bg-emerald-100 text-emerald-800 border-emerald-200'
-        },
-        blue: {
-            border: 'border-blue-200', bg: 'bg-blue-50/70', text: 'text-blue-800',
-            accent: 'bg-blue-600', hover: 'hover:bg-blue-700', accentText: 'text-blue-600',
-            ring: 'focus:ring-blue-500', badge: 'bg-blue-100 text-blue-800 border-blue-200'
-        },
-        rose: {
-            border: 'border-rose-200', bg: 'bg-rose-50/70', text: 'text-rose-800',
-            accent: 'bg-rose-600', hover: 'hover:bg-rose-700', accentText: 'text-rose-600',
-            ring: 'focus:ring-rose-500', badge: 'bg-rose-100 text-rose-800 border-rose-200'
-        },
-        amber: {
-            border: 'border-amber-200', bg: 'bg-amber-50/70', text: 'text-amber-800',
-            accent: 'bg-amber-600', hover: 'hover:bg-amber-700', accentText: 'text-amber-600',
-            ring: 'focus:ring-amber-500', badge: 'bg-amber-100 text-amber-800 border-amber-200'
-        },
-        violet: {
-            border: 'border-violet-200', bg: 'bg-violet-50/70', text: 'text-violet-800',
-            accent: 'bg-violet-600', hover: 'hover:bg-violet-700', accentText: 'text-violet-600',
-            ring: 'focus:ring-violet-500', badge: 'bg-violet-100 text-violet-800 border-violet-200'
-        },
-        teal: {
-            border: 'border-teal-200', bg: 'bg-teal-50/70', text: 'text-teal-800',
-            accent: 'bg-teal-600', hover: 'hover:bg-teal-700', accentText: 'text-teal-600',
-            ring: 'focus:ring-teal-500', badge: 'bg-teal-100 text-teal-800 border-teal-200'
-        },
-        orange: {
-            border: 'border-orange-200', bg: 'bg-orange-50/70', text: 'text-orange-800',
-            accent: 'bg-orange-600', hover: 'hover:bg-orange-700', accentText: 'text-orange-600',
-            ring: 'focus:ring-orange-500', badge: 'bg-orange-100 text-orange-800 border-orange-200'
-        }
+        indigo: { border: 'border-indigo-200', bg: 'bg-indigo-50/70', text: 'text-indigo-800', accent: 'bg-indigo-600', hover: 'hover:bg-indigo-700', accentText: 'text-indigo-600', ring: 'focus:ring-indigo-500', badge: 'bg-indigo-100 text-indigo-800 border-indigo-200' },
+        emerald: { border: 'border-emerald-200', bg: 'bg-emerald-50/70', text: 'text-emerald-800', accent: 'bg-emerald-600', hover: 'hover:bg-emerald-700', accentText: 'text-emerald-600', ring: 'focus:ring-emerald-500', badge: 'bg-emerald-100 text-emerald-800 border-emerald-200' },
+        blue: { border: 'border-blue-200', bg: 'bg-blue-50/70', text: 'text-blue-800', accent: 'bg-blue-600', hover: 'hover:bg-blue-700', accentText: 'text-blue-600', ring: 'focus:ring-blue-500', badge: 'bg-blue-100 text-blue-800 border-blue-200' },
+        rose: { border: 'border-rose-200', bg: 'bg-rose-50/70', text: 'text-rose-800', accent: 'bg-rose-600', hover: 'hover:bg-rose-700', accentText: 'text-rose-600', ring: 'focus:ring-rose-500', badge: 'bg-rose-100 text-rose-800 border-rose-200' },
+        amber: { border: 'border-amber-200', bg: 'bg-amber-50/70', text: 'text-amber-800', accent: 'bg-amber-600', hover: 'hover:bg-amber-700', accentText: 'text-amber-600', ring: 'focus:ring-amber-500', badge: 'bg-amber-100 text-amber-800 border-amber-200' },
+        violet: { border: 'border-violet-200', bg: 'bg-violet-50/70', text: 'text-violet-800', accent: 'bg-violet-600', hover: 'hover:bg-violet-700', accentText: 'text-violet-600', ring: 'focus:ring-violet-500', badge: 'bg-violet-100 text-violet-800 border-violet-200' },
+        teal: { border: 'border-teal-200', bg: 'bg-teal-50/70', text: 'text-teal-800', accent: 'bg-teal-600', hover: 'hover:bg-teal-700', accentText: 'text-teal-600', ring: 'focus:ring-teal-500', badge: 'bg-teal-100 text-teal-800 border-teal-200' },
+        orange: { border: 'border-orange-200', bg: 'bg-orange-50/70', text: 'text-orange-800', accent: 'bg-orange-600', hover: 'hover:bg-orange-700', accentText: 'text-orange-600', ring: 'focus:ring-orange-500', badge: 'bg-orange-100 text-orange-800 border-orange-200' }
     };
 
-    // Kategorisierte Emojis für das fliegende Tages-Menü im Kalender-Journal
     const emojiCategories = [
-        { label: "Tages-Stimmung (auch per Sprachbefehl)", emojis: ["😄", "😐", "☹️"] },
+        { label: "Tages-Stimmung", emojis: ["😄", "😐", "☹️"] },
         { label: "Status & Erfolg", emojis: ["✅", "🚀", "🎯", "⭐", "🔥", "🏆", "💯"] },
         { label: "Arbeit & Technik", emojis: ["🛠️", "💻", "📊", "📝", "🔍", "⚙️", "🔗"] },
         { label: "Team & Fokus", emojis: ["🤝", "💬", "📞", "💡", "🧠", "📌", "📅"] },
-        { label: "Hinweis & Sonstiges", emojis: ["😊", "☕", "⚡", "⚠️", "🚧", "⏳", "🎉"] }
+        { label: "Hinweis", emojis: ["😊", "☕", "⚡", "⚠️", "🚧", "⏳", "🎉"] }
     ];
 
-    // Standard-Basiszustand (beinhaltet BEIDE Protokoll-Systeme)
     const defaultAppState = {
-        activeMode: "compass", // 'compass' oder 'journal'
-        
-        // MODUS 1: PROJEKT-KOMPASS (Meilensteine)
+        activeMode: "compass",
         projectName: "Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)",
         headerPhase: "Phase 1: Vorbereitung",
         headerDocBadge: "Kick-off-Handout & Roadmap",
@@ -505,27 +519,22 @@
             { id: "q1_m1", milestoneId: "m1", text: "Welche exakten Datenfelder (z. B. Personalnummer, Projekt-ID) müssen zwingend in der App erfasst werden?", type: "open" },
             { id: "q2_m1", milestoneId: "m1", text: "Wie stellen wir sicher, dass die App auch offline im Funkloch absolut zuverlässig speichert?", type: "open" },
             { id: "q3_m1", milestoneId: "m1", text: "Welches Smartphone-Betriebssystem (Android, iOS oder beide via Cross-Platform) wird vorrangig genutzt?", type: "open" },
-            
             { id: "q1_m2", milestoneId: "m2", text: "Wie authentifiziert sich die App sicher an der REST-API, um Missbrauch zu verhindern?", type: "open" },
             { id: "q2_m2", milestoneId: "m2", text: "Wie visualisieren wir Übertragungsfehler für den Mitarbeiter direkt auf dem Display?", type: "open" },
             { id: "q3_m2", milestoneId: "m2", text: "Wird nach erfolgreicher Übertragung die lokale Datei auf dem Handy verschoben oder direkt gelöscht?", type: "open" },
-            
             { id: "q1_m3", milestoneId: "m3", text: "Wie werden fehlerhafte oder manipulierte CSV-Dateien bei der Einlesung automatisch aussortiert?", type: "open" },
             { id: "q2_m3", milestoneId: "m3", text: "Wie ordnen wir die erfassten Stundenlöhne den Personalnummern datenschutzkonform zu?", type: "open" },
             { id: "q3_m3", milestoneId: "m3", text: "Welches Backup-Verfahren nutzen wir für die eingelesenen Originaldaten auf dem Büro-PC?", type: "open" },
-            
             { id: "q1_m4", milestoneId: "m4", text: "Welche Person trägt die finale Verantwortung für die Freigabe des Zahllaufs?", type: "open" },
             { id: "q2_m4", milestoneId: "m4", text: "Wie dokumentieren wir das manuelle Go-Signal revisionssicher für Wirtschaftsprüfer?", type: "open" },
             { id: "q3_m4", milestoneId: "m4", text: "In welchem Dateiformat übergeben wir die freigegebenen Lohnsummen an das Bankprogramm?", type: "open" }
         ],
         answers: {},
-
-        // MODUS 2: KALENDER-JOURNAL (Tagesprotokoll)
         journalHeader: {
             title: "Projekt- & Tagesjournal (Hr. Stollberg & BTZ)",
             phase: "Laufendes Journal",
             docBadge: "Kalender-Journal & Tagesprotokoll",
-            subtitle: "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und täglichen Aufgaben auf Kalendertagbasis."
+            subtitle: "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und Aufgaben auf Kalendertagbasis."
         },
         journalFooter: {
             left: "Kalender-Journal & Tagesdokumentation © 2026",
@@ -536,36 +545,13 @@
             { id: "jm2", title: "Dezember 2026", description: "Schnittstellen-Design, Prototyp & Testlauf", color: "emerald" }
         ],
         journalDays: [
-            {
-                id: "jd1",
-                monthId: "jm1",
-                date: "2026-11-06",
-                title: "Kick-off & Abstimmung der Dokumentations-Struktur",
-                emojis: ["😄", "🚀", "✅"],
-                text: "Kick-off-Unterlagen und Handout vorbereitet. Struktur für Meilensteine und das begleitende Tagesjournal festgelegt.\nNächster Schritt: Detailklärung der Pflichtfelder für die mobile Erfassung."
-            },
-            {
-                id: "jd2",
-                monthId: "jm1",
-                date: "2026-11-09",
-                title: "Technische Prüfung Offline-Speicherung & CSV-Format",
-                emojis: ["😐", "🛠️", "💻"],
-                text: "Lokale Datenhaltung im Funkloch evaluiert. Datensätze werden zunächst im Gerätespeicher gepuffert und erst nach erfolgreichem Handshake als übertragen markiert."
-            },
-            {
-                id: "jd3",
-                monthId: "jm2",
-                date: "2026-12-01",
-                title: "Erster Testlauf Datenkonsolidierung am Zentral-PC",
-                emojis: ["😄", "📊", "🔍"],
-                text: "Test-CSV-Dateien eingelesen und Plausibilitätsprüfung für Stundensätze und Personalnummern durchgespielt."
-            }
+            { id: "jd1", monthId: "jm1", date: "2026-11-06", title: "Kick-off & Abstimmung der Dokumentations-Struktur", emojis: ["😄", "🚀", "✅"], text: "Kick-off-Unterlagen und Handout vorbereitet. Struktur für Meilensteine und das begleitende Tagesjournal festgelegt.\nNächster Schritt: Detailklärung der Pflichtfelder für die mobile Erfassung." },
+            { id: "jd2", monthId: "jm1", date: "2026-11-09", title: "Technische Prüfung Offline-Speicherung & CSV-Format", emojis: ["😐", "🛠️", "💻"], text: "Lokale Datenhaltung im Funkloch evaluiert. Datensätze werden zunächst im Gerätespeicher gepuffert und erst nach erfolgreichem Handshake als übertragen markiert." },
+            { id: "jd3", monthId: "jm2", date: "2026-12-01", title: "Erster Testlauf Datenkonsolidierung am Zentral-PC", emojis: ["😄", "📊", "🔍"], text: "Test-CSV-Dateien eingelesen und Plausibilitätsprüfung für Stundensätze und Personalnummern durchgespielt." }
         ],
-
         versions: []
     };
 
-    // Global Active Variables
     let appState = JSON.parse(JSON.stringify(defaultAppState));
     let loadedVersionId = "current";
     let editingMilestoneId = null;
@@ -576,28 +562,21 @@
     let confirmResetState = false;
     let itemDeleteConfirmations = {};
     let dragSourceId = null;
-
-    // Filter-Variablen für das Kalender-Journal
     let activeEmojiFilter = null;
     let journalSearchQuery = "";
-
-    // Sprachdiktat & Heute-Schnellstart Variablen
     let recognitionInstance = null;
     let activeDictationTarget = null;
     let shouldKeepListening = false;
     let quickStartDayId = null;
 
-    // Toast Helper
     function showToast(message, type = 'info') {
         const container = document.getElementById('toast-container');
         if (!container) return;
         const toast = document.createElement('div');
         toast.className = `p-4 rounded-lg shadow-lg text-xs font-semibold flex items-center justify-between gap-4 transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-auto max-w-sm `;
-        
         if (type === 'success') toast.className += 'bg-emerald-600 text-white border-l-4 border-emerald-950';
         else if (type === 'error') toast.className += 'bg-rose-600 text-white border-l-4 border-rose-950';
         else toast.className += 'bg-slate-800 text-white border-l-4 border-slate-500';
-
         toast.innerHTML = `<span>${message}</span><button type="button" onclick="this.parentElement.remove()" class="text-white hover:text-slate-200 font-bold ml-2">✕</button>`;
         container.appendChild(toast);
         setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
@@ -609,7 +588,225 @@
     window.showToast = showToast;
 
     // =========================================================================
-    // SPRACHDIKTAT & 3 SMILEY-SPRACHBEFEHLE („Guter/Normaler/Schlechter Tag“)
+    // GITHUB REST API IMPLEMENTIERUNG
+    // =========================================================================
+    function getStoredGitHubToken() {
+        return localStorage.getItem('gh_sync_token') || "";
+    }
+
+    window.openGitHubModal = function() {
+        const modal = document.getElementById('githubModal');
+        const tokenInput = document.getElementById('ghTokenInput');
+        const token = getStoredGitHubToken();
+        if (tokenInput) tokenInput.value = token;
+        updateGitHubModalStatus();
+        if (modal) modal.classList.remove('hidden');
+    };
+
+    window.closeGitHubModal = function() {
+        const modal = document.getElementById('githubModal');
+        if (modal) modal.classList.add('hidden');
+    };
+
+    window.saveGitHubToken = function() {
+        const tokenInput = document.getElementById('ghTokenInput');
+        const val = tokenInput ? tokenInput.value.trim() : "";
+        if (!val) {
+            localStorage.removeItem('gh_sync_token');
+            showToast("GitHub-Token entfernt.", "info");
+        } else {
+            localStorage.setItem('gh_sync_token', val);
+            showToast("GitHub-Token erfolgreich gespeichert!", "success");
+        }
+        updateGitHubModalStatus();
+        updateGitHubHeaderBtn();
+    };
+
+    function updateGitHubModalStatus() {
+        const label = document.getElementById('ghSyncStatusLabel');
+        const linkSpan = document.getElementById('ghSyncFileLink');
+        const lastSync = localStorage.getItem('gh_last_sync_time');
+        const lastCommit = localStorage.getItem('gh_last_commit_sha');
+        const token = getStoredGitHubToken();
+
+        if (!token) {
+            if (label) label.innerHTML = '<span class="text-amber-600 font-semibold">Kein Token hinterlegt</span>';
+            if (linkSpan) linkSpan.innerHTML = '';
+            return;
+        }
+
+        if (lastSync && label) {
+            label.innerHTML = `<span class="text-emerald-700 font-semibold">Zuletzt gesichert: ${lastSync}</span>`;
+            if (linkSpan) {
+                linkSpan.innerHTML = `<a href="https://github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/commits/${GITHUB_BRANCH}/${GITHUB_DATA_PATH}" target="_blank" class="text-indigo-600 underline font-semibold">Commits auf GitHub anzeigen ↗</a>`;
+            }
+        } else if (label) {
+            label.innerHTML = '<span class="text-slate-600">Bereit für ersten Sync</span>';
+            if (linkSpan) linkSpan.innerHTML = '';
+        }
+    }
+
+    function updateGitHubHeaderBtn() {
+        const btn = document.getElementById('ghSyncHeaderBtn');
+        const token = getStoredGitHubToken();
+        if (!btn) return;
+        if (token) {
+            btn.className = "bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow transition flex items-center gap-1.5";
+            btn.innerHTML = `<span>☁️</span> GitHub Sync`;
+        } else {
+            btn.className = "bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1.5";
+            btn.innerHTML = `<span>☁️</span> GitHub (Setup)`;
+        }
+    }
+
+    // Speichern auf GitHub (PUT /contents/...)
+    window.saveStateToGitHub = async function() {
+        const token = getStoredGitHubToken();
+        if (!token) {
+            showToast("Bitte trage zuerst dein GitHub-Token ein.", "error");
+            openGitHubModal();
+            return;
+        }
+
+        const saveBtn = document.getElementById('ghSaveCommitBtn');
+        const origText = saveBtn ? saveBtn.innerHTML : "";
+        if (saveBtn) {
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = `<span>⏳</span> Übertrage Commit an GitHub...`;
+        }
+
+        try {
+            const apiUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${GITHUB_DATA_PATH}`;
+            
+            // 1. Prüfen, ob die Datei existiert, um deren SHA zu ermitteln
+            let existingSha = null;
+            const getRes = await fetch(apiUrl, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Accept": "application/vnd.github+json",
+                    "X-GitHub-Api-Version": "2022-11-28"
+                }
+            });
+
+            if (getRes.ok) {
+                const fileInfo = await getRes.json();
+                existingSha = fileInfo.sha;
+            } else if (getRes.status !== 404 && getRes.status !== 401) {
+                throw new Error(`GitHub-Fehler beim Prüfen: HTTP ${getRes.status}`);
+            } else if (getRes.status === 401) {
+                throw new Error("Token ungültig oder abgelaufen (401 Unauthorized).");
+            }
+
+            // 2. Datei-Inhalt UTF-8 Base64 kodieren
+            const jsonString = JSON.stringify(appState, null, 2);
+            const contentBase64 = toBase64Unicode(jsonString);
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('de-DE') + ", " + now.toLocaleTimeString('de-DE');
+            const commitMessage = `Sicherungskopie: ${dateStr} (${appState.activeMode === 'compass' ? 'Projekt-Kompass' : 'Kalender-Journal'})`;
+
+            const payload = {
+                message: commitMessage,
+                content: contentBase64,
+                branch: GITHUB_BRANCH
+            };
+            if (existingSha) {
+                payload.sha = existingSha;
+            }
+
+            // 3. Datei per PUT schreiben
+            const putRes = await fetch(apiUrl, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Accept": "application/vnd.github+json",
+                    "Content-Type": "application/json",
+                    "X-GitHub-Api-Version": "2022-11-28"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!putRes.ok) {
+                const errData = await putRes.json().catch(() => ({}));
+                throw new Error(errData.message || `HTTP ${putRes.status}`);
+            }
+
+            const putResult = await putRes.json();
+            const commitSha = putResult.commit ? putResult.commit.sha.substring(0, 7) : "";
+            localStorage.setItem('gh_last_sync_time', dateStr);
+            localStorage.setItem('gh_last_commit_sha', commitSha);
+
+            showToast(`Erfolgreich auf GitHub gesichert! Commit: ${commitSha}`, "success");
+            updateGitHubModalStatus();
+        } catch (err) {
+            console.error("GitHub Sync Fehler:", err);
+            showToast(`GitHub-Sync fehlgeschlagen: ${err.message}`, "error");
+        } finally {
+            if (saveBtn) {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = origText;
+            }
+        }
+    };
+
+    // Laden von GitHub (GET /contents/...)
+    window.loadStateFromGitHub = async function() {
+        const token = getStoredGitHubToken();
+        if (!token) {
+            showToast("Bitte trage zuerst dein GitHub-Token ein.", "error");
+            openGitHubModal();
+            return;
+        }
+
+        if (!confirm("Möchtest du den aktuellen lokalen Stand mit der Sicherung von GitHub überschreiben?")) {
+            return;
+        }
+
+        const loadBtn = document.getElementById('ghLoadBtn');
+        const origText = loadBtn ? loadBtn.innerHTML : "";
+        if (loadBtn) {
+            loadBtn.disabled = true;
+            loadBtn.innerHTML = `<span>⏳</span> Lade Daten von GitHub...`;
+        }
+
+        try {
+            const apiUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${GITHUB_DATA_PATH}?ref=${GITHUB_BRANCH}`;
+            const res = await fetch(apiUrl, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Accept": "application/vnd.github+json",
+                    "X-GitHub-Api-Version": "2022-11-28"
+                }
+            });
+
+            if (!res.ok) {
+                if (res.status === 404) {
+                    throw new Error("Noch keine Sicherungsdatei 'data/journal_daten.json' auf GitHub vorhanden. Bitte zuerst einmal sichern!");
+                }
+                throw new Error(`HTTP ${res.status}`);
+            }
+
+            const fileData = await res.json();
+            const decodedJsonStr = fromBase64Unicode(fileData.content);
+            const parsed = JSON.parse(decodedJsonStr);
+
+            ensureStateIntegrity(parsed);
+            saveToLocalStorage();
+            syncStateToUI();
+            closeGitHubModal();
+            showToast("Neuester Stand erfolgreich von GitHub geladen!", "success");
+        } catch (err) {
+            console.error("GitHub Ladefehler:", err);
+            showToast(`Laden von GitHub fehlgeschlagen: ${err.message}`, "error");
+        } finally {
+            if (loadBtn) {
+                loadBtn.disabled = false;
+                loadBtn.innerHTML = origText;
+            }
+        }
+    };
+
+    // =========================================================================
+    // SPRACHDIKTAT & SMILEY-BEFEHLE
     // =========================================================================
     const moodVoiceCommands = [
         { regex: /\bguter\s+tag\b/gi, emoji: "😄", label: "Guter Tag" },
@@ -630,7 +827,7 @@
                     dayObj.emojis = dayObj.emojis.filter(e => !allMoodEmojis.includes(e));
                     dayObj.emojis.unshift(cmd.emoji);
                     emojiChanged = true;
-                    showToast(`${cmd.emoji} Sprachbefehl „${cmd.label}“ erkannt – Smiley gesetzt!`, "success");
+                    showToast(`${cmd.emoji} Sprachbefehl „${cmd.label}“ erkannt!`, "success");
                     workingText = workingText.replace(cmd.regex, "");
                 }
             });
@@ -653,15 +850,11 @@
     function stopDictation() {
         shouldKeepListening = false;
         if (recognitionInstance) {
-            try {
-                recognitionInstance.stop();
-            } catch (e) {}
+            try { recognitionInstance.stop(); } catch (e) {}
         }
         const prevTarget = activeDictationTarget;
         activeDictationTarget = null;
-        if (prevTarget) {
-            updateMicButtonsUI();
-        }
+        if (prevTarget) updateMicButtonsUI();
     }
     window.stopDictation = stopDictation;
 
@@ -694,7 +887,7 @@
     function startSpeechEngine(onFinalSegment, onInterimSegment) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            showToast("Dein Browser unterstützt die direkte Mikrofon-Schnittstelle nicht. Tipp: Nutze am Handy einfach das Mikrofon-Symbol auf deiner Tastatur!", "error");
+            showToast("Browser unterstützt die Mikrofon-Schnittstelle nicht.", "error");
             stopDictation();
             return;
         }
@@ -713,55 +906,38 @@
             let finalText = '';
             for (let i = event.resultIndex; i < event.results.length; ++i) {
                 const transcript = event.results[i][0].transcript;
-                if (event.results[i].isFinal) {
-                    finalText += transcript;
-                } else {
-                    interimText += transcript;
-                }
+                if (event.results[i].isFinal) finalText += transcript;
+                else interimText += transcript;
             }
-            if (finalText) {
-                onFinalSegment(finalText.trim());
-            }
-            if (onInterimSegment) {
-                onInterimSegment(interimText);
-            }
+            if (finalText) onFinalSegment(finalText.trim());
+            if (onInterimSegment) onInterimSegment(interimText);
         };
 
         recognitionInstance.onerror = (event) => {
-            if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-                showToast("Mikrofonzugriff blockiert. Bitte erlaube das Mikrofon im Browser oder nutze die Mikrofon-Taste deiner Handytastatur.", "error");
+            if (event.error === 'not-allowed') {
+                showToast("Mikrofonzugriff im Browser blockiert.", "error");
                 stopDictation();
             }
         };
 
         recognitionInstance.onend = () => {
             if (shouldKeepListening && activeDictationTarget) {
-                try {
-                    recognitionInstance.start();
-                } catch (e) {
-                    stopDictation();
-                }
+                try { recognitionInstance.start(); } catch (e) { stopDictation(); }
             } else {
                 stopDictation();
             }
         };
 
-        try {
-            recognitionInstance.start();
-        } catch (err) {
-            showToast("Sprachaufnahme konnte nicht gestartet werden.", "error");
-            stopDictation();
-        }
+        try { recognitionInstance.start(); } catch (err) { stopDictation(); }
     }
 
-    // Sprachdiktat für einen Kalendertag im Journal starten/stoppen
     window.toggleDayDictation = function(event, dayId) {
         if (event) event.stopPropagation();
         if (loadedVersionId !== "current") return;
 
         if (activeDictationTarget && activeDictationTarget.type === 'day' && activeDictationTarget.id === dayId) {
             stopDictation();
-            showToast("Sprachdiktat beendet und gespeichert.", "info");
+            showToast("Sprachdiktat beendet.", "info");
             return;
         }
 
@@ -773,7 +949,7 @@
         const textarea = document.getElementById(`dayTextarea_${dayId}`);
         if (textarea) textarea.focus();
 
-        showToast("🎤 Mikrofon aktiv – sprich jetzt (Tipp: Sag „Guter Tag“, „Normaler Tag“ oder „Schlechter Tag“ fürs Smiley!)", "success");
+        showToast("🎤 Mikrofon aktiv – sprich jetzt...", "success");
 
         startSpeechEngine(
             (rawFinalSegment) => {
@@ -793,7 +969,6 @@
                 }
 
                 saveToLocalStorage();
-                window.saveStateToCloud();
 
                 if (emojiChanged) {
                     renderJournalFilterBar();
@@ -810,10 +985,7 @@
                 }
 
                 const updatedStatusHint = document.getElementById(`dictationPreview_${dayId}`);
-                if (updatedStatusHint) {
-                    updatedStatusHint.innerText = "";
-                    updatedStatusHint.classList.add('hidden');
-                }
+                if (updatedStatusHint) updatedStatusHint.classList.add('hidden');
             },
             (interimSegment) => {
                 const currentStatusHint = document.getElementById(`dictationPreview_${dayId}`);
@@ -829,10 +1001,8 @@
         );
     };
 
-    // Sprachdiktat für normale Eingabefelder
     window.toggleInputDictation = function(inputId, triggerSearch = false) {
         if (loadedVersionId !== "current") return;
-
         if (activeDictationTarget && activeDictationTarget.type === 'input' && activeDictationTarget.id === inputId) {
             stopDictation();
             return;
@@ -856,9 +1026,7 @@
                 const currentVal = inputEl.value || "";
                 const needsSpace = currentVal.length > 0 && !currentVal.endsWith(' ');
                 inputEl.value = currentVal + (needsSpace ? " " : "") + cleanedText;
-                if (triggerSearch) {
-                    window.setJournalSearchQuery(inputEl.value);
-                }
+                if (triggerSearch) window.setJournalSearchQuery(inputEl.value);
                 stopDictation();
             },
             null
@@ -866,7 +1034,7 @@
     };
 
     // =========================================================================
-    // HEUTE-AUTOMATIK (?modus=heute, #heute ODER AUTOSTART-SCHALTER)
+    // HEUTE-AUTOMATIK
     // =========================================================================
     function updateAutoQuickStartButtonUI() {
         const btn = document.getElementById('autoQuickStartToggleBtn');
@@ -886,11 +1054,7 @@
         const nextState = !current;
         localStorage.setItem('stollberg_auto_quickstart', nextState ? 'true' : 'false');
         updateAutoQuickStartButtonUI();
-        if (nextState) {
-            showToast("📱 Handy-Autostart aktiviert! Beim Öffnen der Seite startet auf diesem Gerät ab sofort immer direkt das Heute-Schnellstartfenster.", "success");
-        } else {
-            showToast("📱 Handy-Autostart deaktiviert.", "info");
-        }
+        showToast(nextState ? "📱 Handy-Autostart aktiviert!" : "📱 Handy-Autostart deaktiviert.", nextState ? "success" : "info");
     };
 
     window.triggerTodayQuickStart = function(showTouchOverlay = true) {
@@ -903,56 +1067,31 @@
             loadFromLocalStorage();
         }
 
-        // 1. Auf Kalender-Journal umschalten & eventuelle Filter leeren
         appState.activeMode = "journal";
         activeEmojiFilter = null;
         journalSearchQuery = "";
 
-        // 2. Aktuelles Datum & Monatsnamen anhand der Geräteuhr bestimmen
         const now = new Date();
-        const germanMonths = [
-            "Januar", "Februar", "März", "April", "Mai", "Juni",
-            "Juli", "August", "September", "Oktober", "November", "Dezember"
-        ];
+        const germanMonths = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
         const currentMonthTitle = `${germanMonths[now.getMonth()]} ${now.getFullYear()}`;
         const todayISO = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
-        // 3. Prüfen, ob der aktuelle Monat schon existiert – falls nicht, automatisch anlegen
-        let targetMonth = appState.journalMonths.find(
-            m => m.title.trim().toLowerCase() === currentMonthTitle.toLowerCase()
-        );
+        let targetMonth = appState.journalMonths.find(m => m.title.trim().toLowerCase() === currentMonthTitle.toLowerCase());
         if (!targetMonth) {
-            targetMonth = {
-                id: "jm_" + Date.now(),
-                title: currentMonthTitle,
-                description: `Automatisch angelegtes Monatsjournal für ${currentMonthTitle}`,
-                color: "indigo"
-            };
+            targetMonth = { id: "jm_" + Date.now(), title: currentMonthTitle, description: `Monatsjournal für ${currentMonthTitle}`, color: "indigo" };
             appState.journalMonths.push(targetMonth);
         }
 
-        // 4. Prüfen, ob der heutige Kalendertag in diesem Monat schon existiert – falls nicht, anlegen
-        let targetDay = appState.journalDays.find(
-            d => d.monthId === targetMonth.id && d.date === todayISO
-        );
+        let targetDay = appState.journalDays.find(d => d.monthId === targetMonth.id && d.date === todayISO);
         if (!targetDay) {
-            targetDay = {
-                id: "jd_" + (Date.now() + 1),
-                monthId: targetMonth.id,
-                date: todayISO,
-                title: "Tagesprotokoll & Notizen",
-                emojis: ["📅"],
-                text: ""
-            };
+            targetDay = { id: "jd_" + (Date.now() + 1), monthId: targetMonth.id, date: todayISO, title: "Tagesprotokoll & Notizen", emojis: ["📅"], text: "" };
             appState.journalDays.push(targetDay);
         }
 
         quickStartDayId = targetDay.id;
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
 
-        // 5. Zum heutigen Tag scrollen
         setTimeout(() => {
             const dayCardEl = document.getElementById(`day_card_${targetDay.id}`);
             if (dayCardEl) {
@@ -961,16 +1100,11 @@
             }
         }, 120);
 
-        // 6. Großes Handy-Schnellstart-Overlay zeigen
         if (showTouchOverlay) {
             const overlay = document.getElementById('quickDictateOverlay');
             const dateLabel = document.getElementById('quickOverlayDateLabel');
-            if (dateLabel) {
-                dateLabel.innerText = `${formatGermanDayDate(todayISO)} (${currentMonthTitle})`;
-            }
-            if (overlay) {
-                overlay.classList.remove('hidden');
-            }
+            if (dateLabel) dateLabel.innerText = `${formatGermanDayDate(todayISO)} (${currentMonthTitle})`;
+            if (overlay) overlay.classList.remove('hidden');
         }
     };
 
@@ -1000,7 +1134,7 @@
     };
 
     // =========================================================================
-    // STATE MANAGEMENT & LOCAL STORAGE
+    // STATE & LOCAL STORAGE
     // =========================================================================
     function ensureStateIntegrity(parsed) {
         if (!parsed) return;
@@ -1027,7 +1161,7 @@
         try {
             localStorage.setItem('stollberg_handout_state', JSON.stringify(appState));
         } catch (e) {
-            console.error("Fehler beim Speichern im LocalStorage:", e);
+            console.error("LocalStorage Fehler:", e);
         }
     }
 
@@ -1035,10 +1169,9 @@
         const saved = localStorage.getItem('stollberg_handout_state');
         if (saved) {
             try {
-                const parsed = JSON.parse(saved);
-                ensureStateIntegrity(parsed);
+                ensureStateIntegrity(JSON.parse(saved));
             } catch (e) {
-                console.error("Fehler beim Laden aus dem LocalStorage:", e);
+                console.error("Ladefehler:", e);
             }
         }
     }
@@ -1051,18 +1184,13 @@
         editingMonthId = null;
         editingDayId = null;
         openEmojiMenuDayId = null;
-        if (loadedVersionId === "current") {
-            saveToLocalStorage();
-            if (typeof window.saveStateToCloud === 'function') {
-                window.saveStateToCloud();
-            }
-        }
+        if (loadedVersionId === "current") saveToLocalStorage();
         syncStateToUI();
-        showToast(mode === 'compass' ? "Ansicht: Projekt-Kompass (Meilensteine)" : "Ansicht: Kalender-Journal (Tagesbasis)", "info");
+        showToast(mode === 'compass' ? "Ansicht: Projekt-Kompass" : "Ansicht: Kalender-Journal", "info");
     };
 
     // =========================================================================
-    // FILTER-FUNKTIONEN FÜR DAS KALENDER-JOURNAL
+    // FILTER-FUNKTIONEN
     // =========================================================================
     window.toggleEmojiFilter = function(emoji) {
         activeEmojiFilter = (activeEmojiFilter === emoji) ? null : emoji;
@@ -1107,11 +1235,8 @@
 
         const emojiCounts = { "😄": 0, "😐": 0, "☹️": 0 };
         appState.journalDays.forEach(d => {
-            (d.emojis || []).forEach(em => {
-                emojiCounts[em] = (emojiCounts[em] || 0) + 1;
-            });
+            (d.emojis || []).forEach(em => { emojiCounts[em] = (emojiCounts[em] || 0) + 1; });
         });
-
         ["✅", "🚀", "🛠️", "💡", "⚠️"].forEach(stdEm => {
             if (!(stdEm in emojiCounts)) emojiCounts[stdEm] = 0;
         });
@@ -1124,27 +1249,21 @@
             btn.type = 'button';
             btn.onclick = () => window.toggleEmojiFilter(em);
             btn.className = `px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 border ${
-                isSelected
-                    ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm scale-105'
-                    : count > 0
-                        ? 'bg-white hover:bg-indigo-50 text-slate-700 border-slate-300'
-                        : 'bg-slate-100/70 hover:bg-white text-slate-400 border-slate-200'
+                isSelected ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm scale-105' : count > 0 ? 'bg-white hover:bg-indigo-50 text-slate-700 border-slate-300' : 'bg-slate-100/70 hover:bg-white text-slate-400 border-slate-200'
             }`;
             btn.innerHTML = `<span>${em}</span><span class="text-[10px] ${isSelected ? 'text-indigo-100' : 'text-slate-400'}">(${count})</span>`;
             filterContainer.appendChild(btn);
         });
 
         const hasActiveFilter = Boolean(activeEmojiFilter || journalSearchQuery);
-        if (clearBtn) {
-            clearBtn.classList.toggle('hidden', !hasActiveFilter);
-        }
+        if (clearBtn) clearBtn.classList.toggle('hidden', !hasActiveFilter);
         if (summaryBox && summaryText) {
             if (hasActiveFilter) {
                 const matchingDaysCount = appState.journalDays.filter(doesDayMatchFilter).length;
                 let parts = [];
                 if (activeEmojiFilter) parts.push(`Emoji: ${activeEmojiFilter}`);
                 if (journalSearchQuery) parts.push(`Suchbegriff: „${journalSearchQuery}“`);
-                summaryText.innerText = `Aktiver Filter (${parts.join(' + ')}) — ${matchingDaysCount} von ${appState.journalDays.length} Kalendertagen werden angezeigt.`;
+                summaryText.innerText = `Filter aktiv: ${parts.join(' + ')} (${matchingDaysCount} von ${appState.journalDays.length} Kalendertagen)`;
                 summaryBox.classList.remove('hidden');
             } else {
                 summaryBox.classList.add('hidden');
@@ -1153,7 +1272,7 @@
     }
 
     // =========================================================================
-    // KOPFZEILEN- & FUSSZEILEN-GENERATOR
+    // VORSCHLÄGE GENERATOR
     // =========================================================================
     function generateHeaderSuggestions() {
         const isCompass = appState.activeMode === 'compass';
@@ -1166,57 +1285,28 @@
         const titleSuggestions = isCompass ? [
             `Projekt-Kompass: ${firstItem.split('&')[0].trim()} bis ${lastItem.split('&')[0].trim()}`,
             `Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)`,
-            `Kick-off & Prozess-Roadmap (${items.length} Meilensteine)`,
-            `Meilenstein-Planung: ${firstItem}`
+            `Kick-off & Prozess-Roadmap (${items.length} Meilensteine)`
         ] : [
             `Projekt- & Tagesjournal (${firstItem} – ${lastItem})`,
             `Tagesprotokoll: ${appState.projectName}`,
-            `Kalender-Logbuch & Umsetzungs-Journal 2026`,
-            `Chronologisches Arbeitsjournal (${items.length} Monate)`
+            `Kalender-Logbuch 2026`
         ];
 
-        const phaseSuggestions = isCompass ? [
-            "Phase 1: Vorbereitung",
-            "Kick-off & Konzeption",
-            `Fokus: ${firstItem.substring(0, 22)}`,
-            `${items.length} Projektphasen`
-        ] : [
-            "Laufendes Journal",
-            `Zeitraum: ${firstItem}`,
-            "Tagesprotokoll (Aktiv)",
-            `${appState.journalDays.length} Dokumentierte Tage`
-        ];
-
-        const docBadgeSuggestions = isCompass ? [
-            "Kick-off-Handout & Roadmap",
-            "Meilenstein- & Leitfragen-Protokoll",
-            "Prozess-Kompass & Pflichtenheft",
-            "Strategischer Projektfahrplan"
-        ] : [
-            "Kalender-Journal & Tagesprotokoll",
-            "Chronologisches Projekttagebuch",
-            "Monats- & Tages-Logbuch",
-            "Aktivitäts- & Entscheidungsjournal"
-        ];
-
+        const phaseSuggestions = isCompass ? ["Phase 1: Vorbereitung", "Kick-off & Konzeption", `${items.length} Projektphasen`] : ["Laufendes Journal", `Zeitraum: ${firstItem}`, `${appState.journalDays.length} Tage erfasst`];
+        const docBadgeSuggestions = isCompass ? ["Kick-off-Handout & Roadmap", "Meilenstein-Protokoll", "Strategischer Fahrplan"] : ["Kalender-Journal", "Chronologisches Logbuch", "Tagesdokumentation"];
         const subtitleSuggestions = isCompass ? [
             `Strukturierter Projektfahrplan über ${items.length} Meilensteine (${itemNames.slice(0, 4).join(' → ')}) inklusive zentraler Leitfragen zur Prozesssicherung und Inbetriebnahme.`,
-            `Dieses Leitdokument bündelt alle Klärungspunkte von „${firstItem}“ bis „${lastItem}“, um Risiken frühzeitig auszuschließen und Verantwortlichkeiten klar zu regeln.`,
-            `Arbeits- und Entscheidungsprotokoll für „${baseName}“: Schrittweise Dokumentation der technischen Schnittstellen, Datenschutzvorgaben und Freigabeprozesse.`
+            `Arbeits- und Entscheidungsprotokoll für „${baseName}“: Schrittweise Dokumentation der technischen Schnittstellen und Freigabeprozesse.`
         ] : [
-            `Chronologisches Kalender-Journal für den Zeitraum ${firstItem} bis ${lastItem} (${appState.journalDays.length} erfasste Kalendertage) zur täglichen Festhaltung von Ergebnissen, Beschlüssen und Aufgaben.`,
-            `Begleitendes Projekttagebuch auf Kalendertagbasis: Dokumentiert alle Fortschritte, Abstimmungen und technischen Meilensteine in den Monaten ${itemNames.join(', ')}.`,
-            `Lückenlose Tagesdokumentation inklusive Status-Markierungen und Sprachnotizen zur Nachvollziehbarkeit aller Projektschritte im laufenden Betrieb.`
+            `Chronologisches Kalender-Journal für den Zeitraum ${firstItem} bis ${lastItem} (${appState.journalDays.length} Kalendertage) zur täglichen Festhaltung von Ergebnissen und Aufgaben.`,
+            `Begleitendes Projekttagebuch auf Kalendertagbasis: Dokumentiert alle Fortschritte und Meilensteine in den Monaten ${itemNames.join(', ')}.`
         ];
 
         return { titleSuggestions, phaseSuggestions, docBadgeSuggestions, subtitleSuggestions };
     }
 
     window.openHeaderModal = function() {
-        if (loadedVersionId !== "current") {
-            showToast("Im historischen Ansichtsmodus sind keine Änderungen möglich.", "error");
-            return;
-        }
+        if (loadedVersionId !== "current") return;
         const isCompass = appState.activeMode === 'compass';
         document.getElementById('editHeaderTitle').value = isCompass ? appState.projectName : appState.journalHeader.title;
         document.getElementById('editHeaderPhase').value = isCompass ? appState.headerPhase : appState.journalHeader.phase;
@@ -1241,7 +1331,7 @@
         phaseSuggestions.forEach(s => {
             const btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = 'text-[10px] bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 border border-slate-200 px-2 py-0.5 rounded transition';
+            btn.className = 'text-[10px] bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-200 px-2 py-0.5 rounded transition';
             btn.innerText = s;
             btn.onclick = () => { document.getElementById('editHeaderPhase').value = s; };
             phaseContainer.appendChild(btn);
@@ -1252,7 +1342,7 @@
         docBadgeSuggestions.forEach(s => {
             const btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = 'text-[10px] bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 border border-slate-200 px-2 py-0.5 rounded transition';
+            btn.className = 'text-[10px] bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-200 px-2 py-0.5 rounded transition';
             btn.innerText = s;
             btn.onclick = () => { document.getElementById('editHeaderDocBadge').value = s; };
             docBadgeContainer.appendChild(btn);
@@ -1263,7 +1353,7 @@
         subtitleSuggestions.forEach(s => {
             const btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = 'w-full text-left text-[11px] bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-900 border border-slate-200 hover:border-indigo-300 p-2 rounded-lg transition block leading-relaxed';
+            btn.className = 'w-full text-left text-[11px] bg-slate-50 hover:bg-indigo-50 text-slate-700 border border-slate-200 p-2 rounded-lg transition block leading-relaxed';
             btn.innerText = s;
             btn.onclick = () => { document.getElementById('editHeaderSubtitle').value = s; };
             subContainer.appendChild(btn);
@@ -1284,15 +1374,12 @@
         const docBadge = document.getElementById('editHeaderDocBadge').value.trim();
         const subtitle = document.getElementById('editHeaderSubtitle').value.trim();
 
-        if (!title) {
-            showToast("Bitte gib mindestens einen Haupttitel an.", "error");
-            return;
-        }
+        if (!title) return;
 
         if (appState.activeMode === 'compass') {
             appState.projectName = title;
             appState.headerPhase = phase || "Phase 1: Vorbereitung";
-            appState.headerDocBadge = docBadge || "Kick-off-Handout & Roadmap";
+            appState.headerDocBadge = docBadge || "Kick-off-Handout";
             appState.headerSubtitle = subtitle;
         } else {
             appState.journalHeader.title = title;
@@ -1302,43 +1389,34 @@
         }
 
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
         closeHeaderModal();
-        showToast("Kopfzeile erfolgreich aktualisiert!", "success");
+        showToast("Kopfzeile aktualisiert!", "success");
     };
 
     function generateFooterSuggestions() {
         const isCompass = appState.activeMode === 'compass';
         const items = isCompass ? appState.milestones : appState.journalMonths;
-        const firstItem = items[0]?.title || "Start";
-        const lastItem = items[items.length - 1]?.title || "Ziel";
         const currentTitle = isCompass ? appState.projectName : appState.journalHeader.title;
         const todayStr = new Date().toLocaleDateString('de-DE');
 
         const leftSuggestions = [
             `Projekt-Kompass Handout © 2026 Stollberg Arbeits Erleichterung`,
-            `${currentTitle} | Stand: ${todayStr} (${items.length} ${isCompass ? 'Meilensteine' : 'Monate'})`,
-            `Dokumentation & Prozess-Leitfaden © 2026 – Vertrauliche Arbeitskopie`,
+            `${currentTitle} | Stand: ${todayStr}`,
             `Kalender-Journal & Tagesprotokoll © 2026 | ${currentTitle}`
         ];
 
         const rightSuggestions = [
             `„Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“`,
-            `„Von ${firstItem} bis ${lastItem} – strukturiert, transparent, revisionssicher.“`,
-            `„Klare Meilensteine, saubere Schnittstellen, verlässliche Ergebnisse.“`,
             `„Tag für Tag strukturiert dokumentiert – Wissen sichern, Fortschritt sichtbar machen.“`,
-            `„Technik, die den Alltag erleichtert: Einfach erfassen, sicher übertragen.“`
+            `„Klare Meilensteine, saubere Schnittstellen, verlässliche Ergebnisse.“`
         ];
 
         return { leftSuggestions, rightSuggestions };
     }
 
     window.openFooterModal = function() {
-        if (loadedVersionId !== "current") {
-            showToast("Im historischen Ansichtsmodus sind keine Änderungen möglich.", "error");
-            return;
-        }
+        if (loadedVersionId !== "current") return;
         const isCompass = appState.activeMode === 'compass';
         document.getElementById('editFooterLeft').value = isCompass ? appState.footerLeft : appState.journalFooter.left;
         document.getElementById('editFooterRight').value = isCompass ? appState.footerRight : appState.journalFooter.right;
@@ -1350,7 +1428,7 @@
         leftSuggestions.forEach(s => {
             const btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = 'w-full text-left text-[11px] bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-900 border border-slate-200 hover:border-indigo-300 px-3 py-1.5 rounded-lg transition block';
+            btn.className = 'w-full text-left text-[11px] bg-slate-50 hover:bg-indigo-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg transition block';
             btn.innerText = s;
             btn.onclick = () => { document.getElementById('editFooterLeft').value = s; };
             leftContainer.appendChild(btn);
@@ -1361,7 +1439,7 @@
         rightSuggestions.forEach(s => {
             const btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = 'w-full text-left text-[11px] italic bg-slate-50 hover:bg-indigo-50 text-slate-700 hover:text-indigo-900 border border-slate-200 hover:border-indigo-300 px-3 py-1.5 rounded-lg transition block';
+            btn.className = 'w-full text-left text-[11px] italic bg-slate-50 hover:bg-indigo-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg transition block';
             btn.innerText = s;
             btn.onclick = () => { document.getElementById('editFooterRight').value = s; };
             rightContainer.appendChild(btn);
@@ -1389,14 +1467,13 @@
         }
 
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
         closeFooterModal();
-        showToast("Fußzeile erfolgreich aktualisiert!", "success");
+        showToast("Fußzeile aktualisiert!", "success");
     };
 
     // =========================================================================
-    // BACKUP, VERSIONIERUNG & EXPORT/IMPORT
+    // EXPORT / IMPORT / VERSIONIERUNG
     // =========================================================================
     window.exportBackupJSON = function() {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
@@ -1406,7 +1483,7 @@
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();
         downloadAnchor.remove();
-        showToast("JSON-Backup (inkl. Kompass & Journal) exportiert!", "success");
+        showToast("JSON-Backup exportiert!", "success");
     };
 
     window.importBackupJSON = function(event) {
@@ -1420,14 +1497,11 @@
                 if (parsed.projectName || parsed.milestones || parsed.journalMonths) {
                     ensureStateIntegrity(parsed);
                     saveToLocalStorage();
-                    window.saveStateToCloud();
                     syncStateToUI();
-                    showToast("Backup erfolgreich importiert und geladen!", "success");
-                } else {
-                    showToast("Ungültiges Dateiformat.", "error");
+                    showToast("Backup importiert!", "success");
                 }
             } catch (err) {
-                showToast("Fehler beim Lesen der Backup-Datei.", "error");
+                showToast("Fehler beim Lesen der Datei.", "error");
             }
         };
         reader.readAsText(file);
@@ -1437,16 +1511,13 @@
         stopDictation();
         loadedVersionId = val;
         const readonlyWarning = document.getElementById('readonlyWarning');
-        
         if (val === "current") {
             readonlyWarning.classList.add('hidden');
             loadFromLocalStorage();
         } else {
             readonlyWarning.classList.remove('hidden');
             const targetVer = appState.versions.find(v => v.id === val);
-            if (targetVer) {
-                ensureStateIntegrity(JSON.parse(JSON.stringify(targetVer)));
-            }
+            if (targetVer) ensureStateIntegrity(JSON.parse(JSON.stringify(targetVer)));
         }
         syncStateToUI();
     };
@@ -1458,26 +1529,19 @@
             const preservedVersions = appState.versions;
             ensureStateIntegrity(JSON.parse(JSON.stringify(targetVer)));
             appState.versions = preservedVersions;
-            
             saveToLocalStorage();
-            window.saveStateToCloud();
-            
             loadedVersionId = "current";
             document.getElementById('versionSelect').value = "current";
             document.getElementById('readonlyWarning').classList.add('hidden');
-            
             syncStateToUI();
-            showToast("Ausgewählte Version wurde als Arbeitskopie wiederhergestellt!", "success");
+            showToast("Version als Arbeitskopie wiederhergestellt!", "success");
         }
     };
 
     window.createBackup = function() {
-        if (loadedVersionId !== "current") {
-            showToast("Sicherungen können nur in der aktuellen Arbeitskopie angelegt werden.", "error");
-            return;
-        }
-        const timestamp = new Date();
-        const formattedDate = timestamp.toLocaleDateString('de-DE') + ", " + timestamp.toLocaleTimeString('de-DE');
+        if (loadedVersionId !== "current") return;
+        const now = new Date();
+        const formattedDate = now.toLocaleDateString('de-DE') + ", " + now.toLocaleTimeString('de-DE');
         const verId = "v_" + Date.now();
         const nextNum = appState.versions.length + 1;
 
@@ -1489,53 +1553,32 @@
 
         appState.versions.push(snapshot);
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
-        showToast(`Sicherungskopie v${nextNum} erfolgreich erstellt!`, "success");
+        showToast(`Lokale Sicherungskopie v${nextNum} erstellt!`, "success");
     };
 
     // =========================================================================
-    // MODUS 1: PROJEKT-KOMPASS (MEILENSTEINE & LEITFRAGEN)
+    // MEILENSTEINE & FRAGEN
     // =========================================================================
     window.addNewMilestone = function() {
         if (loadedVersionId !== "current") return;
         const titleInput = document.getElementById('newMilestoneTitle');
         const descInput = document.getElementById('newMilestoneDesc');
         const colorInput = document.getElementById('newMilestoneColor');
-
         const title = titleInput.value.trim();
-        const desc = descInput.value.trim();
-        const color = colorInput.value;
-
-        if (!title) {
-            showToast("Bitte gib dem neuen Meilenstein einen Titel.", "error");
-            return;
-        }
+        if (!title) return;
 
         const mId = "m_" + Date.now();
-        appState.milestones.push({
-            id: mId,
-            title: title,
-            description: desc || "Individueller Meilenstein",
-            color: color
-        });
-
+        appState.milestones.push({ id: mId, title: title, description: descInput.value.trim() || "Individueller Meilenstein", color: colorInput.value });
         const qId = "q_" + Date.now();
-        appState.customQuestions.push({
-            id: qId,
-            milestoneId: mId,
-            text: "Deine erste Leitfrage für diesen Schritt eingeben...",
-            type: "open"
-        });
+        appState.customQuestions.push({ id: qId, milestoneId: mId, text: "Deine erste Leitfrage für diesen Schritt eingeben...", type: "open" });
         appState.answers[qId] = ["", "", ""];
 
         titleInput.value = "";
         descInput.value = "";
-
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
-        showToast(`Meilenstein „${title}“ erfolgreich angelegt!`, "success");
+        showToast(`Meilenstein „${title}“ angelegt!`, "success");
     };
 
     window.toggleEditMilestoneMode = function(mId) {
@@ -1548,11 +1591,7 @@
         const titleVal = document.getElementById(`editTitle_${mId}`).value.trim();
         const descVal = document.getElementById(`editDesc_${mId}`).value.trim();
         const colorVal = document.getElementById(`editColor_${mId}`).value;
-
-        if (!titleVal) {
-            showToast("Der Name des Meilensteins darf nicht leer sein.", "error");
-            return;
-        }
+        if (!titleVal) return;
 
         const m = appState.milestones.find(item => item.id === mId);
         if (m) {
@@ -1561,9 +1600,7 @@
             m.color = colorVal;
             editingMilestoneId = null;
             saveToLocalStorage();
-            window.saveStateToCloud();
             syncStateToUI();
-            showToast("Meilenstein aktualisiert!", "success");
         }
     };
 
@@ -1571,14 +1608,8 @@
         if (!itemDeleteConfirmations[mId]) {
             itemDeleteConfirmations[mId] = true;
             const btn = document.getElementById(`delMBtn_${mId}`);
-            if (btn) {
-                btn.innerText = "Sicher? (Erneut klicken)";
-                btn.className = "bg-rose-700 hover:bg-rose-800 text-white font-bold text-[10px] px-3 py-1.5 rounded transition";
-            }
-            setTimeout(() => {
-                itemDeleteConfirmations[mId] = false;
-                syncStateToUI();
-            }, 4000);
+            if (btn) btn.innerText = "Sicher? (Erneut klicken)";
+            setTimeout(() => { itemDeleteConfirmations[mId] = false; syncStateToUI(); }, 4000);
             return;
         }
 
@@ -1586,10 +1617,8 @@
         relatedQuestions.forEach(q => delete appState.answers[q.id]);
         appState.customQuestions = appState.customQuestions.filter(q => q.milestoneId !== mId);
         appState.milestones = appState.milestones.filter(m => m.id !== mId);
-
         itemDeleteConfirmations[mId] = false;
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
         showToast("Meilenstein gelöscht.", "info");
     };
@@ -1598,21 +1627,14 @@
         if (loadedVersionId !== "current") return;
         const input = document.getElementById(`newQuestInput_${mId}`);
         const text = input.value.trim();
-
-        if (!text) {
-            showToast("Bitte gib einen Text für die Leitfrage ein.", "error");
-            return;
-        }
+        if (!text) return;
 
         const qId = "q_" + Date.now();
         appState.customQuestions.push({ id: qId, milestoneId: mId, text: text, type: "open" });
         appState.answers[qId] = ["", "", ""];
-
         input.value = "";
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
-        showToast("Leitfrage hinzugefügt!", "success");
     };
 
     window.toggleEditQuestionMode = function(qId) {
@@ -1624,18 +1646,13 @@
     window.saveQuestionChangesInline = function(qId) {
         const input = document.getElementById(`editQuestText_${qId}`);
         const textVal = input ? input.value.trim() : "";
-        if (!textVal) {
-            showToast("Die Frage darf nicht leer sein.", "error");
-            return;
-        }
+        if (!textVal) return;
         const q = appState.customQuestions.find(item => item.id === qId);
         if (q) {
             q.text = textVal;
             editingQuestionId = null;
             saveToLocalStorage();
-            window.saveStateToCloud();
             syncStateToUI();
-            showToast("Leitfrage aktualisiert!", "success");
         }
     };
 
@@ -1644,9 +1661,7 @@
         appState.customQuestions = appState.customQuestions.filter(q => q.id !== qId);
         delete appState.answers[qId];
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
-        showToast("Frage gelöscht.", "info");
     };
 
     window.updateAnswerLine = function(qId, index, text) {
@@ -1654,7 +1669,6 @@
         if (!appState.answers[qId]) appState.answers[qId] = ["", "", ""];
         appState.answers[qId][index] = text;
         saveToLocalStorage();
-        window.saveStateToCloud();
     };
 
     window.addAnswerLine = function(qId) {
@@ -1662,7 +1676,6 @@
         if (!appState.answers[qId]) appState.answers[qId] = ["", "", ""];
         appState.answers[qId].push("");
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
     };
 
@@ -1671,55 +1684,32 @@
         if (appState.answers[qId]) {
             appState.answers[qId].splice(index, 1);
             saveToLocalStorage();
-            window.saveStateToCloud();
             syncStateToUI();
         }
     };
 
     // =========================================================================
-    // MODUS 2: KALENDER-JOURNAL (MONATE, TAGE, AUTO-TEXTFELD, EMOJIS & DIKTAT)
+    // MONATE & TAGE
     // =========================================================================
     window.addNewJournalMonth = function() {
         if (loadedVersionId !== "current") return;
         const titleInput = document.getElementById('newMonthTitle');
         const descInput = document.getElementById('newMonthDesc');
         const colorInput = document.getElementById('newMonthColor');
-
         const title = titleInput.value.trim();
-        const desc = descInput.value.trim();
-        const color = colorInput.value;
-
-        if (!title) {
-            showToast("Bitte gib einen Monatsnamen ein (z. B. Januar 2027).", "error");
-            return;
-        }
+        if (!title) return;
 
         const jmId = "jm_" + Date.now();
-        appState.journalMonths.push({
-            id: jmId,
-            title: title,
-            description: desc || "Monatsfokus & Tagesprotokolle",
-            color: color
-        });
-
+        appState.journalMonths.push({ id: jmId, title: title, description: descInput.value.trim() || "Monatsfokus", color: colorInput.value });
         const now = new Date();
         const todayISO = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-        appState.journalDays.push({
-            id: "jd_" + Date.now(),
-            monthId: jmId,
-            date: todayISO,
-            title: "Erster Tageseintrag",
-            emojis: ["📅", "📝"],
-            text: ""
-        });
+        appState.journalDays.push({ id: "jd_" + Date.now(), monthId: jmId, date: todayISO, title: "Erster Tageseintrag", emojis: ["📅"], text: "" });
 
         titleInput.value = "";
         descInput.value = "";
-
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
-        showToast(`Monat „${title}“ erfolgreich im Journal angelegt!`, "success");
+        showToast(`Monat „${title}“ angelegt!`, "success");
     };
 
     window.toggleEditMonthMode = function(monthId) {
@@ -1732,11 +1722,7 @@
         const titleVal = document.getElementById(`editMonthTitle_${monthId}`).value.trim();
         const descVal = document.getElementById(`editMonthDesc_${monthId}`).value.trim();
         const colorVal = document.getElementById(`editMonthColor_${monthId}`).value;
-
-        if (!titleVal) {
-            showToast("Der Monatsname darf nicht leer sein.", "error");
-            return;
-        }
+        if (!titleVal) return;
 
         const m = appState.journalMonths.find(item => item.id === monthId);
         if (m) {
@@ -1745,9 +1731,7 @@
             m.color = colorVal;
             editingMonthId = null;
             saveToLocalStorage();
-            window.saveStateToCloud();
             syncStateToUI();
-            showToast("Monat erfolgreich aktualisiert!", "success");
         }
     };
 
@@ -1755,25 +1739,17 @@
         if (!itemDeleteConfirmations[monthId]) {
             itemDeleteConfirmations[monthId] = true;
             const btn = document.getElementById(`delMonthBtn_${monthId}`);
-            if (btn) {
-                btn.innerText = "Sicher? (Erneut klicken)";
-                btn.className = "bg-rose-700 hover:bg-rose-800 text-white font-bold text-[10px] px-3 py-1.5 rounded transition";
-            }
-            setTimeout(() => {
-                itemDeleteConfirmations[monthId] = false;
-                syncStateToUI();
-            }, 4000);
+            if (btn) btn.innerText = "Sicher? (Erneut klicken)";
+            setTimeout(() => { itemDeleteConfirmations[monthId] = false; syncStateToUI(); }, 4000);
             return;
         }
 
         appState.journalDays = appState.journalDays.filter(d => d.monthId !== monthId);
         appState.journalMonths = appState.journalMonths.filter(m => m.id !== monthId);
-
         itemDeleteConfirmations[monthId] = false;
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
-        showToast("Monat samt Kalendertagen gelöscht.", "info");
+        showToast("Monat gelöscht.", "info");
     };
 
     window.addDayToMonth = function(monthId) {
@@ -1781,27 +1757,16 @@
         stopDictation();
         const dateInput = document.getElementById(`newDayDate_${monthId}`);
         const titleInput = document.getElementById(`newDayTitle_${monthId}`);
-
         const now = new Date();
         const todayISO = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
         const dateVal = dateInput.value || todayISO;
         const titleVal = titleInput.value.trim() || "Tagesnotiz & Protokoll";
 
         const jdId = "jd_" + Date.now();
-        appState.journalDays.push({
-            id: jdId,
-            monthId: monthId,
-            date: dateVal,
-            title: titleVal,
-            emojis: ["📝"],
-            text: ""
-        });
-
+        appState.journalDays.push({ id: jdId, monthId: monthId, date: dateVal, title: titleVal, emojis: ["📝"], text: "" });
         titleInput.value = "";
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
-        showToast("Neuer Kalendertag hinzugefügt!", "success");
     };
 
     window.toggleEditDayMode = function(dayId) {
@@ -1813,16 +1778,13 @@
     window.saveDayChangesInline = function(dayId) {
         const dateVal = document.getElementById(`editDayDate_${dayId}`).value;
         const titleVal = document.getElementById(`editDayTitle_${dayId}`).value.trim();
-
         const day = appState.journalDays.find(d => d.id === dayId);
         if (day) {
             day.date = dateVal || day.date;
             day.title = titleVal || "Tageseintrag";
             editingDayId = null;
             saveToLocalStorage();
-            window.saveStateToCloud();
             syncStateToUI();
-            showToast("Kalendertag aktualisiert!", "success");
         }
     };
 
@@ -1831,9 +1793,7 @@
         stopDictation();
         appState.journalDays = appState.journalDays.filter(d => d.id !== dayId);
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
-        showToast("Kalendertag gelöscht.", "info");
     };
 
     window.autoResizeTextarea = function(el) {
@@ -1845,20 +1805,15 @@
     window.updateDayEntryText = function(dayId, textareaEl) {
         if (loadedVersionId !== "current") return;
         window.autoResizeTextarea(textareaEl);
-
         const day = appState.journalDays.find(d => d.id === dayId);
         if (day) {
             day.text = textareaEl.value;
             const printMirror = document.getElementById(`printMirror_${dayId}`);
-            if (printMirror) {
-                printMirror.innerText = textareaEl.value || " ";
-            }
+            if (printMirror) printMirror.innerText = textareaEl.value || " ";
             saveToLocalStorage();
-            window.saveStateToCloud();
         }
     };
 
-    // Fliegendes Emoji-Menü öffnen/schließen & Emojis umschalten
     window.toggleEmojiMenu = function(event, dayId) {
         event.stopPropagation();
         if (loadedVersionId !== "current") return;
@@ -1879,16 +1834,10 @@
         const day = appState.journalDays.find(d => d.id === dayId);
         if (!day) return;
         if (!Array.isArray(day.emojis)) day.emojis = [];
-
         const idx = day.emojis.indexOf(emoji);
-        if (idx > -1) {
-            day.emojis.splice(idx, 1);
-        } else {
-            day.emojis.push(emoji);
-        }
-
+        if (idx > -1) day.emojis.splice(idx, 1);
+        else day.emojis.push(emoji);
         saveToLocalStorage();
-        window.saveStateToCloud();
         syncStateToUI();
     };
 
@@ -1903,7 +1852,6 @@
                 if (!Array.isArray(day.emojis)) day.emojis = [];
                 if (!day.emojis.includes(val)) day.emojis.push(val);
                 saveToLocalStorage();
-                window.saveStateToCloud();
                 syncStateToUI();
             }
         }
@@ -1916,18 +1864,14 @@
         const dateObj = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
         if (isNaN(dateObj.getTime())) return isoDate;
         const weekdays = ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."];
-        const wd = weekdays[dateObj.getDay()];
-        return `${wd}, ${parts[2]}.${parts[1]}.${parts[0]}`;
+        return `${weekdays[dateObj.getDay()]}, ${parts[2]}.${parts[1]}.${parts[0]}`;
     }
 
     // =========================================================================
-    // DRAG AND DROP (FÜR MEILENSTEINE UND MONATE)
+    // DRAG AND DROP
     // =========================================================================
     window.handleDragStart = function(event, id) {
-        if (loadedVersionId !== "current") {
-            event.preventDefault();
-            return;
-        }
+        if (loadedVersionId !== "current") return event.preventDefault();
         dragSourceId = id;
         event.dataTransfer.effectAllowed = 'move';
         event.dataTransfer.setData('text/plain', id);
@@ -1947,20 +1891,16 @@
     window.handleDrop = function(event, targetId) {
         event.preventDefault();
         event.currentTarget.classList.remove('scale-102', 'border-indigo-500', 'bg-indigo-50/50', 'shadow-md');
-        
         if (dragSourceId && dragSourceId !== targetId) {
             const list = (appState.activeMode === 'compass') ? appState.milestones : appState.journalMonths;
             const srcIdx = list.findIndex(item => item.id === dragSourceId);
             const targetIdx = list.findIndex(item => item.id === targetId);
-            
             if (srcIdx !== -1 && targetIdx !== -1) {
                 const [movedItem] = list.splice(srcIdx, 1);
                 list.splice(targetIdx, 0, movedItem);
-                
                 saveToLocalStorage();
-                window.saveStateToCloud();
                 syncStateToUI();
-                showToast("Reihenfolge erfolgreich angepasst!", "success");
+                showToast("Reihenfolge angepasst!", "success");
             }
         }
         dragSourceId = null;
@@ -1974,7 +1914,6 @@
         dragSourceId = null;
     };
 
-    // Werksreset
     window.triggerResetWithConfirmation = function() {
         const btn = document.getElementById('resetBtn');
         if (!confirmResetState) {
@@ -1993,20 +1932,18 @@
             journalSearchQuery = "";
             appState = JSON.parse(JSON.stringify(defaultAppState));
             localStorage.removeItem('stollberg_handout_state');
-            window.saveStateToCloud();
             syncStateToUI();
-            showToast("Anwendung wurde in den Basiszustand zurückgesetzt!", "success");
+            showToast("Zurückgesetzt!", "success");
         }
     };
 
     // =========================================================================
-    // UI RENDERING (BEIDE SYSTEME SYNCHRONISIEREN)
+    // UI RENDERING
     // =========================================================================
     function syncStateToUI() {
         const isReadOnly = (loadedVersionId !== "current");
         const isCompass = (appState.activeMode === "compass");
 
-        // 1. Modus-Umschalter Styling
         const btnCompass = document.getElementById('modeBtnCompass');
         const btnJournal = document.getElementById('modeBtnJournal');
         if (btnCompass && btnJournal) {
@@ -2020,8 +1957,8 @@
         }
 
         updateAutoQuickStartButtonUI();
+        updateGitHubHeaderBtn();
 
-        // 2. Kopfzeile & Fußzeile synchronisieren
         const activeTitle = isCompass ? appState.projectName : appState.journalHeader.title;
         const activePhase = isCompass ? appState.headerPhase : appState.journalHeader.phase;
         const activeDocBadge = isCompass ? appState.headerDocBadge : appState.journalHeader.docBadge;
@@ -2037,7 +1974,6 @@
         document.getElementById('footerLeftDisplay').innerText = activeFooterLeft;
         document.getElementById('footerRightDisplay').innerText = activeFooterRight;
 
-        // 3. Versionen-Auswahl
         const verSelect = document.getElementById('versionSelect');
         if (verSelect) {
             verSelect.innerHTML = '<option value="current">Aktuelle Arbeitskopie</option>';
@@ -2050,7 +1986,6 @@
             });
         }
 
-        // 4. Filterleiste, Überschrift der Landkarte & Erstell-Box anpassen
         const roadmapSectionTitle = document.getElementById('roadmapSectionTitle');
         const creatorBox = document.getElementById('creatorBoxSection');
         const journalFilterSection = document.getElementById('journalFilterSection');
@@ -2060,28 +1995,21 @@
             roadmapSectionTitle.innerHTML = `<span>🗺️</span> Die Projektlandkarte (Visuelle Meilensteine)`;
             creatorBox.innerHTML = `
                 <h3 class="font-bold text-xs text-slate-800 uppercase tracking-wide mb-4 flex items-center gap-2">
-                    <span class="text-base">🛠️</span> Neuen Meilenstein (Projektschritt) hinzufügen
+                    <span class="text-base">🛠️</span> Neuen Meilenstein hinzufügen
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Meilenstein-Name (Titel)</label>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Meilenstein-Name</label>
                         <input type="text" id="newMilestoneTitle" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none" placeholder="z. B. Schulung & Rollout">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kurzziel (Beschreibung)</label>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kurzziel</label>
                         <input type="text" id="newMilestoneDesc" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none" placeholder="z. B. Mitarbeiter befähigen">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Farbschema (Coded)</label>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Farbschema</label>
                         <select id="newMilestoneColor" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
-                            <option value="indigo">Indigo (Standard Blau-Violett)</option>
-                            <option value="emerald">Emerald (Smaragd-Grün)</option>
-                            <option value="blue">Blue (Ozean-Blau)</option>
-                            <option value="rose">Rose (Beeren-Rot)</option>
-                            <option value="amber">Amber (Bernstein-Gelb)</option>
-                            <option value="violet">Violet (Kräftig Lila)</option>
-                            <option value="teal">Teal (Edel-Türkis)</option>
-                            <option value="orange">Orange (Leuchtend Orange)</option>
+                            ${Object.keys(colorMatrix).map(c => `<option value="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</option>`).join('')}
                         </select>
                     </div>
                 </div>
@@ -2098,28 +2026,21 @@
             roadmapSectionTitle.innerHTML = `<span>📅</span> Die Monats-Übersicht (Kalender-Journal Zeitachse)`;
             creatorBox.innerHTML = `
                 <h3 class="font-bold text-xs text-slate-800 uppercase tracking-wide mb-4 flex items-center gap-2">
-                    <span class="text-base">📅</span> Neuen Monat zum Kalender-Journal hinzufügen
+                    <span class="text-base">📅</span> Neuen Monat hinzufügen
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Monat & Jahr (Titel)</label>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Monat & Jahr</label>
                         <input type="text" id="newMonthTitle" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none" placeholder="z. B. Januar 2027">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Monatsfokus / Schwerpunkt</label>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Monatsfokus</label>
                         <input type="text" id="newMonthDesc" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none" placeholder="z. B. Livegang & Feinschliff">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Farbschema (Coded)</label>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Farbschema</label>
                         <select id="newMonthColor" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
-                            <option value="indigo">Indigo (Standard Blau-Violett)</option>
-                            <option value="emerald">Emerald (Smaragd-Grün)</option>
-                            <option value="blue">Blue (Ozean-Blau)</option>
-                            <option value="rose">Rose (Beeren-Rot)</option>
-                            <option value="amber">Amber (Bernstein-Gelb)</option>
-                            <option value="violet">Violet (Kräftig Lila)</option>
-                            <option value="teal">Teal (Edel-Türkis)</option>
-                            <option value="orange">Orange (Leuchtend Orange)</option>
+                            ${Object.keys(colorMatrix).map(c => `<option value="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</option>`).join('')}
                         </select>
                     </div>
                 </div>
@@ -2133,7 +2054,6 @@
         }
     }
 
-    // RENDERER 1: PROJEKT-KOMPASS
     function renderCompassView(isReadOnly) {
         const mapContainer = document.getElementById('roadmapMapContainer');
         const detailsContainer = document.getElementById('milestonesDetailsContainer');
@@ -2155,9 +2075,7 @@
             card.setAttribute('ondragend', `handleDragEnd(event)`);
 
             card.innerHTML = `
-                <div class="absolute top-3 right-3 w-6 h-6 rounded-full ${color.accent} text-white flex items-center justify-center text-[10px] font-bold select-none">
-                    ${stepNum}
-                </div>
+                <div class="absolute top-3 right-3 w-6 h-6 rounded-full ${color.accent} text-white flex items-center justify-center text-[10px] font-bold select-none">${stepNum}</div>
                 <span class="text-[10px] font-bold uppercase tracking-wider ${color.accentText} select-none">${m.color.toUpperCase()}</span>
                 <h4 class="text-sm font-bold text-slate-800 mt-1 group-hover:text-indigo-600 transition truncate select-none">${m.title}</h4>
                 <p class="text-xs text-slate-500 mt-1 line-clamp-2 select-none">${m.description}</p>
@@ -2225,17 +2143,8 @@
                     linesHTML += `
                         <div class="relative flex items-center group/line">
                             <span class="text-[10px] text-slate-300 mr-2 select-none print:hidden">${lIdx + 1}.</span>
-                            <input type="text" 
-                                   value="${lineText.replace(/"/g, '&quot;')}" 
-                                   placeholder="................................................................................................................................................................................................" 
-                                   oninput="updateAnswerLine('${q.id}', ${lIdx}, this.value)" 
-                                   class="w-full bg-transparent border-b border-dotted border-slate-300 focus:outline-none focus:border-indigo-500 py-1 text-slate-700 text-xs tracking-wide writing-line"
-                                   ${isReadOnly ? 'disabled' : ''} />
-                            <button type="button" onclick="removeAnswerLine('${q.id}', ${lIdx})" 
-                                    class="ml-2 text-rose-400 hover:text-rose-600 font-bold text-xs no-print opacity-0 group-hover/line:opacity-100 transition duration-150 focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" 
-                                    title="Zeile entfernen">
-                                ✕
-                            </button>
+                            <input type="text" value="${lineText.replace(/"/g, '&quot;')}" placeholder="................................................................................................................................................................................................" oninput="updateAnswerLine('${q.id}', ${lIdx}, this.value)" class="w-full bg-transparent border-b border-dotted border-slate-300 focus:outline-none focus:border-indigo-500 py-1 text-slate-700 text-xs tracking-wide writing-line" ${isReadOnly ? 'disabled' : ''} />
+                            <button type="button" onclick="removeAnswerLine('${q.id}', ${lIdx})" class="ml-2 text-rose-400 hover:text-rose-600 font-bold text-xs no-print opacity-0 group-hover/line:opacity-100 transition duration-150 focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" title="Zeile entfernen">✕</button>
                         </div>
                     `;
                 });
@@ -2252,9 +2161,7 @@
                 } else {
                     questionTextHTML = `
                         <span class="text-slate-800">${q.text}</span>
-                        <button type="button" onclick="toggleEditQuestionMode('${q.id}')" class="no-print opacity-0 group-hover/quest:opacity-100 text-indigo-500 hover:text-indigo-700 font-bold text-[10px] px-1 transition focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" title="Frage bearbeiten">
-                            ✏️
-                        </button>
+                        <button type="button" onclick="toggleEditQuestionMode('${q.id}')" class="no-print opacity-0 group-hover/quest:opacity-100 text-indigo-500 hover:text-indigo-700 font-bold text-[10px] px-1 transition focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" title="Frage bearbeiten">✏️</button>
                     `;
                 }
 
@@ -2265,18 +2172,12 @@
                                 <span class="${color.accentText} font-bold select-none shrink-0">${stepNum}.${qNum}</span>
                                 ${questionTextHTML}
                             </h4>
-                            <button type="button" onclick="deleteQuestionInline('${q.id}')" class="no-print text-rose-400 hover:text-rose-600 font-bold text-[10px] px-2 py-0.5 rounded border border-rose-200 hover:bg-rose-50 opacity-0 group-hover/quest:opacity-100 transition focus:opacity-100 shrink-0 ${isReadOnly ? 'hidden' : ''}">
-                                Frage löschen
-                            </button>
+                            <button type="button" onclick="deleteQuestionInline('${q.id}')" class="no-print text-rose-400 hover:text-rose-600 font-bold text-[10px] px-2 py-0.5 rounded border border-rose-200 hover:bg-rose-50 opacity-0 group-hover/quest:opacity-100 transition focus:opacity-100 shrink-0 ${isReadOnly ? 'hidden' : ''}">Frage löschen</button>
                         </div>
-                        <div class="space-y-2 mt-2 pl-4">
-                            ${linesHTML}
-                        </div>
+                        <div class="space-y-2 mt-2 pl-4">${linesHTML}</div>
                         <div class="pl-4 mt-2">
                             <button type="button" onclick="addAnswerLine('${q.id}')" class="no-print text-[10px] ${color.accentText} hover:opacity-80 font-bold flex items-center gap-1 shrink-0 ${isReadOnly ? 'hidden' : ''}">
-                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                </svg>
+                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                                 Zeile hinzufügen
                             </button>
                         </div>
@@ -2286,27 +2187,17 @@
 
             const newQuestionFormHTML = `
                 <div class="no-print mt-6 pt-4 border-t border-slate-100 flex gap-2 ${isReadOnly ? 'hidden' : ''}">
-                    <input type="text" id="newQuestInput_${m.id}" placeholder="Eigene Leitfrage hinzufügen (oder per 🎤 diktieren)..." class="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-1 ${color.ring} focus:outline-none">
-                    <button type="button" id="micBtn_newQuestInput_${m.id}" onclick="toggleInputDictation('newQuestInput_${m.id}')" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition shrink-0" title="Leitfrage per Sprache diktieren">🎤</button>
-                    <button type="button" onclick="addQuestionToMilestone('${m.id}')" class="${color.accent} ${color.hover} text-white font-bold text-xs px-4 py-1.5 rounded-lg shadow transition shrink-0">
-                        Hinzufügen
-                    </button>
+                    <input type="text" id="newQuestInput_${m.id}" placeholder="Eigene Leitfrage hinzufügen..." class="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-1 ${color.ring} focus:outline-none">
+                    <button type="button" id="micBtn_newQuestInput_${m.id}" onclick="toggleInputDictation('newQuestInput_${m.id}')" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition shrink-0" title="Leitfrage diktieren">🎤</button>
+                    <button type="button" onclick="addQuestionToMilestone('${m.id}')" class="${color.accent} ${color.hover} text-white font-bold text-xs px-4 py-1.5 rounded-lg shadow transition shrink-0">Hinzufügen</button>
                 </div>
             `;
 
-            section.innerHTML = `
-                ${headerHTML}
-                <div class="space-y-6">
-                    ${questionsHTML || '<p class="text-xs text-slate-400 italic">Noch keine Leitfragen für diesen Schritt angelegt.</p>'}
-                </div>
-                ${newQuestionFormHTML}
-            `;
-
+            section.innerHTML = `${headerHTML}<div class="space-y-6">${questionsHTML || '<p class="text-xs text-slate-400 italic">Noch keine Leitfragen angelegt.</p>'}</div>${newQuestionFormHTML}`;
             detailsContainer.appendChild(section);
         });
     }
 
-    // RENDERER 2: KALENDER-JOURNAL (INKL. EMOJI-/SUCH-FILTER & LIVE-SPRACHDIKTAT)
     function renderJournalView(isReadOnly) {
         const mapContainer = document.getElementById('roadmapMapContainer');
         const detailsContainer = document.getElementById('milestonesDetailsContainer');
@@ -2321,7 +2212,6 @@
             const allMonthDays = appState.journalDays.filter(d => d.monthId === month.id);
             const filteredMonthDays = allMonthDays.filter(doesDayMatchFilter);
 
-            // 1. Monats-Karte oben in der Übersicht
             const card = document.createElement('a');
             card.href = `#month_section_${month.id}`;
             card.className = `block bg-white border ${color.border} rounded-xl p-4 shadow-sm hover:shadow-md transition duration-200 relative group ${isReadOnly ? '' : 'cursor-move'} ${hasActiveFilter && filteredMonthDays.length === 0 ? 'opacity-45' : ''}`;
@@ -2332,21 +2222,16 @@
             card.setAttribute('ondrop', `handleDrop(event, '${month.id}')`);
             card.setAttribute('ondragend', `handleDragEnd(event)`);
 
-            const dayCountLabel = hasActiveFilter
-                ? `${filteredMonthDays.length} / ${allMonthDays.length} TREFFER`
-                : `${allMonthDays.length} TAGE`;
+            const dayCountLabel = hasActiveFilter ? `${filteredMonthDays.length} / ${allMonthDays.length} TREFFER` : `${allMonthDays.length} TAGE`;
 
             card.innerHTML = `
-                <div class="absolute top-3 right-3 w-6 h-6 rounded-full ${color.accent} text-white flex items-center justify-center text-[10px] font-bold select-none">
-                    ${monthNum}
-                </div>
+                <div class="absolute top-3 right-3 w-6 h-6 rounded-full ${color.accent} text-white flex items-center justify-center text-[10px] font-bold select-none">${monthNum}</div>
                 <span class="text-[10px] font-bold uppercase tracking-wider ${color.accentText} select-none">${dayCountLabel}</span>
                 <h4 class="text-sm font-bold text-slate-800 mt-1 group-hover:text-indigo-600 transition truncate select-none">${month.title}</h4>
                 <p class="text-xs text-slate-500 mt-1 line-clamp-2 select-none">${month.description}</p>
             `;
             mapContainer.appendChild(card);
 
-            // 2. Monats-Detailkarte mit den Kalendertagen
             const section = document.createElement('div');
             section.id = `month_section_${month.id}`;
             section.className = `bg-white border ${color.border} rounded-2xl shadow-sm p-6 sm:p-8 relative page-break`;
@@ -2361,7 +2246,7 @@
                                 <input type="text" id="editMonthTitle_${month.id}" value="${month.title}" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Monatsfokus / Beschreibung</label>
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Monatsfokus</label>
                                 <input type="text" id="editMonthDesc_${month.id}" value="${month.description}" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                         </div>
@@ -2388,21 +2273,17 @@
                             <h3 class="text-xl font-bold text-slate-900 tracking-tight">${month.title}</h3>
                             <p class="text-slate-500 text-xs mt-1 leading-relaxed">${month.description}</p>
                         </div>
-                        <button type="button" onclick="toggleEditMonthMode('${month.id}')" class="no-print bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold text-xs px-3 py-1.5 rounded-lg transition shrink-0 ${isReadOnly ? 'hidden' : ''}">
-                            Monat bearbeiten / löschen
-                        </button>
+                        <button type="button" onclick="toggleEditMonthMode('${month.id}')" class="no-print bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold text-xs px-3 py-1.5 rounded-lg transition shrink-0 ${isReadOnly ? 'hidden' : ''}">Monat bearbeiten / löschen</button>
                     </div>
                 `;
             }
 
-            // Kalendertage innerhalb des Monats rendern
             let daysHTML = '';
             filteredMonthDays.forEach((day) => {
                 const dayEmojis = Array.isArray(day.emojis) ? day.emojis : [];
                 const isEmojiMenuOpen = (openEmojiMenuDayId === day.id);
                 const isDictatingThisDay = activeDictationTarget && activeDictationTarget.type === 'day' && activeDictationTarget.id === day.id;
 
-                // Fliegendes Emoji-Menü HTML
                 let floatingEmojiMenuHTML = '';
                 if (isEmojiMenuOpen && !isReadOnly) {
                     floatingEmojiMenuHTML = `
@@ -2416,10 +2297,7 @@
                                     <div>
                                         <span class="block text-[9px] font-bold text-slate-400 uppercase mb-1">${cat.label}</span>
                                         <div class="flex flex-wrap gap-1">
-                                            ${cat.emojis.map(em => {
-                                                const active = dayEmojis.includes(em);
-                                                return `<button type="button" onclick="toggleDayEmoji(event, '${day.id}', '${em}')" class="w-7 h-7 rounded-lg text-sm flex items-center justify-center transition ${active ? 'bg-indigo-100 border-2 border-indigo-500 scale-105' : 'bg-slate-50 hover:bg-slate-100 border border-slate-200'}">${em}</button>`;
-                                            }).join('')}
+                                            ${cat.emojis.map(em => `<button type="button" onclick="toggleDayEmoji(event, '${day.id}', '${em}')" class="w-7 h-7 rounded-lg text-sm flex items-center justify-center transition ${dayEmojis.includes(em) ? 'bg-indigo-100 border-2 border-indigo-500 scale-105' : 'bg-slate-50 hover:bg-slate-100 border border-slate-200'}">${em}</button>`).join('')}
                                         </div>
                                     </div>
                                 `).join('')}
@@ -2432,7 +2310,6 @@
                     `;
                 }
 
-                // Tages-Kopfzeile
                 let dayHeaderHTML = '';
                 if (editingDayId === day.id && !isReadOnly) {
                     dayHeaderHTML = `
@@ -2446,42 +2323,25 @@
                 } else {
                     dayHeaderHTML = `
                         <div class="flex flex-wrap items-center gap-2 flex-1">
-                            <span class="px-2 py-0.5 rounded text-[11px] font-bold ${color.badge} shrink-0">
-                                ${formatGermanDayDate(day.date)}
-                            </span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-bold ${color.badge} shrink-0">${formatGermanDayDate(day.date)}</span>
                             <span class="text-xs font-bold text-slate-800">${day.title}</span>
-                            <button type="button" onclick="toggleEditDayMode('${day.id}')" class="no-print opacity-0 group-hover/day:opacity-100 text-indigo-500 hover:text-indigo-700 font-bold text-[10px] px-1 transition focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" title="Datum oder Tagesthema ändern">
-                                ✏️
-                            </button>
+                            <button type="button" onclick="toggleEditDayMode('${day.id}')" class="no-print opacity-0 group-hover/day:opacity-100 text-indigo-500 hover:text-indigo-700 font-bold text-[10px] px-1 transition focus:opacity-100 ${isReadOnly ? 'hidden' : ''}" title="Bearbeiten">✏️</button>
                         </div>
                     `;
                 }
 
-                // Emojis + Sprachdiktat-Button + Fliegendes Emoji-Menü
                 const controlsDisplayHTML = `
                     <div class="relative flex flex-wrap items-center gap-1.5 shrink-0">
                         <div class="flex items-center gap-1 flex-wrap">
-                            ${dayEmojis.map(em => `
-                                <span onclick="toggleDayEmoji(event, '${day.id}', '${em}')" title="Klicken zum Entfernen" class="cursor-pointer bg-slate-100 hover:bg-rose-50 border border-slate-200 rounded-md px-1.5 py-0.5 text-sm leading-none transition select-none">
-                                    ${em}
-                                </span>
-                            `).join('')}
+                            ${dayEmojis.map(em => `<span onclick="toggleDayEmoji(event, '${day.id}', '${em}')" title="Entfernen" class="cursor-pointer bg-slate-100 hover:bg-rose-50 border border-slate-200 rounded-md px-1.5 py-0.5 text-sm leading-none transition select-none">${em}</span>`).join('')}
                         </div>
-                        <!-- MIKROFON / SPRACHDIKTAT BUTTON -->
-                        <button type="button"
-                                data-day-mic="${day.id}"
-                                onclick="toggleDayDictation(event, '${day.id}')"
-                                class="no-print ${isDictatingThisDay ? 'bg-rose-600 hover:bg-rose-700 text-white animate-pulse' : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200'} font-bold text-[10px] px-2.5 py-1 rounded-lg transition flex items-center gap-1 ${isReadOnly ? 'hidden' : ''}"
-                                title="Eintrag diktieren (Sprachbefehle: „Guter Tag“ 😄, „Normaler Tag“ 😐, „Schlechter Tag“ ☹️)">
+                        <button type="button" data-day-mic="${day.id}" onclick="toggleDayDictation(event, '${day.id}')" class="no-print ${isDictatingThisDay ? 'bg-rose-600 hover:bg-rose-700 text-white animate-pulse' : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200'} font-bold text-[10px] px-2.5 py-1 rounded-lg transition flex items-center gap-1 ${isReadOnly ? 'hidden' : ''}">
                             <span>${isDictatingThisDay ? '🔴' : '🎤'}</span> ${isDictatingThisDay ? 'Aufnahme... (Stopp)' : 'Diktieren'}
                         </button>
-                        <!-- FLIEGENDES EMOJI MENÜ BUTTON -->
-                        <button type="button" onclick="toggleEmojiMenu(event, '${day.id}')" class="no-print bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-bold text-[10px] px-2 py-1 rounded-lg transition flex items-center gap-1 ${isReadOnly ? 'hidden' : ''}" title="Fliegendes Emoji-Menü öffnen">
+                        <button type="button" onclick="toggleEmojiMenu(event, '${day.id}')" class="no-print bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-bold text-[10px] px-2 py-1 rounded-lg transition flex items-center gap-1 ${isReadOnly ? 'hidden' : ''}">
                             <span>😊</span> + Emoji
                         </button>
-                        <button type="button" onclick="deleteDayInline('${day.id}')" class="no-print text-rose-400 hover:text-rose-600 font-bold text-[10px] px-2 py-1 rounded border border-rose-200 hover:bg-rose-50 opacity-0 group-hover/day:opacity-100 transition ${isReadOnly ? 'hidden' : ''}" title="Kalendertag löschen">
-                            ✕
-                        </button>
+                        <button type="button" onclick="deleteDayInline('${day.id}')" class="no-print text-rose-400 hover:text-rose-600 font-bold text-[10px] px-2 py-1 rounded border border-rose-200 hover:bg-rose-50 opacity-0 group-hover/day:opacity-100 transition ${isReadOnly ? 'hidden' : ''}">✕</button>
                         ${floatingEmojiMenuHTML}
                     </div>
                 `;
@@ -2492,49 +2352,27 @@
                             ${dayHeaderHTML}
                             ${controlsDisplayHTML}
                         </div>
-                        <!-- Live-Vorschau während man spricht -->
                         <div id="dictationPreview_${day.id}" class="no-print hidden mb-2 px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-[11px] font-medium italic"></div>
-                        <!-- Automatisch mitwachsendes Textfeld (Bildschirm) -->
-                        <textarea
-                            id="dayTextarea_${day.id}"
-                            placeholder="Tagesnotizen hier eintippen oder auf „🎤 Diktieren“ tippen (Sprachbefehle: „Guter Tag“ = 😄, „Normaler Tag“ = 😐, „Schlechter Tag“ = ☹️)..."
-                            oninput="updateDayEntryText('${day.id}', this)"
-                            class="no-print w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-1 ${color.ring} journal-area"
-                            ${isReadOnly ? 'disabled' : ''}>${day.text || ''}</textarea>
-                        <!-- Druck-Spiegelung (für kompletten Text im PDF-Druck) -->
+                        <textarea id="dayTextarea_${day.id}" placeholder="Tagesnotizen hier eintippen oder per 🎤 diktieren..." oninput="updateDayEntryText('${day.id}', this)" class="no-print w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-1 ${color.ring} journal-area" ${isReadOnly ? 'disabled' : ''}>${day.text || ''}</textarea>
                         <div id="printMirror_${day.id}" class="hidden print-only whitespace-pre-wrap text-xs text-slate-800 leading-relaxed border-l-2 border-slate-300 pl-3 py-1">${day.text || ' '}</div>
                     </div>
                 `;
             });
 
-            // Formular zum Hinzufügen eines neuen Kalendertages
             const now = new Date();
             const todayISO = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
             const newDayFormHTML = `
                 <div class="no-print mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-2 ${isReadOnly ? 'hidden' : ''}">
                     <input type="date" id="newDayDate_${month.id}" value="${todayISO}" class="bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-1 ${color.ring} focus:outline-none">
                     <div class="flex flex-1 gap-1.5">
-                        <input type="text" id="newDayTitle_${month.id}" placeholder="Tagesthema eingeben oder diktieren (z. B. Abstimmung Schnittstelle)..." class="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-1 ${color.ring} focus:outline-none">
-                        <button type="button" id="micBtn_newDayTitle_${month.id}" onclick="toggleInputDictation('newDayTitle_${month.id}')" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition shrink-0" title="Tagesthema per Sprache diktieren">🎤</button>
+                        <input type="text" id="newDayTitle_${month.id}" placeholder="Tagesthema eingeben oder diktieren..." class="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:ring-1 ${color.ring} focus:outline-none">
+                        <button type="button" id="micBtn_newDayTitle_${month.id}" onclick="toggleInputDictation('newDayTitle_${month.id}')" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition shrink-0" title="Tagesthema diktieren">🎤</button>
                     </div>
-                    <button type="button" onclick="addDayToMonth('${month.id}')" class="${color.accent} ${color.hover} text-white font-bold text-xs px-4 py-1.5 rounded-lg shadow transition shrink-0">
-                        + Kalendertag anlegen
-                    </button>
+                    <button type="button" onclick="addDayToMonth('${month.id}')" class="${color.accent} ${color.hover} text-white font-bold text-xs px-4 py-1.5 rounded-lg shadow transition shrink-0">+ Kalendertag anlegen</button>
                 </div>
             `;
 
-            const emptyHint = hasActiveFilter
-                ? '<p class="text-xs text-slate-400 italic">Keine Kalendertage in diesem Monat entsprechen dem aktuellen Emoji-/Suchfilter.</p>'
-                : '<p class="text-xs text-slate-400 italic">Noch keine Kalendertage für diesen Monat eingetragen.</p>';
-
-            section.innerHTML = `
-                ${headerHTML}
-                <div class="space-y-4">
-                    ${daysHTML || emptyHint}
-                </div>
-                ${newDayFormHTML}
-            `;
-
+            section.innerHTML = `${headerHTML}<div class="space-y-4">${daysHTML || '<p class="text-xs text-slate-400 italic">Noch keine Kalendertage für diesen Monat eingetragen.</p>'}</div>${newDayFormHTML}`;
             detailsContainer.appendChild(section);
         });
 
@@ -2543,27 +2381,16 @@
         }, 0);
     }
 
-    // =========================================================================
-    // SOFORT-INITIALISIERUNG BEIM LADEN DER SEITE
-    // =========================================================================
     function initApplication() {
         loadFromLocalStorage();
         syncStateToUI();
 
-        // Prüfen, ob ?modus=heute, #heute ODER der Handy-Autostart-Schalter aktiv ist
         const urlParams = new URLSearchParams(window.location.search);
         const modusParam = (urlParams.get('modus') || urlParams.get('mode') || urlParams.get('aktion') || '').toLowerCase();
         const hashParam = (window.location.hash || '').replace('#', '').toLowerCase();
         const isAutoQuickStartEnabled = localStorage.getItem('stollberg_auto_quickstart') === 'true';
 
-        if (
-            modusParam === 'heute' ||
-            modusParam === 'today' ||
-            modusParam === 'journal' ||
-            hashParam === 'heute' ||
-            hashParam === 'today' ||
-            isAutoQuickStartEnabled
-        ) {
+        if (modusParam === 'heute' || modusParam === 'today' || modusParam === 'journal' || hashParam === 'heute' || hashParam === 'today' || isAutoQuickStartEnabled) {
             window.triggerTodayQuickStart(true);
         }
     }
