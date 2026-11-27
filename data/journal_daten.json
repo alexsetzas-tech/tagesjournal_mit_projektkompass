@@ -1,19 +1,178 @@
 {
   "activeMode": "journal",
-  "projectName": "Projekt-Kompass: Projektstart bis Abschluss",
+  "projectName": "Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)",
   "headerPhase": "Phase 1: Vorbereitung",
   "headerDocBadge": "Kick-off-Handout & Roadmap",
   "headerSubtitle": "Dieses Leitdokument dient als strukturierter Fahrplan zur Auftragsklärung und Prozessgestaltung. Es enthält die strategischen Projektmeilensteine sowie zentrale Leitfragen für die Inbetriebnahme.",
-  "footerLeft": "Projekt-Kompass Handout © 2026",
+  "footerLeft": "Projekt-Kompass Handout © 2026 Stollberg Arbeits Erleichterung",
   "footerRight": "„Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“",
-  "milestones": [],
-  "customQuestions": [],
-  "answers": {},
+  "milestones": [
+    {
+      "id": "m1",
+      "title": "Konzeptionierung & Datenerfassung",
+      "description": "Phase 1 planen und starten",
+      "color": "indigo"
+    },
+    {
+      "id": "m2",
+      "title": "Schnittstellen-Abgleich & Datentransfer",
+      "description": "Technischer Handshake",
+      "color": "emerald"
+    },
+    {
+      "id": "m3",
+      "title": "Datenkonsolidierung & Verarbeitung",
+      "description": "Phase 2 auf dem Zentral-PC",
+      "color": "blue"
+    },
+    {
+      "id": "m4",
+      "title": "Freigabe-Gateway & Zahllauf",
+      "description": "Letzte Meile zur Auszahlung",
+      "color": "rose"
+    }
+  ],
+  "customQuestions": [
+    {
+      "id": "q1_m1",
+      "milestoneId": "m1",
+      "text": "Welche exakten Datenfelder (z. B. Personalnummer, Projekt-ID) müssen zwingend in der App erfasst werden?",
+      "type": "open"
+    },
+    {
+      "id": "q2_m1",
+      "milestoneId": "m1",
+      "text": "Wie stellen wir sicher, dass die App auch offline im Funkloch absolut zuverlässig speichert?",
+      "type": "open"
+    },
+    {
+      "id": "q3_m1",
+      "milestoneId": "m1",
+      "text": "Welches Smartphone-Betriebssystem (Android, iOS oder beide via Cross-Platform) wird vorrangig genutzt?",
+      "type": "open"
+    },
+    {
+      "id": "q1_m2",
+      "milestoneId": "m2",
+      "text": "Wie authentifiziert sich die App sicher an der REST-API, um Missbrauch zu verhindern?",
+      "type": "open"
+    },
+    {
+      "id": "q2_m2",
+      "milestoneId": "m2",
+      "text": "Wie visualisieren wir Übertragungsfehler für den Mitarbeiter direkt auf dem Display?",
+      "type": "open"
+    },
+    {
+      "id": "q3_m2",
+      "milestoneId": "m2",
+      "text": "Wird nach erfolgreicher Übertragung die lokale Datei auf dem Handy verschoben oder direkt gelöscht?",
+      "type": "open"
+    },
+    {
+      "id": "q1_m3",
+      "milestoneId": "m3",
+      "text": "Wie werden fehlerhafte oder manipulierte CSV-Dateien bei der Einlesung automatisch aussortiert?",
+      "type": "open"
+    },
+    {
+      "id": "q2_m3",
+      "milestoneId": "m3",
+      "text": "Wie ordnen wir die erfassten Stundenlöhne den Personalnummern datenschutzkonform zu?",
+      "type": "open"
+    },
+    {
+      "id": "q3_m3",
+      "milestoneId": "m3",
+      "text": "Welches Backup-Verfahren nutzen wir für die eingelesenen Originaldaten auf dem Büro-PC?",
+      "type": "open"
+    },
+    {
+      "id": "q1_m4",
+      "milestoneId": "m4",
+      "text": "Welche Person trägt die finale Verantwortung für die Freigabe des Zahllaufs?",
+      "type": "open"
+    },
+    {
+      "id": "q2_m4",
+      "milestoneId": "m4",
+      "text": "Wie dokumentieren wir das manuelle Go-Signal revisionssicher für Wirtschaftsprüfer?",
+      "type": "open"
+    },
+    {
+      "id": "q3_m4",
+      "milestoneId": "m4",
+      "text": "In welchem Dateiformat übergeben wir die freigegebenen Lohnsummen an das Bankprogramm?",
+      "type": "open"
+    }
+  ],
+  "answers": {
+    "q1_m1": [
+      "",
+      "",
+      ""
+    ],
+    "q2_m1": [
+      "",
+      "",
+      ""
+    ],
+    "q3_m1": [
+      "",
+      "",
+      ""
+    ],
+    "q1_m2": [
+      "",
+      "",
+      ""
+    ],
+    "q2_m2": [
+      "",
+      "",
+      ""
+    ],
+    "q3_m2": [
+      "",
+      "",
+      ""
+    ],
+    "q1_m3": [
+      "",
+      "",
+      ""
+    ],
+    "q2_m3": [
+      "",
+      "",
+      ""
+    ],
+    "q3_m3": [
+      "",
+      "",
+      ""
+    ],
+    "q1_m4": [
+      "",
+      "",
+      ""
+    ],
+    "q2_m4": [
+      "",
+      "",
+      ""
+    ],
+    "q3_m4": [
+      "",
+      "",
+      ""
+    ]
+  },
   "journalHeader": {
-    "title": "Projekt- & Tagesjournal (Eurodeco Wallsystem GmbH)",
+    "title": "Projekt- & Tagesjournal (Hr. Stollberg & BTZ)",
     "phase": "Laufendes Journal",
     "docBadge": "Kalender-Journal & Tagesprotokoll",
-    "subtitle": "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und täglichen Aufgaben auf Kalendertagbasis."
+    "subtitle": "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und Aufgaben auf Kalendertagbasis."
   },
   "journalFooter": {
     "left": "Kalender-Journal & Tagesdokumentation © 2026",
@@ -23,422 +182,53 @@
     {
       "id": "jm1",
       "title": "November 2026",
-      "description": "Praktikumsstart bei Eurodeco Wallsystem GmbH",
+      "description": "Kick-off, Anforderungsanalyse & Grundkonzept",
       "color": "indigo"
+    },
+    {
+      "id": "jm2",
+      "title": "Dezember 2026",
+      "description": "Schnittstellen-Design, Prototyp & Testlauf",
+      "color": "emerald"
     }
   ],
   "journalDays": [
     {
+      "id": "jd1",
+      "monthId": "jm1",
+      "date": "2026-11-06",
+      "title": "Kick-off & Abstimmung der Dokumentations-Struktur",
+      "emojis": [
+        "😄",
+        "🚀",
+        "✅"
+      ],
+      "text": "Kick-off-Unterlagen und Handout vorbereitet. Struktur für Meilensteine und das begleitende Tagesjournal festgelegt.\nNächster Schritt: Detailklärung der Pflichtfelder für die mobile Erfassung."
+    },
+    {
       "id": "jd2",
       "monthId": "jm1",
       "date": "2026-11-09",
-      "title": "Erster Tag bei Eurodeco Wallsystem GmbH",
+      "title": "Technische Prüfung Offline-Speicherung & CSV-Format",
       "emojis": [
-        "😄",
+        "😐",
         "🛠️",
-        "🤝"
-      ],
-      "text": "Ankunft 7.55UHR\n- Telefondienst\n- Aufträge prüfen (Stückliste und Palletteninhalt)\n-  Auftragsbegleitscheine angelegt und gedruckt (Auftragsbeschreibung und Stückliste) noch 13 Uhr war nicht viel los aber ich habe eine neue App weiterentwickelt. Auto leider laut und kracht und ich und hoffe dass es funktioniert dass mir von BTZ ein Auto gestellt wird bis ich es repariert habe. tatsächlich habe ich noch meinen bewegungsplan eingehalten und es ist jetzt 25 Korrektur 17:25 Uhr"
-    },
-    {
-      "id": "jd_1794332316826",
-      "monthId": "jm1",
-      "date": "2026-11-10",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "😄",
-        "📅"
-      ],
-      "text": "Heute definitiv viel und herausfordernde Tätigkeiten. den Tag über Telefondienst.\nProjektbesprechung für kunden Anfrage zur Kalkulation. Erstellung einer Stückliste aus architektenzeichnungen für eine Treppe.\n für ein treppenprojekt Stückliste in Excel bearbeitet. Einführung in das Kalkulationsschema und in das Management der Arbeitspläne. verbessern Kalkulation. Absatz Einfahrt Auto BTZ weil mein Auto kaputt war empfangen - "
-    },
-    {
-      "id": "jd_1794332705128",
-      "monthId": "jm1",
-      "date": "2026-11-10",
-      "title": "wie habe ich mich gefühlt",
-      "emojis": [
-        "📝",
-        "😄",
-        "🔥"
-      ],
-      "text": "Ein sehr herausfordernden Tag nahe an meiner stressgrenze weil es viele Aufgaben gegeben hat die ich noch nicht gewohnt war und keine Routine dabei hatte. Herr schleinkofer und die Kollegen sind nett und ein angenehmes Arbeitsverhältnis. Weil viel zu tun war hatte ich nicht den Eindruck dass es hektisch war. Das schöne an dem Tag war dass ich obwohl viel zu tun war die Arbeitslast bewältigen kann ohne dass ich das Gefühl gehabt hätte aufgeben zu müssen.  Das Thema mit meinem Auto hat mich den ganzen Tag über beschäftigt weil ich befürchte bzw weil ich nicht weiß was kaputt ist und was repariert werden muss "
-    },
-    {
-      "id": "jd_1794406987386",
-      "monthId": "jm1",
-      "date": "2026-11-11",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "📅",
-        "😐",
-        "😄"
-      ],
-      "text": "- Telefondienst \n- Vorbereitung Auftragskalkulation fertig stellen \n"
-    },
-    {
-      "id": "jd_1794407252879",
-      "monthId": "jm1",
-      "date": "2026-11-11",
-      "title": "Wie habe ich mich gefühlt",
-      "emojis": [
-        "😄",
-        "😐"
-      ],
-      "text": "Gut. Viel weniger stressig als gestern. Auch konnte ich das Leihauto von BTZ laden.\nRoutine fehlt noch "
-    },
-    {
-      "id": "jd_1794461951442",
-      "monthId": "jm1",
-      "date": "2026-11-12",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "📅",
-        "😄",
-        "😐",
-        "✅"
-      ],
-      "text": "Test ja wie fühle ich mich tatsächlich gut gerade einen Verzögerung gemacht heute war es in der Arbeit entspannt. Den Tag über Telefondienst\n- Stückliste für einen Auftrag zur Kalkulation vorbereitet. ich habe keine Kritik bekommen für meine Arbeit also keine negative Kritik was ich gut finde. Ich habe in meiner Leerlaufzeit die Tagesprotokoll App weiter programmiert und die zeiterfassungs-app verbessert."
-    },
-    {
-      "id": "jd_1794552334121",
-      "monthId": "jm1",
-      "date": "2026-11-13",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "😄",
-        "📅"
-      ],
-      "text": "Heute bin ich richtig herzlich im BTZ empfangen worden was mir richtig gut getan hat.ich habe viele Gespräche geführt die alle positiv waren und habe mich tatsächlich wohlgefühlt und sogar anschließend noch meinen bewegungsplan eingehalten."
-    },
-    {
-      "id": "jd_1794814683737",
-      "monthId": "jm1",
-      "date": "2026-11-16",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "📅",
-        "😊",
-        "☕"
-      ],
-      "text": "- gutes Feed Back Gespräch mit Rudi Schleinkofer. (darf mich auch relaxter geben) und er ist mit meiner Arbeit zufrieden\n- Tagesausblick . Messe Orga für MUC (Messe Start ca. Anfang, Mitte Januar)\n- Suche für Teppichboden\n- Brigitte Schleinkofer, kurze Einführung in Versand / keine to do's und er ist mit meiner Arbeit zufrieden"
-    },
-    {
-      "id": "jd_1794849436454",
-      "monthId": "jm1",
-      "date": "2026-11-16",
-      "title": "wie geht es mir mit den Aufgaben",
-      "emojis": [
-        "📝",
-        "😐",
-        "📊"
-      ],
-      "text": "Heute war eher ein ruhiger Tag. Weil ich einen schmerzenden nerv am Genick gehabt habe war ich meistens verspannt und obwohl alles ruhig und ohne Stress ablief habe ich mich deswegen nicht wirklich gut gefühlt. mit den Aufgaben ging es mir gut. Zum Walken nach der Arbeit habe ich mich durchgerungen. Hat mir im Endeffekt gut getan."
-    },
-    {
-      "id": "jd_1794921706367",
-      "monthId": "jm1",
-      "date": "2026-11-17",
-      "title": "Tagesnotiz & Protokoll",
-      "emojis": [
-        "📝"
-      ],
-      "text": "- Vorbereitung Messe (Farbmusterauswahl für Stand)\n   so wie ich es verstanden habe, könnte ich ab 11.1.'27 auf die Messe München mitfahren\n- Peu a peu Aufgaben für Messe übernehmen\n- Verteilzeit (programmieren projektkompass und zeiterfassung"
-    },
-    {
-      "id": "jd_1794936070330",
-      "monthId": "jm1",
-      "date": "2026-11-17",
-      "title": "wie geht es mir mit den Aufgaben",
-      "emojis": [
-        "😄",
-        "📝",
-        "🧠",
-        "⚙️"
-      ],
-      "text": "Ja wie geht es mir mit den Aufgaben tatsächlich gut und motiviert heute gerade weil die Themen mit der Messe dazu gekommen sind. Hoffe dass die Themen nicht zu komplex werden dass ich den Überblick nicht verliere da die Themen alle neu sind muss ich mich gut sortieren. heute war es leicht stressig aber nicht erschöpfend immer noch ein sehr gutes Betriebsklima. Ich denke ich habe eine gute Balance gefunden zwischen fragen weil ich die Aufgabe nicht komplett erfasst habe und selbstständigen Arbeiten"
-    },
-    {
-      "id": "jd_1795007369292",
-      "monthId": "jm1",
-      "date": "2026-11-18",
-      "title": "Tagesnotiz & Protokoll",
-      "emojis": [
-        "📝",
-        "📅",
         "💻"
       ],
-      "text": "- Messevorbereitung // Wandpaneele verschlüsseln und Deko Anordnungsentwurf\n- Kurz Briefing Rude To Dos abgeschlo0ssen offen"
+      "text": "Lokale Datenhaltung im Funkloch evaluiert. Datensätze werden zunächst im Gerätespeicher gepuffert und erst nach erfolgreichem Handshake als übertragen markiert."
     },
     {
-      "id": "jd_1795022639302",
-      "monthId": "jm1",
-      "date": "2026-11-18",
-      "title": "wie geht es mir mit den Aufgaben",
-      "emojis": [
-        "📝",
-        "😐",
-        "😄"
-      ],
-      "text": "Heute gut eine gute Auslastung. die Aufgaben sind anspruchsvoll aber nicht stressig und ich habe nicht das Gefühl dass Druck auf mich ausgeübt wird"
-    },
-    {
-      "id": "jd_1795106800783",
-      "monthId": "jm1",
-      "date": "2026-11-19",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "📅",
-        "😄",
-        "✅",
-        "🛠️"
-      ],
-      "text": "Teppich bestellen für Messe Absatz stellungswände vorbereiten für Messe\nAlleine mit der Leiter neun fast 3 m hohe Wände mit muster beklebt und ausgerichtet und verschiedene Anordnungen probiert.\nRelativ anstrengend geistig und auch körperlich. Das Tagespensum habe ich gerade so bis 3:30 Uhr geschafft. "
-    },
-    {
-      "id": "jd_1795107104002",
-      "monthId": "jm1",
-      "date": "2026-11-19",
-      "title": "wie geht es mir mit den Aufgaben",
-      "emojis": [
-        "🧠",
-        "😄",
-        "😐"
-      ],
-      "text": "Insgesamt motivierende Aufgaben wenn auch von meiner Leistungsfähigkeit grenzwertig. Ich habe mich darüber gefreut dass ich die Aufgabe geschafft habe. Abends erschöpft aber nicht niedergeschlagen "
-    },
-    {
-      "id": "jd_1795159192679",
-      "monthId": "jm1",
-      "date": "2026-11-20",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "📅"
-      ],
-      "text": ""
-    },
-    {
-      "id": "jd_1795450404490",
-      "monthId": "jm1",
-      "date": "2026-11-23",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "📅"
-      ],
-      "text": "Gute Auslastung den ganzen Tag über. Hauptsächlich Design für den Stand auf der Messe. Einteilung der Paneele für kleinere Dekore.  Anordnung und systematik mit Rudi besprochen."
-    },
-    {
-      "id": "jd_1795450636908",
-      "monthId": "jm1",
-      "date": "2026-11-23",
-      "title": "wie geht es mir mit den Aufgaben",
-      "emojis": [
-        "📝",
-        "😐",
-        "😄"
-      ],
-      "text": "Es war heute stressfrei und kein unangenehmes Gespräch wie ich es befürchtet hatte. Was gut war. Ganz normales gutes Arbeitsklima"
-    },
-    {
-      "id": "jd_1795542341236",
-      "monthId": "jm1",
-      "date": "2026-11-24",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "📅"
-      ],
-      "text": "Besprechung und Planung für den Messestand (Brainstorming). Absatz Protokoll verfasst App für Projekt Kompass angepasst und neu erstellt zum Planen der Messe. Mithilfe Koordination der Tätigkeiten. Beschriftungen der dekore"
-    },
-    {
-      "id": "jd_1795542618887",
-      "monthId": "jm1",
-      "date": "2026-11-24",
-      "title": "wie geht es mir mit den Aufgaben",
+      "id": "jd3",
+      "monthId": "jm2",
+      "date": "2026-12-01",
+      "title": "Erster Testlauf Datenkonsolidierung am Zentral-PC",
       "emojis": [
         "😄",
-        "📝"
+        "📊",
+        "🔍"
       ],
-      "text": "Ein aus gut ausgefüllter Tag ohne Leerlauf Zusammenarbeit hat gut getan. Ich habe das Gefühl dass ich mich wieder an einen Arbeitsalltag gewöhne. Ich muss aber trotzdem aufpassen dass ich nicht überpace also zu viele Sachen zu schnell erledigen. Will"
-    },
-    {
-      "id": "jd_1795627249284",
-      "monthId": "jm1",
-      "date": "2026-11-25",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "📅"
-      ],
-      "text": "Müsste in Excel aufgesetzt und gefüllt. Mit olina eine Besprechung bezüglich fotos für die Messe zum ausstellen. Versionsmanagement für eine App zur to-do-listenverwaltung verbessert. Stellungspaneele zum für kleinere Dekore vorbereitet und beklebt."
-    },
-    {
-      "id": "jd_1795627482179",
-      "monthId": "jm1",
-      "date": "2026-11-25",
-      "title": "wie geht es mir mit den Aufgaben",
-      "emojis": [
-        "📝",
-        "😐",
-        "😄",
-        "☹️"
-      ],
-      "text": "Insgesamt gut. Ich war auch kurzfristig gestresst und gefrustet weil ich die richtige und gute Lösung zum Ausmessen der paneele lange nicht gefunden habe. nach ein paar Versuchen jedoch ein gutes Konzept gehabt. Ich bin gerade rechtzeitig noch in der Zeit mit der kompletten Paneele geworden. Sonst alles normal"
-    },
-    {
-      "id": "jd_1795718786191",
-      "monthId": "jm1",
-      "date": "2026-11-26",
-      "title": "Tagesprotokoll & Notizen",
-      "emojis": [
-        "📅",
-        "😐"
-      ],
-      "text": "Heute Vormittag eher Leerlauf ich habe die Projekt App weiterentwickelt. Etikett entwickelt für die kundenweihnachtsgeschenke Pakete mit Versandschein versehen.  Getränke holen.  Weihnachtsgeschenke für die Kunden beklebt Nachmittag Gespräch hr. schleinkofer und Rudi über den bisherigen Verlauf meines Praktikums"
-    },
-    {
-      "id": "jd_1795719022874",
-      "monthId": "jm1",
-      "date": "2026-11-26",
-      "title": "wie geht es mir mit den Aufgaben",
-      "emojis": [
-        "📝"
-      ],
-      "text": "Heute ganz normal gut kein Stress kein Zeitdruck die Etiketten haben funktioniert. Das Gespräch heute war weder euphorisch noch belastend normales gutes Feedback. Ich kann mit meinen Aufgaben umgehen bin aber bei weitem nicht so schnell wie ein Handwerker ca 50% langsamer. Um mich sinnvoll einzuarbeiten in verantwortungsvollere Aufgaben ist aktuell nicht so viel Zeit seitens Rudi. Ich für meinen Teil finde dass ich gut ausgelastet bin und finde es für mich gut die Aufgaben gelöst zu haben"
+      "text": "Test-CSV-Dateien eingelesen und Plausibilitätsprüfung für Stundensätze und Personalnummern durchgespielt."
     }
   ],
-  "versions": [
-    {
-      "activeMode": "journal",
-      "projectName": "Zeiterfassungs-Einführung (Hr. Stollberg & BTZ)",
-      "headerPhase": "Phase 1: Vorbereitung",
-      "headerDocBadge": "Kick-off-Handout & Roadmap",
-      "headerSubtitle": "Dieses Leitdokument dient als strukturierter Fahrplan zur Auftragsklärung und Prozessgestaltung. Es enthält die strategischen Projektmeilensteine sowie zentrale Leitfragen für die Inbetriebnahme.",
-      "footerLeft": "Projekt-Kompass Handout © 2026",
-      "footerRight": "„Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“",
-      "milestones": [],
-      "customQuestions": [],
-      "answers": {},
-      "journalHeader": {
-        "title": "Projekt- & Tagesjournal (Eurodeco Wallsystem GmbH)",
-        "phase": "Laufendes Journal",
-        "docBadge": "Kalender-Journal & Tagesprotokoll",
-        "subtitle": "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und täglichen Aufgaben auf Kalendertagbasis."
-      },
-      "journalFooter": {
-        "left": "Kalender-Journal & Tagesdokumentation © 2026",
-        "right": "„Tag für Tag strukturiert dokumentiert – Fortschritt sichtbar machen.“"
-      },
-      "journalMonths": [
-        {
-          "id": "jm1",
-          "title": "November 2026",
-          "description": "Praktikumsstart bei Eurodeco Wallsystem GmbH",
-          "color": "indigo"
-        }
-      ],
-      "journalDays": [
-        {
-          "id": "jd2",
-          "monthId": "jm1",
-          "date": "2026-11-09",
-          "title": "Erster Tag bei Eurodeco Wallsystem GmbH",
-          "emojis": [
-            "😐"
-          ],
-          "text": "Ankunft 7.55UHR\n- Telefondienst\n- Aufträge prüfen (Stückliste und Palletteninhalt)\n-  Auftragsbegleitscheine angelegt und gedruckt (Auftragsbeschreibung und Stückliste)"
-        }
-      ],
-      "id": "v_1794225279195",
-      "dateLabel": "9.11.2026, 12:54:39",
-      "versionNum": 1
-    },
-    {
-      "activeMode": "journal",
-      "projectName": "Projekt-Kompass: Projektstart bis Abschluss",
-      "headerPhase": "Phase 1: Vorbereitung",
-      "headerDocBadge": "Kick-off-Handout & Roadmap",
-      "headerSubtitle": "Dieses Leitdokument dient als strukturierter Fahrplan zur Auftragsklärung und Prozessgestaltung. Es enthält die strategischen Projektmeilensteine sowie zentrale Leitfragen für die Inbetriebnahme.",
-      "footerLeft": "Projekt-Kompass Handout © 2026",
-      "footerRight": "„Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“",
-      "milestones": [],
-      "customQuestions": [],
-      "answers": {},
-      "journalHeader": {
-        "title": "Projekt- & Tagesjournal (Eurodeco Wallsystem GmbH)",
-        "phase": "Laufendes Journal",
-        "docBadge": "Kalender-Journal & Tagesprotokoll",
-        "subtitle": "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und täglichen Aufgaben auf Kalendertagbasis."
-      },
-      "journalFooter": {
-        "left": "Kalender-Journal & Tagesdokumentation © 2026",
-        "right": "„Tag für Tag strukturiert dokumentiert – Fortschritt sichtbar machen.“"
-      },
-      "journalMonths": [
-        {
-          "id": "jm1",
-          "title": "November 2026",
-          "description": "Praktikumsstart bei Eurodeco Wallsystem GmbH",
-          "color": "indigo"
-        }
-      ],
-      "journalDays": [
-        {
-          "id": "jd2",
-          "monthId": "jm1",
-          "date": "2026-11-09",
-          "title": "Erster Tag bei Eurodeco Wallsystem GmbH",
-          "emojis": [
-            "😐"
-          ],
-          "text": "Ankunft 7.55UHR\n- Telefondienst\n- Aufträge prüfen (Stückliste und Palletteninhalt)\n-  Auftragsbegleitscheine angelegt und gedruckt (Auftragsbeschreibung und Stückliste)"
-        }
-      ],
-      "id": "v_1794225674496",
-      "dateLabel": "9.11.2026, 13:01:14",
-      "versionNum": 2
-    },
-    {
-      "activeMode": "journal",
-      "projectName": "Projekt-Kompass: Projektstart bis Abschluss",
-      "headerPhase": "Phase 1: Vorbereitung",
-      "headerDocBadge": "Kick-off-Handout & Roadmap",
-      "headerSubtitle": "Dieses Leitdokument dient als strukturierter Fahrplan zur Auftragsklärung und Prozessgestaltung. Es enthält die strategischen Projektmeilensteine sowie zentrale Leitfragen für die Inbetriebnahme.",
-      "footerLeft": "Projekt-Kompass Handout © 2026",
-      "footerRight": "„Prozesse vereinfachen, Zeit gewinnen, Fehler ausschließen.“",
-      "milestones": [],
-      "customQuestions": [],
-      "answers": {},
-      "journalHeader": {
-        "title": "Projekt- & Tagesjournal (Eurodeco Wallsystem GmbH)",
-        "phase": "Laufendes Journal",
-        "docBadge": "Kalender-Journal & Tagesprotokoll",
-        "subtitle": "Chronologisches Tagesprotokoll zur lückenlosen Dokumentation von Projektfortschritten, Abstimmungen, Erkenntnissen und täglichen Aufgaben auf Kalendertagbasis."
-      },
-      "journalFooter": {
-        "left": "Kalender-Journal & Tagesdokumentation © 2026",
-        "right": "„Tag für Tag strukturiert dokumentiert – Fortschritt sichtbar machen.“"
-      },
-      "journalMonths": [
-        {
-          "id": "jm1",
-          "title": "November 2026",
-          "description": "Praktikumsstart bei Eurodeco Wallsystem GmbH",
-          "color": "indigo"
-        }
-      ],
-      "journalDays": [
-        {
-          "id": "jd2",
-          "monthId": "jm1",
-          "date": "2026-11-09",
-          "title": "Erster Tag bei Eurodeco Wallsystem GmbH",
-          "emojis": [
-            "😐"
-          ],
-          "text": "Ankunft 7.55UHR\n- Telefondienst\n- Aufträge prüfen (Stückliste und Palletteninhalt)\n-  Auftragsbegleitscheine angelegt und gedruckt (Auftragsbeschreibung und Stückliste)"
-        }
-      ],
-      "id": "v_1794228905583",
-      "dateLabel": "9.11.2026, 13:55:05",
-      "versionNum": 3
-    }
-  ]
+  "versions": []
 }
